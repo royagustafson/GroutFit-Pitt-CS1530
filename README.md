@@ -40,7 +40,17 @@ Explain how to run automated tests
 
 ### Break down into specific tests
 
+Test 1
+
+```
+Demo
+```
+
+Etc
+
 ## Deployment
+
+Blah bl blah bl blah
 
 ## Built With
 
