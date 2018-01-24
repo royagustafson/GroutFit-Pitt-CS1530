@@ -1,18 +1,58 @@
-1.0 Scope (Product overview and summary. Evolves into Sec. 1 of requirements spec)
- 1.1 Functions (What can this product do? Evolves into Sec. 3 of requirements spec)
- 1.2 Performance (How well can this product do?  Evolves into Sec. 4 of requirements spec.)
- 1.3 Limitations (What this product cannot do? Included in Sec. 8 of requirements spec.)
+# Milestone 1 - Groutfit
+Group 5
 
-2.0 Tasks (From developer's viewpoint, what are the tasks? For
-   example tasks may include user interface, database manager,
-   data mining, profile management, and so on.  Cost analysis is based on tasks.)
+## 1.0 - Scope
+### 1.1 - Functions
+* **User Profile** - Allows users to login for other features - *creation, log in, log out, clothing sizes, cart*
+* **Clothing Items** - View individual clothing items - *item page, photos, sizes, colors, recommendations*
+* **Clothing Display** - Find items for purchase - *display all, by category, sorting, searching*
+* **Cart** - Reserve items for purchase - *add item, remove item, secure checkout*
+* **Wishlist** - Save items long term * *add item, remove item, move to cart*
+* **Outfit** - Build a mannequin, minimum top and bottom - *link to item pages, save to cart, save to wishlist*
+* **Outfit Sharing** - Social media based on outfits - *share outfits
 
-3.0 Resources
- 3.1 Hardware (for development and for deployment)
- 3.2 Software (what do you need for the development environment?)
- 3.3 People (introduction of personnel and their roles)
+### 1.2 - Performance
+* Prioritize fast response times (<200 ms)
+* Live outfit feed
 
-4.0 Cost (based upon tasks from 2.0)
+### 1.3 - Limitations
+* Must be connected to internet
+* Only runs in a browser
+* Does not support external sellers
+* No SSL server (should be implemented in real life)
 
-5.0 Schedule (based upon tasks from 2.0)
-Note: For the first deliverable only 1.0, 2.0 and 3.0 will be delivered. 
+## 2.0 Tasks
+* Website Design
+* Social Media Application
+* Database Manager
+* Server Application
+* Test Functions (*database and application*)
+
+## 3.0 Resources
+### 3.1 Hardware
+* Client (internet connected device with browser)
+* Server (always online computer)
+
+### 3.2 Software
+* [Bootstrap](https://getbootstrap.com/) - Frontend design (DHTML)
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [Spark](http://sparkjava.com/) - Server Framework
+* [Hibernate](http://hibernate.org/) - Object Relational Library
+* [Selenium](http://www.seleniumhq.org/) - Testing Library
+
+### 3.3 People
+**Roy Gustafson** - *Project Manager* - [royagustafson](https://github.com/royagustafson)
+
+**Katee Coleman** - *Document Specialist, Salesperson* - [ktedid](https://github.com/ktedid)
+
+**Spencer Rakoczy** - *GUI Programmer, Application Programmer* - [spencerrakoczy](https://github.com/spencerrakoczy)
+
+**Matt Ciraula** - *Database Programmer, Application Programmer* - [ciraulam](https://github.com/ciraulam)
+
+**John Fahnestock** - *Quality Assurance* - [johnfcs778](https://github.com/johnfcs778)
+
+## 4.0 Costs
+TBA
+
+## 5.0 Schedule
+TBA
