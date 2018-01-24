@@ -5,23 +5,27 @@
 * Semester 2184 - Spring 2018
 * Group 5
 
-# Clothing Company
+# Groutfit
 
-Our project is to create a clothing based eCommerce website that supports a variety of features. 
+Our project is to create a competitive eCommerce website that supports a variety of features, including mannequins and a social media style outfit feed.
 
-## Getting started
-
-Instructions to get up an running on your machine
+* **User Profile** - Allows users to login for other features - *creation, log in, log out, clothing sizes, cart*
+* **Clothing Items** - View individual clothing items - *item page, photos, sizes, colors, recommendations*
+* **Clothing Display** - Find items for purchase - *display all, by category, sorting, searching*
+* **Cart** - Reserve items for purchase - *add item, remove item, secure checkout*
+* **Wishlist** - Save items long term * *add item, remove item, move to cart*
+* **Outfit** - Build a mannequin, minimum top and bottom - *link to item pages, save to cart, save to wishlist*
+* **Outfit Sharing** - Social media based on outfits - *share outfits
 
 ### Prerequisites
 
 These are the languages, libraries, frameworks, software tools, etc required to run locally.
 
 ```
-Bootstrap (v ?.?.?)
-Node.js?
-Java?
-Database?
+Maven 3.5.2
+HTML5/CSS3/JS
+Java 1.8
+Postgres 10.1
 ```
 
 ### Installation
@@ -34,30 +38,26 @@ Add examples?
 
 Add demo to finish?
 
-## Running the tests
-
-Explain how to run automated tests
-
-### Break down into specific tests
-
-Test 1
-
-```
-Demo
-```
-
-Etc
-
 ## Deployment
 
 Blah bl blah bl blah
 
 ## Built With
 
+* [Bootstrap](https://getbootstrap.com/) - Frontend design (DHTML)
 * [Maven](https://maven.apache.org/) - Dependency Management
-
-## Versioning?
+* [Spark](http://sparkjava.com/) - Server Framework
+* [Hibernate](http://hibernate.org/) - Object Relational Library
+* [Selenium](http://www.seleniumhq.org/) - Testing Library
 
 ## Authors
 
-* **Roy Gustafson** - *Role* - [GitHub](https://github.com/royagustafson)
+**Roy Gustafson** - *Project Manager* - [royagustafson](https://github.com/royagustafson)
+
+**Katee Coleman** - *Document Specialist, Salesperson* - [ktedid](https://github.com/ktedid)
+
+**Spencer Rakoczy** - *GUI Programmer, Application Programmer* - [spencerrakoczy](https://github.com/spencerrakoczy)
+
+**Matt Ciraula** - *Database Programmer, Application Programmer* - [ciraulam](https://github.com/ciraulam)
+
+**John Fahnestock** - *Quality Assurance* - [johnfcs778](https://github.com/johnfcs778)
