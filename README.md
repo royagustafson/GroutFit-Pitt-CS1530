@@ -1,11 +1,11 @@
-# CS1530-S2184-G5
+# GroutFit
 
 ## This respository is for
 * Pitt CS 1530 - Software Engineering
 * Semester 2184 - Spring 2018
 * Group 5
 
-# Groutfit
+# Overview
 
 Our project is to create a competitive eCommerce website that supports a variety of features, including mannequins and a social media style outfit feed.
 
