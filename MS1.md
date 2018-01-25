@@ -8,8 +8,8 @@ Group 5
 * **Clothing Display** - Find items for purchase - *display all, by category, sorting, searching*
 * **Cart** - Reserve items for purchase - *add item, remove item, secure checkout*
 * **Wishlist** - Save items long term * *add item, remove item, move to cart*
-* **Outfit** - Build a mannequin, minimum top and bottom - *link to item pages, save to cart, save to wishlist*
-* **Outfit Sharing** - Social media based on outfits - *share outfits
+* **Outfit** - Visualize clothing items - *link to item pages, save to cart, save to wishlist*
+* **Outfit Sharing** - Twitter style outfit feed - *share outfits, follow friends, view live feed*
 
 ### 1.2 - Performance
 * Prioritize fast response times (<200 ms)
