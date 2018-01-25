@@ -3,7 +3,7 @@ Group 5
 
 ## 1.0 - Scope
 ### 1.1 - Functions
-* **User Profile** - Allows users to login for other features - *creation, log in, log out, clothing sizes, cart*
+* **User Profile** - Allows users to login for other features - *creation, log in, log out, clothing sizes, cart, wishlist*
 * **Clothing Items** - View individual clothing items - *item page, photos, sizes, colors, recommendations*
 * **Clothing Display** - Find items for purchase - *display all, by category, sorting, searching*
 * **Cart** - Reserve items for purchase - *add item, remove item, secure checkout*
