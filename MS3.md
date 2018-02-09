@@ -23,11 +23,13 @@ The user will be able to login to the system using a standard login prompt. The 
 A general help button will be available that will serve an html page where answers to general help questions will be displayed relating to the login screen. A support email will also be provided for customers to ask any outlying questions not covered in the provided help page or to deal with any account issues. The support email will also take bug reports or any other general problems users would like to report.
 ##### 2.3 Sample Runs
 *Login*
+
 To login to Groutfit, navigate to the home page and click on the button labeled “login” which will bring up a login screen. The login screen will prompt for your username and password which you will enter in the text boxes and click the button to login. If you have entered valid credentials and the login is successful, you will be brought to the home page where you can start browsing clothing. More detailed steps below:
 1. Navigate to the Groutfit home page as pictured below. While on this screen, move your mouse to the upper right corner and click on the blue button labeled “login”, which is located to the right of “cart”.
 2. This will bring up the login screen shown below, while on this page click into the textbox labeled “username” and type in your username. Once complete, repeat this process for the textbox labeled “password,” and type in your password that corresponds with the above username. Once this is complete click the large blue login button to complete your login.
 
 *Purchase a Shirt*
+
 In order to purchase an item, navigate to the Groutfit homepage and select the category filter and select “shirts”. From this screen click on any individual shirt item where its specific info page will come up. Select a size and color and then click add to cart(coming soon). You may now click the cart button in the upper right corner to show you the current items in your cart. From the cart screen you may click “checkout” which will complete your order. More detailed steps below:
 1. Navigate to the Groutfit homepage as shown below.
 2. Once in this page, click on the blue down arrow on the top right of the screen next to the word “Filter.” This will bring up a drop down menu allowing you to select a category of items you want to be shown. Select “Shirts”.
