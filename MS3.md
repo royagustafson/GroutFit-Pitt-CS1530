@@ -35,7 +35,7 @@ In order to purchase an item, navigate to the Groutfit homepage and select the c
 ####3. Modes of Operation
 The user will be interacting with the system through html and javascript laced webpages where various dialogs and buttons will be the primary form of interaction. User’s will not be entering any manual commands through any sort of command-line interface but rather logging in and navigating the site through GUI pages. Pages such as the login will require the user to type in account information into dialog boxes. When making a purchase, the user will also have to enter data for checking out. When browsing clothing items and constructing outfits, the user will be able to navigate the site through the back and forward arrows as well clicking on hyper-linked text and images.
 ###2.2 High Level Data Flow Diagram
-*See DFD image in folder*
+![alt text](https://github.com/royagustafson/GroutFit-Pitt-CS1530/dfd.png "Data Flow Diagram")
 ###2.3 Data Structure (or object) Representation
 (What data elements are in the databases or objects?)
 ###2.4 Data Elements (or objects) Dictionary
