@@ -70,27 +70,31 @@ Groutfit is a 95% complete e-commerce website, selling clothing items only manuf
 
 The reason that we chose this website is because the skill curve is about as linear as we could plan for. Almost any planned feature could be abandoned and the final project would still be acceptable. However, this is the planned sequence of features. I offer a short explanation as to the rationale, different parts, and relative difficulty of each. 
 
-1. Functioning database - Underlying data store that runs our website. We need to create the database, write sample data, and create reasonable constraints and triggers. 
-⋅⋅* Clothing items
-⋅⋅* Pictures?
-⋅⋅* Customer log ins
-2. Interactive front end - All aspects that the customer will interact with, as a skeleton to be later filled with data. Pictures of clothing, available sizes, etc, will not yet be available. 
-⋅⋅* Category view
-⋅⋅* Search bar
-⋅⋅* Item pages 
-3. Application layer - Connects front end to back end, eventually adding additional functionality and security. This part will be bare bones, but will require that front end and data store are correctly implemented to run. 
-⋅⋅* Secure log ins
-⋅⋅* ORM Usage
-⋅⋅* Website structure
-4. Outfit View - Will require a more advanced web page to run. Links together many things, and requires very specific photo angles. This will take some UI magic. 
-⋅⋅* Unique web page
-⋅⋅* Item lists, interactivity
-⋅⋅* Photos displayed
-⋅⋅* Photos displayed on mannequin
-5. Social Media Feed - Will be the most difficult feature. We will only attempt this if we've made sufficient expected progress in all other areas. This will require streaming data, interactions between different users, possible comments, and likes. 
-⋅⋅* Blog style feed (outfits over time)
-⋅⋅* Twitter style feed (following)
-⋅⋅* Profile view (view outfits by user)
+1. **Functioning database** - Underlying data store that runs our website. We need to create the database, write sample data, and create reasonable constraints and triggers. 
+  * Clothing items
+  * Pictures?
+  * Customer log ins
+
+2. **Interactive front end** - All aspects that the customer will interact with, as a skeleton to be later filled with data. Pictures of clothing, available sizes, etc, will not yet be available. 
+  * Category view
+  * Search bar
+  * Item pages 
+
+3. **Application layer** - Connects front end to back end, eventually adding additional functionality and security. This part will be bare bones, but will require that front end and data store are correctly implemented to run. 
+  * Secure log ins
+  * ORM Usage
+  * Website structure
+
+4. **Outfit View** - Will require a more advanced web page to run. Links together many things, and requires very specific photo angles. This will take some UI magic. 
+  * Unique web page
+  * Item lists, interactivity
+  * Photos displayed
+  * Photos displayed on mannequin
+
+5. **Social Media Feed** - Will be the most difficult feature. We will only attempt this if we've made sufficient expected progress in all other areas. This will require streaming data, interactions between different users, possible comments, and likes. 
+  * Blog style feed (outfits over time)
+  * Twitter style feed (following)
+  * Profile view (view outfits by user)
 
 ## 7. Foreseeable Modifications and Enhancements
 ## 8. Acceptance Criteria
