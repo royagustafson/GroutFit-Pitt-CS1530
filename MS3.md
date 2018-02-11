@@ -46,43 +46,43 @@ The user will be interacting with the system through html and javascript laced w
 ### 2.2 High Level Data Flow Diagram
 ![alt text](https://github.com/royagustafson/GroutFit-Pitt-CS1530/dfd.png "Data Flow Diagram")
 ### 2.3 Data Structure (or object) Representation
-user(user_id, email, password, size_shirt, size_pants, size_shoe)
-item(item_id, type, price, description)
-inventory(inventory_id, item_id, color, size, quantity)
-outfit(outfit_id, user_id, full_body, top, bottom, shoes, acc1, acc2, acc3)
-wishlist(user_id, inventory_id)
-### 2.4 Data Elements (or objects) Dictionary
-(Compile all data elements into a dictionary)
-user_id: user (appears as foreign key in  outfit and wishlist)
-email: user
-password: user
-size_shirt: user
-size_pants: user
-size_shoe: user
+user(user_id, email, password, size_shirt, size_pants, size_shoe)  
+item(item_id, type, price, description)  
+inventory(inventory_id, item_id, color, size, quantity)  
+outfit(outfit_id, user_id, full_body, top, bottom, shoes, acc1, acc2, acc3)  
+wishlist(user_id, inventory_id)  
+### 2.4 Data Elements (or objects) Dictionary  
+(Compile all data elements into a dictionary)  
+user_id: user (appears as foreign key in  outfit and wishlist)  
+email: user  
+password: user  
+size_shirt: user  
+size_pants: user  
+size_shoe: user  
+  
+item_id: item (appears as foreign key in inventory)  
+type: item  
+price: item  
+description: item  
+  
+inventory_id: inventory (appears as a foreign key in outfit and wishlist)  
+item_id: inventory (foreign key referencing item(item_id))  
+color: inventory  
+size: inventory  
+quantity: inventory  
+  
+outfit_id: outfit  
+user_id: outfit (foreign key referencing user(user_id))  
+full_body: outfit  
+top: outfit (foreign key referencing inventory(inventory_id))  
+bottom: outfit (foreign key referencing inventory(inventory_id))  
+shoes: outfit (foreign key referencing inventory(inventory_id))  
+acc1: outfit (foreign key referencing inventory(inventory_id))  
+acc2: outfit (foreign key referencing inventory(inventory_id))  
+acc3: outfit (foreign key referencing inventory(inventory_id))  
 
-item_id: item (appears as foreign key in inventory)
-type: item
-price: item
-description: item
-
-inventory_id: inventory (appears as a foreign key in outfit and wishlist)
-item_id: inventory (foreign key referencing item(item_id))
-color: inventory
-size: inventory
-quantity: inventory
-
-outfit_id: outfit
-user_id: outfit (foreign key referencing user(user_id))
-full_body: outfit
-top: outfit (foreign key referencing inventory(inventory_id))
-bottom: outfit (foreign key referencing inventory(inventory_id))
-shoes: outfit (foreign key referencing inventory(inventory_id))
-acc1: outfit (foreign key referencing inventory(inventory_id))
-acc2: outfit (foreign key referencing inventory(inventory_id))
-acc3: outfit (foreign key referencing inventory(inventory_id))
-
-user_id: wishlist (foreign key referencing user(user_id))
-inventory_id: wishlist (foreign key referencing inventory(inventory_id))
+user_id: wishlist (foreign key referencing user(user_id))  
+inventory_id: wishlist (foreign key referencing inventory(inventory_id))  
 ## 3. Functional Description
 ### 3.1 Functions
 *See IC Cards in folder*
