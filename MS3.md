@@ -51,7 +51,7 @@ item(item_id, type, price, description)
 inventory(inventory_id, item_id, color, size, quantity)  
 outfit(outfit_id, user_id, full_body, top, bottom, shoes, acc1, acc2, acc3)  
 wishlist(user_id, inventory_id)  
-### 2.4 Data Elements (or objects) Dictionary  
+### 2.4 Data Elements (or objects) Dictionary
 (Compile all data elements into a dictionary)  
 user_id: user (appears as foreign key in  outfit and wishlist)  
 email: user  
