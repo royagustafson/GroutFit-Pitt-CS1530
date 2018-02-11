@@ -74,7 +74,7 @@ Documentation standards
 ## 9. Sources of Information
 Our sources of information will come from a variety of sources to help us solve a variety of problems. I've attempted to divide these problems into categories.
 
-###Front End Design Goals
+### Front End Design Goals
 We will use the following sales websites as black box inspiration. Not the source code, but the higher level user interface concepts and techniques. Researching websites like these will help us to create a more competitive website. 
 
 *Amazon - https://www.amazon.com/
@@ -82,24 +82,25 @@ We will use the following sales websites as black box inspiration. Not the sourc
 *Nordstrom - https://shop.nordstrom.com/
 
 
-###Front End Implementation
+### Front End Implementation
 This following will help us to achieve our design goals using Bootstrap. This will provide general guides for getting started, as well as more in depth documentation to help us implement specific user interactivity elements we notice in the above websites. 
 
 *BootStrap Documentation - [https://getbootstrap.com/](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
-*w3schools Bootstrap Guide -[https://www.w3schools.com/]( https://www.w3schools.com/bootstrap/default.asp)
+*w3schools Bootstrap Guide -[https://www.w3schools.com/](https://www.w3schools.com/bootstrap/default.asp)
 
 
-###Spark Usage
+### Spark Usage
 These guides will help us to create a Rest API using Spark Framework. Baeldung will help us to get started and configured, and the spark documentation will help us to incorporate more of sparks features that we deem useful. 
 
 *Spark Java Documentation - [http://sparkjava.com/](http://sparkjava.com/documentation)
 *Baeldung Spark Tutorial - [http://www.baeldung.com/](http://www.baeldung.com/spark-framework-rest-api)
 
 
-###Database Design
+### Database Design
 The documentation will help us to use the ORM to interface with our database. TutorialsPoint has excellent documentation on hibernate's features. The tutorial will help us to start thinking about what attributes of clothing we would need to store in a real scenario. 
 
 *Hibernate ORM/Search Documentation - [http://hibernate.org/](http://hibernate.org/orm)
 *TutorialsPoint Hibernate Guide - [https://www.tutorialspoint.com/](https://www.tutorialspoint.com/hibernate/index.htm)
 *Clothing Database Tutorial - [http://www.vertabelo.com/](http://www.vertabelo.com/blog/technical-articles/database-model-for-an-online-store)
+
 ## 10. Revision History
