@@ -43,34 +43,65 @@ In order to purchase an item, navigate to the Groutfit homepage and select the c
 4. Once the item is added into cart, open up the cart by selecting the light blue button in the top right labeled “Cart”. This will bring up the cart screen with the shirt item you previously added. You may now click the large blue “Checkout” button at the bottom to complete your purchase.
 #### 3. Modes of Operation
 The user will be interacting with the system through html and javascript laced webpages where various dialogs and buttons will be the primary form of interaction. User’s will not be entering any manual commands through any sort of command-line interface but rather logging in and navigating the site through GUI pages. Pages such as the login will require the user to type in account information into dialog boxes. When making a purchase, the user will also have to enter data for checking out. When browsing clothing items and constructing outfits, the user will be able to navigate the site through the back and forward arrows as well clicking on hyper-linked text and images.
+#### 4. Advanced Features
+Wish list: Users will be able to add clothing items to a wish list. This will allow users to save items to be purchased later through a graphical listed of wish-listed items. Users must have an account on the website in order to have the ability to create a cart.
+
+Mannequin: Users can create and edit “mannequins” through a user interface with the following features: Users will be able to group different types of clothing items into outfits. Users will be able to create new outfits from scratch, and add items to an outfit via a drop-down list on an item’s page. An outfit may consist of no more than one of each type of clothing item. Once created, all items in the outfit can be added to the user’s cart or wish list with one button click. Users may also add, or remove items from an outfit using the mannequin building user interface. Users also have the option to delete an outfit entirely.
+
+Personal Outfit Feed: Users will be able to see a list of their own outfits in a chronological feed. Through this feed they can view previous outfits they have made. Clicking on one of the outfits in the feed will lead to the mannequin building user interface.   
+
+Public Outfit Feed: After creating a valid outfit, users will have the option to present their creation to the public by publishing it to a global feed. An outfit must be composed of at least a shirt and pants before it can be shared publicly. The outfit feed can be viewed by anyone accessing the site, not just account holders. The feed will be organized in chronological order such that the most recently published outfits appear at the top of the page. By polling at a constant time interval of five seconds, users will be able to view the newest posts without refreshing their browser.
+
+Suggested Items: Individual clothing items will have their own pages. These will display more detail about the product.  A portion of an item’s page will have a scrollable feed which will display hyperlinked pictures to items related to the item on the current page. Related items are items that other users have added to an outfit that contains the current page’s item.
+#### 5. Glossary of Commands and System Options
+Create Account: Users will be able to create an account through a user interface, allowing them to create a custom username and password.
+
+Log In: If a user has an account, they will be able to enter their login credentials through a user interface in order to proceed to certain features only offered to account holders such as wish lists.
+
+Log Out: Users will have the option to log out, after which they will only be able to see public data
+
+Add Item to Cart: Users will be able to add an item to their cart with the click of a button from an item’s user interface.
+
+Add Outfit to Cart: Users will be able to add an outfit to their cart with the click of a button from a mannequin’s user interface.
+
+Add Item to Wish List: Users will be able to add an item to their wish list with the click of a button from an item’s user interface.
+
+Add Outfit to Wish List. Users will be able to add an outfit to their cart with the click of a button from a mannequin’s user interface.
+
+Create Outfit: Uses will be able to create an initially empty outfit, or clone an outfit from a public feed.
+
+Edit Outfit: Users will be able to add items to outfits from the item’s page. If there is already one of the same types of item in the outfit, the user will be able to swap the previous item out and add the desired one, all with one click.
+
+Remove item from Outfit: Users will be able to remove an item from an outfit from within the mannequin user interface
+
+Remove Outfit: Users will be able to delete any outfit of their own. They will be able to do so from the mannequin page, the public outfit feed, and their personal outfit feed.
 ### 2.2 High Level Data Flow Diagram
-![alt text](https://github.com/royagustafson/GroutFit-Pitt-CS1530/dfd.png "Data Flow Diagram")
+![Data Flow Diagram](https://github.com/royagustafson/GroutFit-Pitt-CS1530/blob/master/Data_Flow_Diagram.png "Data Flow Diagram")
 ### 2.3 Data Structure (or object) Representation
 user(user_id, email, password, size_shirt, size_pants, size_shoe)  
 item(item_id, type, price, description)  
 inventory(inventory_id, item_id, color, size, quantity)  
 outfit(outfit_id, user_id, full_body, top, bottom, shoes, acc1, acc2, acc3)  
 wishlist(user_id, inventory_id)  
-### 2.4 Data Elements (or objects) Dictionary
-(Compile all data elements into a dictionary)  
+### 2.4 Data Elements (or objects) Dictionary  
 user_id: user (appears as foreign key in  outfit and wishlist)  
 email: user  
 password: user  
 size_shirt: user  
 size_pants: user  
 size_shoe: user  
-  
+
 item_id: item (appears as foreign key in inventory)  
 type: item  
 price: item  
 description: item  
-  
+
 inventory_id: inventory (appears as a foreign key in outfit and wishlist)  
 item_id: inventory (foreign key referencing item(item_id))  
 color: inventory  
 size: inventory  
 quantity: inventory  
-  
+
 outfit_id: outfit  
 user_id: outfit (foreign key referencing user(user_id))  
 full_body: outfit  
@@ -97,35 +128,42 @@ Users will be able to create outfits and a function of the site will allow the o
 ### 3.3 Design Constraints
 Groutfit is a 95% complete e-commerce website, selling clothing items only manufactured in shades of grey. However, the functionality of the website stops right before allowing a user to enter a valid credit card and actually purchase the items.
 ### 3.4 Diagrams
-(There should be a detailed data flow diagram for each function)
+![Function Diagrams](https://github.com/royagustafson/GroutFit-Pitt-CS1530/blob/master/Function_Diagrams.png "Function Diagrams")
 ## 4. Performance Requirements
+The purpose of this section is to outline the software performance goals for Groutfit. These are the goals that are minimally required to see in the testing environment before allowing the application to be put on the market.
+* The system shall support at least 450,000 user profiles.
+* The system shall support at least 500 concurrent users.
+* 95% of all visible pages for users respond in 2 seconds or less.
+* The system shall support up to 250 requests to post outfits to social media feed per second in peak load.
+* Errors in search returns shall be less than 1 failure per 100 requests.
+* The system shall be available 99% of the time. 
 ## 5. Exception Conditions/Exception Handling
 ## 6. Implementation Priorities
 
-The reason that we chose this website is because the skill curve is about as linear as we could plan for. Almost any planned feature could be abandoned and the final project would still be acceptable. However, this is the planned sequence of features. I offer a short explanation as to the rationale, different parts, and relative difficulty of each. 
+The reason that we chose this website is because the skill curve is about as linear as we could plan for. Almost any planned feature could be abandoned and the final project would still be acceptable. However, this is the planned sequence of features. I offer a short explanation as to the rationale, different parts, and relative difficulty of each.
 
-1. **Functioning database** - Underlying data store that runs our website. We need to create the database, write sample data, and create reasonable constraints and triggers. 
+1. **Functioning database** - Underlying data store that runs our website. We need to create the database, write sample data, and create reasonable constraints and triggers.
   * Clothing items
   * Pictures?
   * Customer log ins
 
-2. **Interactive front end** - All aspects that the customer will interact with, as a skeleton to be later filled with data. Pictures of clothing, available sizes, etc, will not yet be available. 
+2. **Interactive front end** - All aspects that the customer will interact with, as a skeleton to be later filled with data. Pictures of clothing, available sizes, etc, will not yet be available.
   * Category view
   * Search bar
-  * Item pages 
+  * Item pages
 
-3. **Application layer** - Connects front end to back end, eventually adding additional functionality and security. This part will be bare bones, but will require that front end and data store are correctly implemented to run. 
+3. **Application layer** - Connects front end to back end, eventually adding additional functionality and security. This part will be bare bones, but will require that front end and data store are correctly implemented to run.
   * Secure log ins
   * ORM Usage
   * Website structure
 
-4. **Outfit View** - Will require a more advanced web page to run. Links together many things, and requires very specific photo angles. This will take some UI magic. 
+4. **Outfit View** - Will require a more advanced web page to run. Links together many things, and requires very specific photo angles. This will take some UI magic.
   * Unique web page
   * Item lists, interactivity
   * Photos displayed
   * Photos displayed on mannequin
 
-5. **Social Media Feed** - Will be the most difficult feature. We will only attempt this if we've made sufficient expected progress in all other areas. This will require streaming data, interactions between different users, possible comments, and likes. 
+5. **Social Media Feed** - Will be the most difficult feature. We will only attempt this if we've made sufficient expected progress in all other areas. This will require streaming data, interactions between different users, possible comments, and likes.
   * Blog style feed (outfits over time)
   * Twitter style feed (following)
   * Profile view (view outfits by user)
@@ -134,11 +172,106 @@ The reason that we chose this website is because the skill curve is about as lin
 ## 8. Acceptance Criteria
 Functional and performance tests
 Documentation standards
+___
+
+* Given a loaded login page, when you enter credentials and login, then the login should be successful. 
+* Given the correct URL for Groutfit, when you enter the URL into a browser and attempt to navigate to it, then the home screen is successfully loaded.
+* Given an item page, when the user clicks add to cart, then the item is successfully added to the cart.
+* Given a page of items, when the user clicks to sort by some filter, then the items are filtered correctly. 
+* Given a cart page with at least one item, when the user clicks checkout, then the order is successfully “processed”
+* Given the user has a cart with at least one item, when the user clicks on the cart button, then the cart screen is shown, listing all the items in the user’s cart. 
+* Given the user is on a page displaying a list of items, when the user clicks on an item, then the item’s info page is correctly loaded and all information for that item is successfully shown. 
+#### TEST CASES: 
+
+IDENTIFIER: TEST-LOGIN-PAGE
+
+DESCRIPTION: This test will ensure that the login page and system is functional and that any user with valid credentials is able to login to the website successfully. 
+
+PRECONDITIONS: The login page is loaded and the user has valid credentials to login with.
+
+EXECUTION STEPS: First the user will click inside the username text box and type in their username into the box. Next the user will click inside the password text box and enter their password into the box that corresponds to their username. Finally the user will click the LOGIN button. 
+
+POSTCONDITIONS: The user should be brought to the home screen of Groutfit, and the top right of the screen should display the user is logged in and a button to logout will appear. 
+
+___
+IDENTIFIER: TEST-HOMEPAGE
+
+DESCRIPTION: This test will ensure that the website is up and running and a correct URL points to the homepage that will load successfully. 
+
+PRECONDITIONS: The user has the correct URL for the Groutfit home page
+
+EXECUTION STEPS: The user will enter in the Groufit URL in any internet browser and attempt to navigate to that page.
+
+POSTCONDITIONS: The groufit page should be loaded successfully with no errors and the homepage should be displayed as expected.
+___
+IDENTIFIER: TEST-ADD-TO-CART
+
+DESCRIPTION: This test will ensure that the add to cart function works and that an item can be successfully added to the cart.
+
+PRECONDITIONS: The user has an item page loaded for any given purchasable item on the Groutfit website. 
+
+EXECUTION STEPS: The user will click the add to cart button on the page of a given item.
+
+POSTCONDITIONS: The item should be successfully added to the user’s cart, this will be represented visually (in some way). 
+____
+IDENTIFIER: TEST-FILTER
+
+DESCRIPTION: This test will ensure that the filter by category button will function properly by only showing items of the category chosen by the user. 
+
+PRECONDITIONS: The user has a Groutfit page loaded displaying a list of items 
+
+EXECUTION STEPS: The user will click on the filter button and choose any of the categories listed to sort by. 
+
+POSTCONDITIONS: The resulting page of items will all be of the category chosen by the user to filter by. 
+___
+IDENTIFIER: TEST-CHECKOUT
+
+DESCRIPTION: This test will ensure that the checkout button functions properly when the user is trying to purchase an item(s).
+
+PRECONDITIONS: The user has a cart page loaded displaying the item(s) currently in the cart. The user’s has entered necessary info. 
+
+EXECUTION STEPS: The user will click on the CHECKOUT button.
+
+POSTCONDITIONS: The user should be shown a successful purchase message screen displaying the contents of their order. 
+___
+IDENTIFIER: TEST-CART-SCREEN
+
+DESCRIPTION: This test will ensure that the cart button and cart screen works properly showing all items.
+
+PRECONDITIONS: The user should have the Groutfit page loaded and have at least one item added to cart. 
+
+EXECUTION STEPS: The user will click on the CART button at the top of the screen. 
+
+POSTCONDITIONS: The user’s cart page should be shown, displaying all item(s) the user previously added. A checkout button will be shown on screen. 
+___
+IDENTIFIER: TEST-ITEM-DISPLAY
+
+DESCRIPTION: This test will ensure that the item display page for any given item is displayed properly and its data is grabbed from the database. 
+
+PRECONDITIONS: The user should have a Groutfit page loaded showing a list of items. 
+
+EXECUTION STEPS: The user will click on an any item on the page to bring up its information page.
+
+POSTCONDITIONS: The item’s page will be loaded properly and all information displayed should be correct. 
+___
+TRACEABILITY MATRIX:
+
+- AC1: TEST-LOGIN-PAGE
+- AC2: TEST-HOMEPAGE
+- AC3: TEST-ADD-TO-CART
+- AC4: TEST-FILTER
+- AC5: TEST-CHECKOUT
+- AC6: TEST-CART-SCREEN
+- AC7: TEST-ITEM-DISPLAY
+
+#### Documentation Standards:
+The above list of acceptance criteria will be the basis for testing. The list, along with relevant test cases will be delivered in an official test plan format. As tests become automated these will be written in java and the JavaDoc standards will be used for this. 
+
 ## 9. Sources of Information
 Our sources of information will come from a variety of sources to help us solve a variety of problems. I've attempted to divide these problems into categories.
 
 ### Front End Design Goals
-We will use the following sales websites as black box inspiration. Not the source code, but the higher level user interface concepts and techniques. Researching websites like these will help us to create a more competitive website. 
+We will use the following sales websites as black box inspiration. Not the source code, but the higher level user interface concepts and techniques. Researching websites like these will help us to create a more competitive website.
 
 * Amazon - https://www.amazon.com/
 * ASOS - http://www.asos.com/
@@ -146,21 +279,21 @@ We will use the following sales websites as black box inspiration. Not the sourc
 
 
 ### Front End Implementation
-This following will help us to achieve our design goals using Bootstrap. This will provide general guides for getting started, as well as more in depth documentation to help us implement specific user interactivity elements we notice in the above websites. 
+This following will help us to achieve our design goals using Bootstrap. This will provide general guides for getting started, as well as more in depth documentation to help us implement specific user interactivity elements we notice in the above websites.
 
 * BootStrap Documentation - [https://getbootstrap.com/](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 * w3schools Bootstrap Guide -[https://www.w3schools.com/](https://www.w3schools.com/bootstrap/default.asp)
 
 
 ### Spark Usage
-These guides will help us to create a Rest API using Spark Framework. Baeldung will help us to get started and configured, and the spark documentation will help us to incorporate more of sparks features that we deem useful. 
+These guides will help us to create a Rest API using Spark Framework. Baeldung will help us to get started and configured, and the spark documentation will help us to incorporate more of sparks features that we deem useful.
 
 * Spark Java Documentation - [http://sparkjava.com/](http://sparkjava.com/documentation)
 * Baeldung Spark Tutorial - [http://www.baeldung.com/](http://www.baeldung.com/spark-framework-rest-api)
 
 
 ### Database Design
-The documentation will help us to use the ORM to interface with our database. TutorialsPoint has excellent documentation on hibernate's features. The tutorial will help us to start thinking about what attributes of clothing we would need to store in a real scenario. 
+The documentation will help us to use the ORM to interface with our database. TutorialsPoint has excellent documentation on hibernate's features. The tutorial will help us to start thinking about what attributes of clothing we would need to store in a real scenario.
 
 * Hibernate ORM/Search Documentation - [http://hibernate.org/](http://hibernate.org/orm)
 * TutorialsPoint Hibernate Guide - [https://www.tutorialspoint.com/](https://www.tutorialspoint.com/hibernate/index.htm)
