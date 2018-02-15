@@ -169,6 +169,12 @@ The reason that we chose this website is because the skill curve is about as lin
   * Profile view (view outfits by user)
 
 ## 7. Foreseeable Modifications and Enhancements
+	* More search filters such as filter by brand or material
+	* Allow users to share outfits on outside social media platforms
+	* Adapt U.I. to fit mobile devices
+	* Upgrade U.I. - add animations and other flashy things
+	* Optimize queries for better performance
+	
 ## 8. Acceptance Criteria
 Functional and performance tests
 Documentation standards
