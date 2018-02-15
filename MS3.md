@@ -138,6 +138,18 @@ The purpose of this section is to outline the software performance goals for Gro
 * Errors in search returns shall be less than 1 failure per 100 requests.
 * The system shall be available 99% of the time. 
 ## 5. Exception Conditions/Exception Handling
+In order to provide error reporting capabilities, the application will use a java logger to log errors. Spark will use middleware to recognize errors and display an appropriate error page. 
+Database Errors: By using a Hibernate ORM connected to Java’s Persistence API, exceptions will be reported to the logger program and logged. A page will be displayed containing the error’s name and details. 
+Database Constraints: Before querying the database, java will check that the data is in the correct format. If it is not, an error will be reported to the user. 
+Java Runtime Exceptions: Java exceptions, if caught and handled, will be logged to the browser console. If a fatal exception occurs, the server will become unresponsive, and manual intervention will be necessary to diagnose the problem and restart the server. 
+HTTP Errors:
+	400 – Request header is improperly formatted. Display a relevant error page. 
+	405 – Forbidden resource. Display a relevant message in an error page informing the user that they are forbidden from accessing this data.  
+	401 – Session token has expired. Display an error page reporting that the session has expired, and advise the user to refresh the page or try again later. 
+	409 – Conflicting Data. This will happen if a user attempts to make an account that already exists. The application will return the user to the login page and inform them that they already have an account. 
+	503 – Request has taken too long to process or the API is temporarily unavailable. Display an error page with relevant details and advise the user to refresh the page or try again later.
+Server Errors: If the server hosting the application encounters an error, manual intervention will be necessary to diagnose the problem and restore the server to a functioning state. 
+
 ## 6. Implementation Priorities
 
 The reason that we chose this website is because the skill curve is about as linear as we could plan for. Almost any planned feature could be abandoned and the final project would still be acceptable. However, this is the planned sequence of features. I offer a short explanation as to the rationale, different parts, and relative difficulty of each.
