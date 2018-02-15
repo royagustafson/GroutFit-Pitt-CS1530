@@ -53,10 +53,10 @@ Personal Outfit Feed: Users will be able to see a list of their own outfits in a
 Public Outfit Feed: After creating a valid outfit, users will have the option to present their creation to the public by publishing it to a global feed. An outfit must be composed of at least a shirt and pants before it can be shared publicly. The outfit feed can be viewed by anyone accessing the site, not just account holders. The feed will be organized in chronological order such that the most recently published outfits appear at the top of the page. By polling at a constant time interval of five seconds, users will be able to view the newest posts without refreshing their browser.
 
 Suggested Items: Individual clothing items will have their own pages. These will display more detail about the product.  A portion of an item’s page will have a scrollable feed which will display hyperlinked pictures to items related to the item on the current page. Related items are items that other users have added to an outfit that contains the current page’s item.
-#### 5. Glossary of commands and system options
+#### 5. Glossary of Commands and System Options
 Create Account: Users will be able to create an account through a user interface, allowing them to create a custom username and password.
 
-Log In: If a user has an account, they will be able to enter their login credentials through a user interface in order to proceed to certain features only offered to account holders such as wish lists. 
+Log In: If a user has an account, they will be able to enter their login credentials through a user interface in order to proceed to certain features only offered to account holders such as wish lists.
 
 Log Out: Users will have the option to log out, after which they will only be able to see public data
 
@@ -70,7 +70,7 @@ Add Outfit to Wish List. Users will be able to add an outfit to their cart with 
 
 Create Outfit: Uses will be able to create an initially empty outfit, or clone an outfit from a public feed.
 
-Edit Outfit: Users will be able to add items to outfits from the item’s page. If there is already one of the same types of item in the outfit, the user will be able to swap the previous item out and add the desired one, all with one click. 
+Edit Outfit: Users will be able to add items to outfits from the item’s page. If there is already one of the same types of item in the outfit, the user will be able to swap the previous item out and add the desired one, all with one click.
 
 Remove item from Outfit: Users will be able to remove an item from an outfit from within the mannequin user interface
 
@@ -83,26 +83,25 @@ item(item_id, type, price, description)
 inventory(inventory_id, item_id, color, size, quantity)  
 outfit(outfit_id, user_id, full_body, top, bottom, shoes, acc1, acc2, acc3)  
 wishlist(user_id, inventory_id)  
-### 2.4 Data Elements (or objects) Dictionary
-(Compile all data elements into a dictionary)  
+### 2.4 Data Elements (or objects) Dictionary  
 user_id: user (appears as foreign key in  outfit and wishlist)  
 email: user  
 password: user  
 size_shirt: user  
 size_pants: user  
 size_shoe: user  
-  
+
 item_id: item (appears as foreign key in inventory)  
 type: item  
 price: item  
 description: item  
-  
+
 inventory_id: inventory (appears as a foreign key in outfit and wishlist)  
 item_id: inventory (foreign key referencing item(item_id))  
 color: inventory  
 size: inventory  
 quantity: inventory  
-  
+
 outfit_id: outfit  
 user_id: outfit (foreign key referencing user(user_id))  
 full_body: outfit  
@@ -131,33 +130,40 @@ Groutfit is a 95% complete e-commerce website, selling clothing items only manuf
 ### 3.4 Diagrams
 (There should be a detailed data flow diagram for each function)
 ## 4. Performance Requirements
+The purpose of this section is to outline the software performance goals for Groutfit. These are the goals that are minimally required to see in the testing environment before allowing the application to be put on the market.
+* The system shall support at least 450,000 user profiles.
+* The system shall support at least 500 concurrent users.
+* 95% of all visible pages for users respond in 2 seconds or less.
+* The system shall support up to 250 requests to post outfits to social media feed per second in peak load.
+* Errors in search returns shall be less than 1 failure per 100 requests.
+* The system shall be available 99% of the time. 
 ## 5. Exception Conditions/Exception Handling
 ## 6. Implementation Priorities
 
-The reason that we chose this website is because the skill curve is about as linear as we could plan for. Almost any planned feature could be abandoned and the final project would still be acceptable. However, this is the planned sequence of features. I offer a short explanation as to the rationale, different parts, and relative difficulty of each. 
+The reason that we chose this website is because the skill curve is about as linear as we could plan for. Almost any planned feature could be abandoned and the final project would still be acceptable. However, this is the planned sequence of features. I offer a short explanation as to the rationale, different parts, and relative difficulty of each.
 
-1. **Functioning database** - Underlying data store that runs our website. We need to create the database, write sample data, and create reasonable constraints and triggers. 
+1. **Functioning database** - Underlying data store that runs our website. We need to create the database, write sample data, and create reasonable constraints and triggers.
   * Clothing items
   * Pictures?
   * Customer log ins
 
-2. **Interactive front end** - All aspects that the customer will interact with, as a skeleton to be later filled with data. Pictures of clothing, available sizes, etc, will not yet be available. 
+2. **Interactive front end** - All aspects that the customer will interact with, as a skeleton to be later filled with data. Pictures of clothing, available sizes, etc, will not yet be available.
   * Category view
   * Search bar
-  * Item pages 
+  * Item pages
 
-3. **Application layer** - Connects front end to back end, eventually adding additional functionality and security. This part will be bare bones, but will require that front end and data store are correctly implemented to run. 
+3. **Application layer** - Connects front end to back end, eventually adding additional functionality and security. This part will be bare bones, but will require that front end and data store are correctly implemented to run.
   * Secure log ins
   * ORM Usage
   * Website structure
 
-4. **Outfit View** - Will require a more advanced web page to run. Links together many things, and requires very specific photo angles. This will take some UI magic. 
+4. **Outfit View** - Will require a more advanced web page to run. Links together many things, and requires very specific photo angles. This will take some UI magic.
   * Unique web page
   * Item lists, interactivity
   * Photos displayed
   * Photos displayed on mannequin
 
-5. **Social Media Feed** - Will be the most difficult feature. We will only attempt this if we've made sufficient expected progress in all other areas. This will require streaming data, interactions between different users, possible comments, and likes. 
+5. **Social Media Feed** - Will be the most difficult feature. We will only attempt this if we've made sufficient expected progress in all other areas. This will require streaming data, interactions between different users, possible comments, and likes.
   * Blog style feed (outfits over time)
   * Twitter style feed (following)
   * Profile view (view outfits by user)
@@ -170,7 +176,7 @@ Documentation standards
 Our sources of information will come from a variety of sources to help us solve a variety of problems. I've attempted to divide these problems into categories.
 
 ### Front End Design Goals
-We will use the following sales websites as black box inspiration. Not the source code, but the higher level user interface concepts and techniques. Researching websites like these will help us to create a more competitive website. 
+We will use the following sales websites as black box inspiration. Not the source code, but the higher level user interface concepts and techniques. Researching websites like these will help us to create a more competitive website.
 
 * Amazon - https://www.amazon.com/
 * ASOS - http://www.asos.com/
@@ -178,21 +184,21 @@ We will use the following sales websites as black box inspiration. Not the sourc
 
 
 ### Front End Implementation
-This following will help us to achieve our design goals using Bootstrap. This will provide general guides for getting started, as well as more in depth documentation to help us implement specific user interactivity elements we notice in the above websites. 
+This following will help us to achieve our design goals using Bootstrap. This will provide general guides for getting started, as well as more in depth documentation to help us implement specific user interactivity elements we notice in the above websites.
 
 * BootStrap Documentation - [https://getbootstrap.com/](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
 * w3schools Bootstrap Guide -[https://www.w3schools.com/](https://www.w3schools.com/bootstrap/default.asp)
 
 
 ### Spark Usage
-These guides will help us to create a Rest API using Spark Framework. Baeldung will help us to get started and configured, and the spark documentation will help us to incorporate more of sparks features that we deem useful. 
+These guides will help us to create a Rest API using Spark Framework. Baeldung will help us to get started and configured, and the spark documentation will help us to incorporate more of sparks features that we deem useful.
 
 * Spark Java Documentation - [http://sparkjava.com/](http://sparkjava.com/documentation)
 * Baeldung Spark Tutorial - [http://www.baeldung.com/](http://www.baeldung.com/spark-framework-rest-api)
 
 
 ### Database Design
-The documentation will help us to use the ORM to interface with our database. TutorialsPoint has excellent documentation on hibernate's features. The tutorial will help us to start thinking about what attributes of clothing we would need to store in a real scenario. 
+The documentation will help us to use the ORM to interface with our database. TutorialsPoint has excellent documentation on hibernate's features. The tutorial will help us to start thinking about what attributes of clothing we would need to store in a real scenario.
 
 * Hibernate ORM/Search Documentation - [http://hibernate.org/](http://hibernate.org/orm)
 * TutorialsPoint Hibernate Guide - [https://www.tutorialspoint.com/](https://www.tutorialspoint.com/hibernate/index.htm)
