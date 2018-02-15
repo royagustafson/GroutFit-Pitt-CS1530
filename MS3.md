@@ -136,19 +136,19 @@ The purpose of this section is to outline the software performance goals for Gro
 * 95% of all visible pages for users respond in 2 seconds or less.
 * The system shall support up to 250 requests to post outfits to social media feed per second in peak load.
 * Errors in search returns shall be less than 1 failure per 100 requests.
-* The system shall be available 99% of the time. 
+* The system shall be available 99% of the time.
 ## 5. Exception Conditions/Exception Handling
-In order to provide error reporting capabilities, the application will use a java logger to log errors. Spark will use middleware to recognize errors and display an appropriate error page. 
-Database Errors: By using a Hibernate ORM connected to Java’s Persistence API, exceptions will be reported to the logger program and logged. A page will be displayed containing the error’s name and details. 
-Database Constraints: Before querying the database, java will check that the data is in the correct format. If it is not, an error will be reported to the user. 
-Java Runtime Exceptions: Java exceptions, if caught and handled, will be logged to the browser console. If a fatal exception occurs, the server will become unresponsive, and manual intervention will be necessary to diagnose the problem and restart the server. 
+In order to provide error reporting capabilities, the application will use a java logger to log errors. Spark will use middleware to recognize errors and display an appropriate error page.
+Database Errors: By using a Hibernate ORM connected to Java’s Persistence API, exceptions will be reported to the logger program and logged. A page will be displayed containing the error’s name and details.
+Database Constraints: Before querying the database, java will check that the data is in the correct format. If it is not, an error will be reported to the user.
+Java Runtime Exceptions: Java exceptions, if caught and handled, will be logged to the browser console. If a fatal exception occurs, the server will become unresponsive, and manual intervention will be necessary to diagnose the problem and restart the server.
 HTTP Errors:
-	400 – Request header is improperly formatted. Display a relevant error page. 
-	405 – Forbidden resource. Display a relevant message in an error page informing the user that they are forbidden from accessing this data.  
-	401 – Session token has expired. Display an error page reporting that the session has expired, and advise the user to refresh the page or try again later. 
-	409 – Conflicting Data. This will happen if a user attempts to make an account that already exists. The application will return the user to the login page and inform them that they already have an account. 
-	503 – Request has taken too long to process or the API is temporarily unavailable. Display an error page with relevant details and advise the user to refresh the page or try again later.
-Server Errors: If the server hosting the application encounters an error, manual intervention will be necessary to diagnose the problem and restore the server to a functioning state. 
+* 400 – Request header is improperly formatted. Display a relevant error page.
+* 405 – Forbidden resource. Display a relevant message in an error page informing the user that they are forbidden from accessing this data.  
+* 401 – Session token has expired. Display an error page reporting that the session has expired, and advise the user to refresh the page or try again later.
+* 409 – Conflicting Data. This will happen if a user attempts to make an account that already exists. The application will return the user to the login page and inform them that they already have an account.
+* 503 – Request has taken too long to process or the API is temporarily unavailable. Display an error page with relevant details and advise the user to refresh the page or try again later.
+Server Errors: If the server hosting the application encounters an error, manual intervention will be necessary to diagnose the problem and restore the server to a functioning state.
 
 ## 6. Implementation Priorities
 
@@ -192,29 +192,29 @@ Functional and performance tests
 Documentation standards
 ___
 
-* Given a loaded login page, when you enter credentials and login, then the login should be successful. 
+* Given a loaded login page, when you enter credentials and login, then the login should be successful.
 * Given the correct URL for Groutfit, when you enter the URL into a browser and attempt to navigate to it, then the home screen is successfully loaded.
 * Given an item page, when the user clicks add to cart, then the item is successfully added to the cart.
-* Given a page of items, when the user clicks to sort by some filter, then the items are filtered correctly. 
+* Given a page of items, when the user clicks to sort by some filter, then the items are filtered correctly.
 * Given a cart page with at least one item, when the user clicks checkout, then the order is successfully “processed”
-* Given the user has a cart with at least one item, when the user clicks on the cart button, then the cart screen is shown, listing all the items in the user’s cart. 
-* Given the user is on a page displaying a list of items, when the user clicks on an item, then the item’s info page is correctly loaded and all information for that item is successfully shown. 
-#### TEST CASES: 
+* Given the user has a cart with at least one item, when the user clicks on the cart button, then the cart screen is shown, listing all the items in the user’s cart.
+* Given the user is on a page displaying a list of items, when the user clicks on an item, then the item’s info page is correctly loaded and all information for that item is successfully shown.
+#### TEST CASES:
 
 IDENTIFIER: TEST-LOGIN-PAGE
 
-DESCRIPTION: This test will ensure that the login page and system is functional and that any user with valid credentials is able to login to the website successfully. 
+DESCRIPTION: This test will ensure that the login page and system is functional and that any user with valid credentials is able to login to the website successfully.
 
 PRECONDITIONS: The login page is loaded and the user has valid credentials to login with.
 
-EXECUTION STEPS: First the user will click inside the username text box and type in their username into the box. Next the user will click inside the password text box and enter their password into the box that corresponds to their username. Finally the user will click the LOGIN button. 
+EXECUTION STEPS: First the user will click inside the username text box and type in their username into the box. Next the user will click inside the password text box and enter their password into the box that corresponds to their username. Finally the user will click the LOGIN button.
 
-POSTCONDITIONS: The user should be brought to the home screen of Groutfit, and the top right of the screen should display the user is logged in and a button to logout will appear. 
+POSTCONDITIONS: The user should be brought to the home screen of Groutfit, and the top right of the screen should display the user is logged in and a button to logout will appear.
 
 ___
 IDENTIFIER: TEST-HOMEPAGE
 
-DESCRIPTION: This test will ensure that the website is up and running and a correct URL points to the homepage that will load successfully. 
+DESCRIPTION: This test will ensure that the website is up and running and a correct URL points to the homepage that will load successfully.
 
 PRECONDITIONS: The user has the correct URL for the Groutfit home page
 
@@ -226,51 +226,51 @@ IDENTIFIER: TEST-ADD-TO-CART
 
 DESCRIPTION: This test will ensure that the add to cart function works and that an item can be successfully added to the cart.
 
-PRECONDITIONS: The user has an item page loaded for any given purchasable item on the Groutfit website. 
+PRECONDITIONS: The user has an item page loaded for any given purchasable item on the Groutfit website.
 
 EXECUTION STEPS: The user will click the add to cart button on the page of a given item.
 
-POSTCONDITIONS: The item should be successfully added to the user’s cart, this will be represented visually (in some way). 
+POSTCONDITIONS: The item should be successfully added to the user’s cart, this will be represented visually (in some way).
 ____
 IDENTIFIER: TEST-FILTER
 
-DESCRIPTION: This test will ensure that the filter by category button will function properly by only showing items of the category chosen by the user. 
+DESCRIPTION: This test will ensure that the filter by category button will function properly by only showing items of the category chosen by the user.
 
-PRECONDITIONS: The user has a Groutfit page loaded displaying a list of items 
+PRECONDITIONS: The user has a Groutfit page loaded displaying a list of items
 
-EXECUTION STEPS: The user will click on the filter button and choose any of the categories listed to sort by. 
+EXECUTION STEPS: The user will click on the filter button and choose any of the categories listed to sort by.
 
-POSTCONDITIONS: The resulting page of items will all be of the category chosen by the user to filter by. 
+POSTCONDITIONS: The resulting page of items will all be of the category chosen by the user to filter by.
 ___
 IDENTIFIER: TEST-CHECKOUT
 
 DESCRIPTION: This test will ensure that the checkout button functions properly when the user is trying to purchase an item(s).
 
-PRECONDITIONS: The user has a cart page loaded displaying the item(s) currently in the cart. The user’s has entered necessary info. 
+PRECONDITIONS: The user has a cart page loaded displaying the item(s) currently in the cart. The user’s has entered necessary info.
 
 EXECUTION STEPS: The user will click on the CHECKOUT button.
 
-POSTCONDITIONS: The user should be shown a successful purchase message screen displaying the contents of their order. 
+POSTCONDITIONS: The user should be shown a successful purchase message screen displaying the contents of their order.
 ___
 IDENTIFIER: TEST-CART-SCREEN
 
 DESCRIPTION: This test will ensure that the cart button and cart screen works properly showing all items.
 
-PRECONDITIONS: The user should have the Groutfit page loaded and have at least one item added to cart. 
+PRECONDITIONS: The user should have the Groutfit page loaded and have at least one item added to cart.
 
-EXECUTION STEPS: The user will click on the CART button at the top of the screen. 
+EXECUTION STEPS: The user will click on the CART button at the top of the screen.
 
-POSTCONDITIONS: The user’s cart page should be shown, displaying all item(s) the user previously added. A checkout button will be shown on screen. 
+POSTCONDITIONS: The user’s cart page should be shown, displaying all item(s) the user previously added. A checkout button will be shown on screen.
 ___
 IDENTIFIER: TEST-ITEM-DISPLAY
 
-DESCRIPTION: This test will ensure that the item display page for any given item is displayed properly and its data is grabbed from the database. 
+DESCRIPTION: This test will ensure that the item display page for any given item is displayed properly and its data is grabbed from the database.
 
-PRECONDITIONS: The user should have a Groutfit page loaded showing a list of items. 
+PRECONDITIONS: The user should have a Groutfit page loaded showing a list of items.
 
 EXECUTION STEPS: The user will click on an any item on the page to bring up its information page.
 
-POSTCONDITIONS: The item’s page will be loaded properly and all information displayed should be correct. 
+POSTCONDITIONS: The item’s page will be loaded properly and all information displayed should be correct.
 ___
 TRACEABILITY MATRIX:
 
@@ -283,7 +283,7 @@ TRACEABILITY MATRIX:
 - AC7: TEST-ITEM-DISPLAY
 
 #### Documentation Standards:
-The above list of acceptance criteria will be the basis for testing. The list, along with relevant test cases will be delivered in an official test plan format. As tests become automated these will be written in java and the JavaDoc standards will be used for this. 
+The above list of acceptance criteria will be the basis for testing. The list, along with relevant test cases will be delivered in an official test plan format. As tests become automated these will be written in java and the JavaDoc standards will be used for this.
 
 ## 9. Sources of Information
 Our sources of information will come from a variety of sources to help us solve a variety of problems. I've attempted to divide these problems into categories.
