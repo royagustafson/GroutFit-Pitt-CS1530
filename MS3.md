@@ -172,6 +172,98 @@ The reason that we chose this website is because the skill curve is about as lin
 ## 8. Acceptance Criteria
 Functional and performance tests
 Documentation standards
+___
+Given a loaded login page, when you enter credentials and login, then the login should be successful. 
+Given the correct URL for Groutfit, when you enter the URL into a browser and attempt to navigate to it, then the home screen is successfully loaded.
+Given an item page, when the user clicks add to cart, then the item is successfully added to the cart.
+Given a page of items, when the user clicks to sort by some filter, then the items are filtered correctly. 
+Given a cart page with at least one item, when the user clicks checkout, then the order is successfully “processed”
+Given the user has a cart with at least one item, when the user clicks on the cart button, then the cart screen is shown, listing all the items in the user’s cart. 
+Given the user is on a page displaying a list of items, when the user clicks on an item, then the item’s info page is correctly loaded and all information for that item is successfully shown. 
+
+IDENTIFIER: TEST-LOGIN-PAGE
+
+DESCRIPTION: This test will ensure that the login page and system is functional and that any user with valid credentials is able to login to the website successfully. 
+
+PRECONDITIONS: The login page is loaded and the user has valid credentials to login with.
+
+EXECUTION STEPS: First the user will click inside the username text box and type in their username into the box. Next the user will click inside the password text box and enter their password into the box that corresponds to their username. Finally the user will click the LOGIN button. 
+
+POSTCONDITIONS: The user should be brought to the home screen of Groutfit, and the top right of the screen should display the user is logged in and a button to logout will appear. 
+
+___
+IDENTIFIER: TEST-HOMEPAGE
+
+DESCRIPTION: This test will ensure that the website is up and running and a correct URL points to the homepage that will load successfully. 
+
+PRECONDITIONS: The user has the correct URL for the Groutfit home page
+
+EXECUTION STEPS: The user will enter in the Groufit URL in any internet browser and attempt to navigate to that page.
+
+POSTCONDITIONS: The groufit page should be loaded successfully with no errors and the homepage should be displayed as expected.
+___
+IDENTIFIER: TEST-ADD-TO-CART
+
+DESCRIPTION: This test will ensure that the add to cart function works and that an item can be successfully added to the cart.
+
+PRECONDITIONS: The user has an item page loaded for any given purchasable item on the Groutfit website. 
+
+EXECUTION STEPS: The user will click the add to cart button on the page of a given item.
+
+POSTCONDITIONS: The item should be successfully added to the user’s cart, this will be represented visually (in some way). 
+____
+IDENTIFIER: TEST-FILTER
+
+DESCRIPTION: This test will ensure that the filter by category button will function properly by only showing items of the category chosen by the user. 
+
+PRECONDITIONS: The user has a Groutfit page loaded displaying a list of items 
+
+EXECUTION STEPS: The user will click on the filter button and choose any of the categories listed to sort by. 
+
+POSTCONDITIONS: The resulting page of items will all be of the category chosen by the user to filter by. 
+___
+IDENTIFIER: TEST-CHECKOUT
+
+DESCRIPTION: This test will ensure that the checkout button functions properly when the user is trying to purchase an item(s).
+
+PRECONDITIONS: The user has a cart page loaded displaying the item(s) currently in the cart. The user’s has entered necessary info. 
+
+EXECUTION STEPS: The user will click on the CHECKOUT button.
+
+POSTCONDITIONS: The user should be shown a successful purchase message screen displaying the contents of their order. 
+___
+IDENTIFIER: TEST-CART-SCREEN
+
+DESCRIPTION: This test will ensure that the cart button and cart screen works properly showing all items.
+
+PRECONDITIONS: The user should have the Groutfit page loaded and have at least one item added to cart. 
+
+EXECUTION STEPS: The user will click on the CART button at the top of the screen. 
+
+POSTCONDITIONS: The user’s cart page should be shown, displaying all item(s) the user previously added. A checkout button will be shown on screen. 
+___
+IDENTIFIER: TEST-ITEM-DISPLAY
+
+DESCRIPTION: This test will ensure that the item display page for any given item is displayed properly and its data is grabbed from the database. 
+
+PRECONDITIONS: The user should have a Groutfit page loaded showing a list of items. 
+
+EXECUTION STEPS: The user will click on an any item on the page to bring up its information page.
+
+POSTCONDITIONS: The item’s page will be loaded properly and all information displayed should be correct. 
+___
+TRACEABILITY MATRIX:
+AC1: TEST-LOGIN-PAGE
+AC2: TEST-HOMEPAGE
+AC3: TEST-ADD-TO-CART
+AC4: TEST-FILTER
+AC5: TEST-CHECKOUT
+AC6: TEST-CART-SCREEN
+AC7: TEST-ITEM-DISPLAY
+
+### Documentation Standards:
+The above list of acceptance criteria will be the basis for testing. The list, along with relevant test cases will be delivered in an official test plan format. As tests become automated these will be written in java and the JavaDoc standards will be used for this. 
+
 ## 9. Sources of Information
 Our sources of information will come from a variety of sources to help us solve a variety of problems. I've attempted to divide these problems into categories.
 
