@@ -76,7 +76,7 @@ Remove item from Outfit: Users will be able to remove an item from an outfit fro
 
 Remove Outfit: Users will be able to delete any outfit of their own. They will be able to do so from the mannequin page, the public outfit feed, and their personal outfit feed.
 ### 2.2 High Level Data Flow Diagram
-![Data Flow Diagram](https://github.com/royagustafson/GroutFit-Pitt-CS1530/Data_Flow_Diagram.png "Data Flow Diagram")
+![Data Flow Diagram](https://github.com/royagustafson/GroutFit-Pitt-CS1530/blob/master/Data_Flow_Diagram.png "Data Flow Diagram")
 ### 2.3 Data Structure (or object) Representation
 user(user_id, email, password, size_shirt, size_pants, size_shoe)  
 item(item_id, type, price, description)  
@@ -128,7 +128,7 @@ Users will be able to create outfits and a function of the site will allow the o
 ### 3.3 Design Constraints
 Groutfit is a 95% complete e-commerce website, selling clothing items only manufactured in shades of grey. However, the functionality of the website stops right before allowing a user to enter a valid credit card and actually purchase the items.
 ### 3.4 Diagrams
-![Function Diagrams](https://github.com/royagustafson/GroutFit-Pitt-CS1530/Function_Diagrams.png "Data Flow Diagram")
+![Function Diagrams](https://github.com/royagustafson/GroutFit-Pitt-CS1530/blob/master/Function_Diagrams.png "Function Diagrams")
 ## 4. Performance Requirements
 The purpose of this section is to outline the software performance goals for Groutfit. These are the goals that are minimally required to see in the testing environment before allowing the application to be put on the market.
 * The system shall support at least 450,000 user profiles.
