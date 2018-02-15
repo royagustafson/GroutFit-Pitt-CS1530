@@ -173,13 +173,15 @@ The reason that we chose this website is because the skill curve is about as lin
 Functional and performance tests
 Documentation standards
 ___
-Given a loaded login page, when you enter credentials and login, then the login should be successful. 
-Given the correct URL for Groutfit, when you enter the URL into a browser and attempt to navigate to it, then the home screen is successfully loaded.
-Given an item page, when the user clicks add to cart, then the item is successfully added to the cart.
-Given a page of items, when the user clicks to sort by some filter, then the items are filtered correctly. 
-Given a cart page with at least one item, when the user clicks checkout, then the order is successfully “processed”
-Given the user has a cart with at least one item, when the user clicks on the cart button, then the cart screen is shown, listing all the items in the user’s cart. 
-Given the user is on a page displaying a list of items, when the user clicks on an item, then the item’s info page is correctly loaded and all information for that item is successfully shown. 
+
+* Given a loaded login page, when you enter credentials and login, then the login should be successful. 
+* Given the correct URL for Groutfit, when you enter the URL into a browser and attempt to navigate to it, then the home screen is successfully loaded.
+* Given an item page, when the user clicks add to cart, then the item is successfully added to the cart.
+* Given a page of items, when the user clicks to sort by some filter, then the items are filtered correctly. 
+* Given a cart page with at least one item, when the user clicks checkout, then the order is successfully “processed”
+* Given the user has a cart with at least one item, when the user clicks on the cart button, then the cart screen is shown, listing all the items in the user’s cart. 
+* Given the user is on a page displaying a list of items, when the user clicks on an item, then the item’s info page is correctly loaded and all information for that item is successfully shown. 
+#### TEST CASES: 
 
 IDENTIFIER: TEST-LOGIN-PAGE
 
@@ -253,15 +255,16 @@ EXECUTION STEPS: The user will click on an any item on the page to bring up its 
 POSTCONDITIONS: The item’s page will be loaded properly and all information displayed should be correct. 
 ___
 TRACEABILITY MATRIX:
-AC1: TEST-LOGIN-PAGE
-AC2: TEST-HOMEPAGE
-AC3: TEST-ADD-TO-CART
-AC4: TEST-FILTER
-AC5: TEST-CHECKOUT
-AC6: TEST-CART-SCREEN
-AC7: TEST-ITEM-DISPLAY
 
-### Documentation Standards:
+- AC1: TEST-LOGIN-PAGE
+- AC2: TEST-HOMEPAGE
+- AC3: TEST-ADD-TO-CART
+- AC4: TEST-FILTER
+- AC5: TEST-CHECKOUT
+- AC6: TEST-CART-SCREEN
+- AC7: TEST-ITEM-DISPLAY
+
+#### Documentation Standards:
 The above list of acceptance criteria will be the basis for testing. The list, along with relevant test cases will be delivered in an official test plan format. As tests become automated these will be written in java and the JavaDoc standards will be used for this. 
 
 ## 9. Sources of Information
