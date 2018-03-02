@@ -1,0 +1,16 @@
+div#banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #DDEEEE;
+    width: 100%;
+}
+div#banner-content {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #000;
+}
+div#main-content {
+    padding-top: 70px;
+}
