@@ -11,47 +11,42 @@ DROP TABLE IF EXISTS outfit CASCADE;
 ------- write check constraints
 ------- triggers
 
-CREATE TABLE profile(
-	profile_id INT PRIMARY KEY,
-	email        TEXT NOT NULL,
-	password     TEXT NOT NULL,
-	size_shirt   TEXT,
-	size_pants   TEXT,
-	size_shoe    TEXT
+CREATE TABLE profile (
+  profile_id INT PRIMARY KEY,
+  email      VARCHAR(40) NOT NULL,
+  password   VARCHAR(60) NOT NULL,
+  size_shirt CHAR(2),
+  size_pants CHAR(2)
 );
 
-CREATE TABLE clothing_type(
-	type_id        INT  PRIMARY KEY,
-	article        TEXT NOT NULL, --should be shirt/pants/shoes etc
-	price NUMERIC(6, 2) NOT NULL,
-	brand          TEXT NOT NULL,
-	description    TEXT NOT NULL
+CREATE TABLE clothing_type (
+  type_id     INT PRIMARY KEY,
+  name        VARCHAR(20)   NOT NULL,
+  category    VARCHAR(10)   NOT NULL, --should be shirt/pants/sweatshirt etc
+  price       NUMERIC(6, 2) NOT NULL,
+  description VARCHAR(255)  NOT NULL
 );
 
-CREATE TABLE clothing_item(
-	item_id  INT  PRIMARY KEY,
-	type_id  INT  REFERENCES clothing_type(type_id),
-	color    TEXT NOT NULL,
-	size     TEXT NOT NULL,
-	quantity INT  NOT NULL,
-	gender   TEXT
+CREATE TABLE clothing_item (
+  item_id  INT PRIMARY KEY,
+  type_id  INT REFERENCES clothing_type (type_id),
+  color    VARCHAR(6) NOT NULL,
+  size     VARCHAR(2) NOT NULL,
+  quantity INT        NOT NULL,
+  gender   BOOLEAN
 );
 
-CREATE TABLE wishlist(
-	profile_id INT REFERENCES profile(profile_id),
-	item_id    INT REFERENCES clothing_item(item_id),
-	PRIMARY KEY(profile_id, item_id)
+CREATE TABLE wishlist (
+  profile_id INT REFERENCES profile (profile_id),
+  item_id    INT REFERENCES clothing_item (item_id),
+  PRIMARY KEY (profile_id, item_id)
 );
 
-CREATE TABLE outfit(
-	outfit_id INT PRIMARY KEY,
-	creator INT REFERENCES profile(profile_id),
-	full_body BOOLEAN,
-	top INT REFERENCES clothing_item(item_id),
-	bottom INT REFERENCES clothing_item(item_id),
-	jacket INT REFERENCES clothing_item(item_id),
-	shoes INT REFERENCES clothing_item(item_id),
-	acc1 INT REFERENCES clothing_item(item_id),
-	acc2 INT REFERENCES clothing_item(item_id),
-	acc3 INT REFERENCES clothing_item(item_id)
+CREATE TABLE outfit (
+  outfit_id INT PRIMARY KEY,
+  creator   INT REFERENCES profile (profile_id),
+  full_body BOOLEAN,
+  top       INT REFERENCES clothing_item (item_id),
+  bottom    INT REFERENCES clothing_item (item_id),
+  jacket    INT REFERENCES clothing_item (item_id)
 );
