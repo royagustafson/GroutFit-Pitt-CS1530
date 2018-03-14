@@ -64,18 +64,6 @@
       "Denim"
     ]
   },
-  "sizing": {
-    "T-Shirt": "shirt",
-    "Shirt": "shirt",
-    "Sweater": "shirt",
-    "Sweatshirt": "shirt",
-    "Jacket": "shirt",
-    "Jeans": "pants",
-    "Pants": "pants",
-    "Sweatpants": "pants",
-    "Dress": "dress",
-    "Skirt": "dress"
-  },
   "sizes": {
     "shirt": [
       "xs",
@@ -101,5 +89,17 @@
       12,
       14
     ]
+  },
+  "sizing": {
+    "T-Shirt": "shirt",
+    "Shirt": "shirt",
+    "Sweater": "shirt",
+    "Sweatshirt": "shirt",
+    "Jacket": "shirt",
+    "Jeans": "pants",
+    "Pants": "pants",
+    "Sweatpants": "pants",
+    "Dress": "dress",
+    "Skirt": "dress"
   }
 }
