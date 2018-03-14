@@ -9,12 +9,16 @@ import javax.persistence.Table;
 @Entity
 @Table(name="wishlist", schema="schema" )
 public class Wishlist {
+    @Id
     private int profileId;
     private int itemId;
 
+    // getters and setters
     public int getProfileId() { return profileId; }
+
     public void setProfileId(int profileId) { this.profileId = profileId; }
 
     public int getItemId() { return itemId; }
+
     public void setItemId(int itemId) { this.itemId = itemId; }
 }
