@@ -1,0 +1,67 @@
+{
+  "types": [
+    "T-Shirt",
+    "Shirt",
+    "Sweatshirt",
+    "Jacket",
+    "Jeans",
+    "Pants",
+    "Sweatpants",
+    "Dress",
+    "Skirt",
+    "Top"
+  ],
+  "patterns": {
+    "T-Shirt": [
+      "Solid",
+      "Graphic",
+      "Block",
+      "Striped",
+      "Distressed"
+    ],
+    "Shirt": [
+      "Plaid",
+      "Striped",
+      "Eggshell",
+      "Dotted",
+      "Casual"
+    ],
+    "Sweater": [
+      "Solid",
+      "Argyle",
+      "Striped"
+    ],
+    "Sweatshirt": [
+      "Solid",
+      "Graphic"
+    ],
+    "Jacket": [
+      "Padded",
+      "Woven"
+    ],
+    "Jeans": [
+      "Dyed",
+      "Acid Washed",
+      "Two-Tone"
+    ],
+    "Pants": [
+      "Solid",
+      "Pin-Striped"
+    ],
+    "Sweatpants": [
+      "Solid",
+      "Textured",
+      "Side-Striped"
+    ],
+    "Dress": [
+      "Solid",
+      "Lattice",
+      "Striped",
+      "Floral"
+    ],
+    "Skirt": [
+      "Solid",
+      "Denim",
+    ]
+  }
+}
