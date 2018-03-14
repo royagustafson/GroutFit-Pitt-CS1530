@@ -47,10 +47,10 @@ class UserGen:
     def export_sql(self):
         sql = "INSERT INTO profile " \
               "(profile_id, email, password, size_shirt, size_pants) " \
-              "VALUES \n"
+              "VALUES\n"
         for profile_id, user in self.profiles.items():
             sql += '\t' + user.as_insert() + ',\n'
-        return sql[:-2] + '\n'
+        return sql[:-2] + ';\n'
 
     class User:
 
