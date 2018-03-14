@@ -33,7 +33,7 @@ CREATE TABLE clothing_item (
   color    VARCHAR(6) NOT NULL,
   size     VARCHAR(2) NOT NULL,
   quantity INT        NOT NULL,
-  gender   BOOLEAN
+  gender   BOOLEAN -- male = true, female = false, unisex = null
 );
 
 CREATE TABLE wishlist (
