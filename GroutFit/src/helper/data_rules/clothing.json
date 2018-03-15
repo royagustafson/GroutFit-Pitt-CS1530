@@ -1,4 +1,3 @@
-
 {
   "types": [
     "T-Shirt",
@@ -9,8 +8,7 @@
     "Pants",
     "Sweatpants",
     "Dress",
-    "Skirt",
-    "Top"
+    "Skirt"
   ],
   "patterns": {
     "T-Shirt": [
