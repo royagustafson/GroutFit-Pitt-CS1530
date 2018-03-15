@@ -94,7 +94,7 @@ class UserGen:
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Generate profile data")
-    parser.add_argument("-f", default="profiles.sql")
+    parser.add_argument("-f", default="profiles.csv")
     parser.add_argument("-c", default=200)
     parser.add_argument("-s", default=None)
 

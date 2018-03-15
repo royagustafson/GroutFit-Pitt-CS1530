@@ -85,7 +85,7 @@ class ClothingGen:
               "(item_id, type_id, color, size, quantity, gender) " \
               "VALUES\n"
         for key, clothing_item in self.items.items():
-            sql += '\t' + clothing_item.as_csv() + '\n'
+            sql += '\t' + clothing_item.as_insert() + ',\n'
         return sql[:-2] + ';\n'
 
     class ClothingType:
