@@ -1,5 +1,8 @@
 package com.GroutFit.Interfaces;
 
+import com.GroutFit.Model.ClothingItem;
+import com.GroutFit.Model.Outfit;
+
 import java.util.ArrayList;
 
 public interface MoveItems {
