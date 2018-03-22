@@ -2,12 +2,9 @@ package com.GroutFit.Model;
 
 // TODO fix schema name in all
 
-import org.hibernate.annotations.Table;
+import javax.persistence.*;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
+@Entity
 @Table(name="clothing_item", schema="schema")
 public class ClothingItem {
 

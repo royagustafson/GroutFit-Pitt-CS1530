@@ -1,7 +1,9 @@
 package com.GroutFit.Model;
 
-import org.hibernate.annotations.Entity;
+import javax.persistence.*;
+import java.util.ArrayList;
 
+@Entity
 @Table(name="clothing_type", schema="schema" )
 public class ClothingType {
     @Id

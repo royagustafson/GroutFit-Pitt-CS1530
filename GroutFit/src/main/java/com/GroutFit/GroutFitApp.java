@@ -2,9 +2,8 @@ package com.GroutFit;
 
 import static spark.Spark.*;
 
-public class Main {
+public class GroutFitApp {
     public static void main(String[] args) {
-
         // Perform setup, load public files
         /*
         SessionFactory sf = new Configuration()
