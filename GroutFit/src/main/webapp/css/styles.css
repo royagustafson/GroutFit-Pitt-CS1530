@@ -1,7 +1,29 @@
-.logo {
-    width: 60%;
-    height: 60%;
+#itemList{
+	position:relative;
+	background-color: green;
+	width:75%;
+	height:2500px;
+	margin:auto;
+	z-index:1;
 }
-.universalSearch {
-    margin: auto;
+
+.itemBox{
+	position:relative;
+	background-color: red;
+	width: 200px;
+	height: 200px;
+	margin:auto;
+	margin-top: 10px;
+	display: block;
+	z-index:2;
+}
+.itemImg{
+	position:absolute;
+	background-color:yellow;
+	top:10px;
+	left:10px;
+	width: 135px;
+	height: 180px;
+	border:2px solid #000000;
+	z-index:3;
 }
