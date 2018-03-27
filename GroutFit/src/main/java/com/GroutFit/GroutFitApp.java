@@ -1,6 +1,7 @@
 package com.GroutFit;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.staticFiles;
 
 public class GroutFitApp {
     public static void main(String[] args) {
@@ -10,17 +11,16 @@ public class GroutFitApp {
                 .configure()
                 .buildSessionFactory(); // Hibernate
         */
-        staticFiles.location("/src/main/webapp");
+
+        staticFiles.location("public");
 
         // Example routes
         get("/hello", (req, res) -> "Hello World");
 
         // Api calls
-        path("/api", () -> {
-            post("/cart", (request, response) -> "This will load all items in shopping cart");
-            post("/wishlist", (request, response) -> "This will load all items in wishlist");
-            post("/outfits", (request, response) -> "This will load all user outfits/outfit feed");
-            post("/outfit/:id", (request, response) -> "This will load an outfit with id" + request.params(":id"));
-        });
+        get("/cart", (req, res) -> "This will load all items in shopping cart");
+        get("/wishlist", (req, res) -> "This will load all items in wishlist");
+        get("/outfits", (req, res) -> "This will load all user outfits/outfit feed");
+        get("/outfit/:id", (req, res) -> "This will load an outfit with id" + req.params(":id"));
     }
 }
