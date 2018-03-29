@@ -23,4 +23,6 @@ public class GroutFitApp {
         get("/outfits", (req, res) -> "This will load all user outfits/outfit feed");
         get("/outfit/:id", (req, res) -> "This will load an outfit with id" + req.params(":id"));
     }
+
+
 }
