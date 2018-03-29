@@ -43,10 +43,20 @@ body{
 .itemImg{
 	position:absolute;
 	background-color:white;
+	text-align: center;
 	top:5px;
 	left:5px;
 	width: 192px;
 	height: 256px;
+	z-index:3;
+}
+.itemDetails{
+	position: absolute;
+	background-color: slategray;
+	width:200px;
+	height:300px;
+	top:0px;
+	right:0px;
 	z-index:3;
 }
 .itemBtn{
@@ -107,4 +117,18 @@ form {
 }
 input {
 	margin-top:10px;
+}
+
+/* CART PAGE CSS */
+
+.checkout-button{
+	position:absolute;
+	left:30%;
+	width:150px;
+	height:50px;
+	border-radius:10px;
+	border:none;
+	text-align: center;
+	z-index:4;
+	background-color: dimgray;
 }
