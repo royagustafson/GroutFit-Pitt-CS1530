@@ -10,9 +10,6 @@ public class GroutFitApp {
     public static void main(String[] args) {
         SessionFactory sf = new Configuration().configure().buildSessionFactory(); // Hibernate
 
-        // right here
-        // add database from '../../../../resources/GroutFit.sql
-
         staticFiles.location("public");
 
         // Example routes
@@ -30,6 +27,9 @@ public class GroutFitApp {
                     res.body("Hello");
                     return res;
                 });
+            });
+            get("/item/:id", (req, res) -> {
+                return null;
             });
         });
         get("/cart", (req, res) -> "This will load all items in shopping cart");
