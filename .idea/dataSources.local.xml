@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="wzlscuud@baasu.db.elephantsql.com" uuid="ead08d34-f663-45c3-b4ef-223ca0d893b3">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <introspection-schemas>wzlscuud:public</introspection-schemas>
+    </data-source>
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="49dd3f66-ed09-400e-b232-5c5bd4b067ad">
+      <database-info product="PostgreSQL" version="10.0" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.1">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <user-name>wzlscuud</user-name>
+      <introspection-schemas>wzlscuud:public</introspection-schemas>
+    </data-source>
+  </component>
+</project>
