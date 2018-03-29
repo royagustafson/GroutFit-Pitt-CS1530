@@ -123,11 +123,11 @@ input {
 
 .checkout-button{
 	position:absolute;
-	left:30%;
+	right:30%;
 	width:150px;
 	height:50px;
 	border-radius:10px;
-	border:none;
+	border:2px solid black;
 	text-align: center;
 	z-index:4;
 	background-color: dimgray;
