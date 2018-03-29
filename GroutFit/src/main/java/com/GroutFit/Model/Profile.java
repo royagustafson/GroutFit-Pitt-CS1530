@@ -8,11 +8,12 @@ import java.util.ArrayList;
 @Table(name="profile", schema="schema")
 public class Profile implements ProfileInterface {
     @Id
-    private int profile_id;
-    private String username;
+    private String email;
     private String password;
     private String sizeShirt;
     private String sizePants;
+    private String sizeDress;
+    private String gender;
     @OneToMany
     private ArrayList<Outfit> outfits;
 
@@ -29,13 +30,9 @@ public class Profile implements ProfileInterface {
     private ArrayList<ClothingItem> wishlist;
 
     // getters and setters
-    public int getId() { return profile_id; }
+    public String getEmail() { return this.email; }
 
-    public void setId(int Id) { profile_id = Id; }
-
-    public String getUsername() { return this.username; }
-
-    private void setUsername(String username) { this.username = username; }
+    private void setEmail(String email) { this.email = email; }
 
     public String getPassword() { return password; }
 
@@ -57,6 +54,14 @@ public class Profile implements ProfileInterface {
 
     public void setOutfits(ArrayList<Outfit> outfits) { this.outfits = outfits; }
 
+    public String getSizeDress() { return sizeDress; }
+
+    public void setSizeDress(String sizeDress) { this.sizeDress = sizeDress; }
+
+    public String getGender() { return gender; }
+
+    public void setGender(String gender) { this.gender = gender; }
+
     //TODO: this either needs to be a static method or moved to another interface/class
     public void register(String username, String password) {
 
@@ -68,10 +73,9 @@ public class Profile implements ProfileInterface {
         return false;
     }
 
-    //TODO: make dress size field and implement it here
     public void saveSizes(String shirtSize, String pantSize, String dressSize) {
         if(shirtSize != null) this.setSizeShirt(shirtSize);
         if(pantSize != null)  this.setSizePants(pantSize);
-        if(dressSize != null) ;
+        if(dressSize != null) this.setSizeDress(dressSize);
     }
 }
