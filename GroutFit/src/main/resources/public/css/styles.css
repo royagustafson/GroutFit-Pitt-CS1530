@@ -114,6 +114,14 @@ img{
 
 
 /* LOGIN & REGISTER PAGE CSS */
+.fake-login{
+	position: absolute;
+	right:45%;
+	bottom:20%;
+	width:150px;
+	height:50px;
+
+}
 
 .form-box{
 	position: absolute;
