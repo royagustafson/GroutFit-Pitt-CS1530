@@ -1,7 +1,6 @@
 package com.GroutFit.Interfaces;
 
 import com.GroutFit.Model.ClothingItem;
-
 import java.util.ArrayList;
 
 public interface Fetcher {

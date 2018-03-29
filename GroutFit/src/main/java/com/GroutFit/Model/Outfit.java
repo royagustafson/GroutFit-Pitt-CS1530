@@ -1,10 +1,11 @@
 package com.GroutFit.Model;
 
 import javax.persistence.*;
+import com.GroutFit.Interfaces.OutfitInterface;
 
 @Entity
 @Table(name="outfit", schema="schema" )
-public class Outfit {
+public class Outfit implements OutfitInterface {
     @Id
     private int outfitId;
     @ManyToOne
@@ -36,13 +37,27 @@ public class Outfit {
 
     public ClothingItem getTop() { return top; }
 
-    public void setTop(ClothingItem top) { this.top = top; }
+    private void setTop(ClothingItem top) { this.top = top; }
 
     public ClothingItem getBottom() { return bottom; }
 
-    public void setBottom(ClothingItem bottom) { this.bottom = bottom; }
+    private void setBottom(ClothingItem bottom) { this.bottom = bottom; }
 
     public ClothingItem getJacket() { return jacket; }
 
-    public void setJacket(ClothingItem jacket) { this.jacket = jacket; }
+    private void setJacket(ClothingItem jacket) { this.jacket = jacket; }
+
+    //TODO: currently works with "shirt", "jacket", "pants"
+    public void add(ClothingItem item) {
+        String type = item.getType().getArticle();
+        if(type.equals("shirt"))       this.setTop(item);
+        else if(type.equals("jacket")) this.setJacket(item);
+        else if(type.equals("pants"))  this.setBottom(item);
+    }
+
+    public void remove(String article) {
+        if(article.equals("top"))         this.setTop(null);
+        else if(article.equals("bottom")) this.setBottom(null);
+        else if(article.equals("jacket")) this.setJacket(null);
+    }
 }
