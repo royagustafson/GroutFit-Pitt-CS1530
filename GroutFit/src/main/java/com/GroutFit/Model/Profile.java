@@ -13,7 +13,6 @@ public class Profile implements ProfileInterface {
     private String sizeShirt;
     private String sizePants;
     private String sizeDress;
-    private String gender;
     @OneToMany
     private ArrayList<Outfit> outfits;
 
@@ -57,10 +56,6 @@ public class Profile implements ProfileInterface {
     public String getSizeDress() { return sizeDress; }
 
     public void setSizeDress(String sizeDress) { this.sizeDress = sizeDress; }
-
-    public String getGender() { return gender; }
-
-    public void setGender(String gender) { this.gender = gender; }
 
     //TODO: this either needs to be a static method or moved to another interface/class
     public void register(String username, String password) {
