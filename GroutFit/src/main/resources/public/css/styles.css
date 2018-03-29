@@ -4,6 +4,9 @@ body{
 	background-color: whitesmoke;
 	z-index:-5;
 }
+img{
+	z-index:5;
+}
 #itemList{
 	position:absolute;
 	background-color: lightgray;
@@ -53,8 +56,11 @@ body{
 .itemDetails{
 	position: absolute;
 	background-color: slategray;
-	width:200px;
-	height:300px;
+	text-align: center;
+	color: white;
+	font-size: 15px;
+	width:194px;
+	height:294px;
 	top:0px;
 	right:0px;
 	z-index:3;
@@ -131,4 +137,22 @@ input {
 	text-align: center;
 	z-index:4;
 	background-color: dimgray;
+}
+.remove-button-container{
+	position:absolute;
+	left:3px;
+	bottom:3px;
+}
+.remove-button{
+	height:30px;
+	width: 80px;
+	text-align:center;
+	color: black;
+	font-size:15px;
+
+}
+.cart-total{
+	text-align:center;
+	color: white;
+	font-size:30px;
 }
