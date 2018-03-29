@@ -1,7 +1,12 @@
 package com.GroutFit;
 
+import com.GroutFit.Helper.pHash;
+import com.GroutFit.Model.Profile;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import java.util.HashMap;
 
 import static spark.Spark.*;
 
@@ -9,8 +14,10 @@ public class GroutFitApp {
 
     public static void main(String[] args) {
         SessionFactory sf = new Configuration().configure().buildSessionFactory(); // Hibernate
+        Session session = sf.openSession();
 
         staticFiles.location("public");
+        HashMap<String, Boolean> loginTable = new HashMap<>();
 
         // Example routes
         get("/hello", (req, res) -> "Hello World");
@@ -28,6 +35,20 @@ public class GroutFitApp {
                     return res;
                 });
             });
+            post("/login", (req, res) -> {
+                String username = req.attribute("username");
+                String password = req.attribute("password");
+                Profile user = session.get(Profile.class, username);
+                String retrievedPass = user.getPassword();
+                Boolean valid = pHash.verify(password, retrievedPass);
+                if(valid.booleanValue()) {
+                    loginTable.put(username, true);
+                    res.status(200);
+                } else
+                    res.status(401);
+                res.body(valid.toString());
+                return res;
+            });
             get("/item/:id", (req, res) -> {
                 return null;
             });
@@ -37,6 +58,4 @@ public class GroutFitApp {
         get("/outfits", (req, res) -> "This will load all user outfits/outfit feed");
         get("/outfit/:id", (req, res) -> "This will load an outfit with id" + req.params(":id"));
     }
-
-
 }

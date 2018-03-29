@@ -12,11 +12,12 @@ DROP TABLE IF EXISTS outfit CASCADE;
 ------- triggers
 
 CREATE TABLE profile (
-  profile_id INT PRIMARY KEY,
-  email      VARCHAR(40) NOT NULL,
+  email      VARCHAR(40) PRIMARY KEY,
   password   VARCHAR(60) NOT NULL,
   size_shirt CHAR(2),
-  size_pants CHAR(2)
+  size_pants CHAR(2),
+  size_dress CHAR(2),
+  gender     CHAR(1)
 );
 
 CREATE TABLE clothing_type (
