@@ -1,14 +1,15 @@
 package com.GroutFit.Model;
 
+import com.GroutFit.Interfaces.ProfileInterface;
 import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
 @Table(name="profile", schema="schema")
-public class Profile {
+public class Profile implements ProfileInterface {
     @Id
     private int profile_id;
-    private String email;
+    private String username;
     private String password;
     private String sizeShirt;
     private String sizePants;
@@ -32,9 +33,9 @@ public class Profile {
 
     public void setId(int Id) { profile_id = Id; }
 
-    public String getEmail() { return email; }
+    public String getUsername() { return this.username; }
 
-    public void setEmail(String email) { this.email = email; }
+    private void setUsername(String username) { this.username = username; }
 
     public String getPassword() { return password; }
 
@@ -42,11 +43,11 @@ public class Profile {
 
     public String getSizeShirt() { return sizeShirt; }
 
-    public void setSizeShirt(String sizeShirt) { this.sizeShirt = sizeShirt; }
+    private void setSizeShirt(String sizeShirt) { this.sizeShirt = sizeShirt; }
 
     public String getSizePants() { return sizePants; }
 
-    public void setSizePants(String sizePants) { this.sizePants = sizePants; }
+    private void setSizePants(String sizePants) { this.sizePants = sizePants; }
 
     public ArrayList<ClothingItem> getWishlist() { return wishlist; }
 
@@ -55,4 +56,22 @@ public class Profile {
     public ArrayList<Outfit> getOutfits() { return outfits; }
 
     public void setOutfits(ArrayList<Outfit> outfits) { this.outfits = outfits; }
+
+    //TODO: this either needs to be a static method or moved to another interface/class
+    public void register(String username, String password) {
+
+    }
+
+    public boolean login(String username, String password) {
+        if(this.username.equals(username) && this.password.equals(password))
+            return true;
+        return false;
+    }
+
+    //TODO: make dress size field and implement it here
+    public void saveSizes(String shirtSize, String pantSize, String dressSize) {
+        if(shirtSize != null) this.setSizeShirt(shirtSize);
+        if(pantSize != null)  this.setSizePants(pantSize);
+        if(dressSize != null) ;
+    }
 }

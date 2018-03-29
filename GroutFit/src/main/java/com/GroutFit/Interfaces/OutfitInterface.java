@@ -7,5 +7,5 @@ public interface OutfitInterface {
     void add(ClothingItem item);
 
     // remove Item from wishlist
-    void remove(ClothingItem item);
+    void remove(String article);
 }
