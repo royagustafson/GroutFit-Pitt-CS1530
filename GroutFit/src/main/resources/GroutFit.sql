@@ -7,16 +7,16 @@ DROP TABLE IF EXISTS outfit CASCADE;
 --TODO:
 ------- put this in main/resources on maven
 ------- make size and clothing type domains
-------- images? on the server and store index? seperate db?
+------- images? on the server and store index? separate db?
 ------- write check constraints
 ------- triggers
 
 CREATE TABLE profile (
-  profile_id INT PRIMARY KEY,
-  email      VARCHAR(40) NOT NULL,
+  email      VARCHAR(40) PRIMARY KEY,
   password   VARCHAR(60) NOT NULL,
-  size_shirt CHAR(2),
-  size_pants CHAR(2)
+  size_shirt VARCHAR(2),
+  size_pants VARCHAR(2),
+  size_dress VARCHAR(2)
 );
 
 CREATE TABLE clothing_type (
