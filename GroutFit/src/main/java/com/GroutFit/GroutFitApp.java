@@ -26,6 +26,8 @@ public class GroutFitApp {
 
         // Api calls
         path("/api", () -> {
+
+            // Example queries
             path("/example", () -> {
                 post("/login", (req, res) -> {
                     // http://sparkjava.com/documentation#request
@@ -45,7 +47,7 @@ public class GroutFitApp {
                 String size_pants = req.headers("size_pants");
                 String size_dress = req.headers("size_dress");
 
-                // Create new row
+                // TODO Create new row
                 res.body("Successful");
                 res.status(200);
                 return res;
@@ -85,6 +87,8 @@ public class GroutFitApp {
                 }
                 return res;
             });
+
+            // Item functionality
             get("/item/:id", (req, res) -> {
                 try {
                     int id = Integer.parseInt(req.params("id"));
