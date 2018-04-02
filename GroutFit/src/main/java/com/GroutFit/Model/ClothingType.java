@@ -1,6 +1,6 @@
 package com.GroutFit.Model;
 
-import java.util.Set;
+import java.util.List;
 
 public class ClothingType {
     private int typeId;
@@ -9,7 +9,7 @@ public class ClothingType {
     private double price;
     private String description;
 
-    private Set<ClothingItem> items;
+    private List<ClothingItem> items;
 
     // getters and setters
     public int getTypeId() { return typeId; }
@@ -28,9 +28,9 @@ public class ClothingType {
 
     public void setDescription(String description) { this.description = description; }
 
-    public Set<ClothingItem> getItems() { return items; }
+    public List<ClothingItem> getItems() { return items; }
 
-    public void setItems(Set<ClothingItem> items) { this.items = items; }
+    public void setItems(List<ClothingItem> items) { this.items = items; }
 
     public String getName() { return this.name; }
 

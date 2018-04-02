@@ -2,10 +2,7 @@ package com.GroutFit.Model;
 
 import com.GroutFit.Interfaces.ProfileInterface;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class Profile implements ProfileInterface {
     private String email;
@@ -14,15 +11,8 @@ public class Profile implements ProfileInterface {
     private String sizePants;
     private String sizeDress;
 
-   private Set outfits = new HashSet();
-
-   private Set wishlist = new HashSet();
-
-   public Profile() {}
-   public Profile(String username, String password) {
-       this.email = username;
-       this.password = password;
-   }
+   private List<Outfit> outfits;
+   private List<Wishlist> wishlist;
 
     // getters and setters
     public String getEmail() { return this.email; }
@@ -41,13 +31,13 @@ public class Profile implements ProfileInterface {
 
     private void setSizePants(String sizePants) { this.sizePants = sizePants; }
 
-    public ArrayList<ClothingItem> getWishlist() { return wishlist; }
+    public List<Wishlist> getWishlist() { return wishlist; }
 
-    public void setWishlist(ArrayList<ClothingItem> wishlist) { this.wishlist = wishlist; }
+    public void setWishlist(List<Wishlist> wishlist) { this.wishlist = wishlist; }
 
-    public ArrayList<Outfit> getOutfits() { return outfits; }
+    public List<Outfit> getOutfits() { return outfits; }
 
-    public void setOutfits(ArrayList<Outfit> outfits) { this.outfits = outfits; }
+    public void setOutfits(List<Outfit> outfits) { this.outfits = outfits; }
 
     public String getSizeDress() { return sizeDress; }
 
