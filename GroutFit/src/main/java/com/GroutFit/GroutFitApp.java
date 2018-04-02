@@ -1,10 +1,12 @@
 package com.GroutFit;
 
 import com.GroutFit.Helper.pHash;
+import com.GroutFit.Model.ClothingItem;
 import com.GroutFit.Model.Profile;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import spark.Response;
 
 import java.util.HashMap;
 
@@ -29,11 +31,24 @@ public class GroutFitApp {
                     // http://sparkjava.com/documentation#request
                     return req.attribute("username") != null && req.attribute("password") != null;
                 });
-                post("/cart", (req, res) -> {
-                    // http://sparkjava.com/documentation#response
-                    res.body("Hello");
-                    return res;
-                });
+                get("/cart", (req, res) -> "This will load all items in shopping cart");
+                get("/wishlist", (req, res) -> "This will load all items in wishlist");
+                get("/outfits", (req, res) -> "This will load all user outfits/outfit feed");
+                get("/outfit/:id", (req, res) -> "This will load an outfit with id" + req.params(":id"));
+            });
+
+            // Basic user functionality
+            post("/register", (req, res) -> {
+                String username = req.headers("username");
+                String password = req.headers("password");
+                String size_shirt = req.headers("size_shirt");
+                String size_pants = req.headers("size_pants");
+                String size_dress = req.headers("size_dress");
+
+                // Create new row
+                res.body("Successful");
+                res.status(200);
+                return res;
             });
             post("/login", (req, res) -> {
                 try {
@@ -43,24 +58,64 @@ public class GroutFitApp {
                     Boolean valid = pHash.verify(password, user.getPassword());
                     if (valid) {
                         loginTable.put(username, true);
-                        res.status(400);
+                        res.status(200);
                     } else
                         res.status(401);
                     res.body(valid.toString());
-                    return valid;
-                } catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                    res.status(0);
-                    return res;
+                    res.status(500);
                 }
+                return res;
+            });
+            post("/logout", (req, res) -> {
+                try {
+                    String username = req.headers("username");
+                    if (loginTable.get(username)) {
+                        loginTable.remove(username);
+                        res.body("Successful");
+                        res.status(200);
+                    } else {
+                        res.body(String.format("User %s is not logged in", username));
+                        res.status(401);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    res.status(500);
+                }
+                return res;
             });
             get("/item/:id", (req, res) -> {
-                return null;
+                try {
+                    int id = Integer.parseInt(req.params("id"));
+                    ClothingItem item = session.get(ClothingItem.class, id);
+                    if (item != null) {
+                        res.body(item.toString());
+                        res.status(200);
+                    } else {
+                        res.body(String.format("No results for id %d", id));
+                        res.status(200);
+                    }
+                    return null;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    res.status(500);
+                }
+                return res;
+            });
+            get("/item/:query", (req, res) -> {
+                res.body("Not implemented");
+                res.status(200);
+                // To be implemented
+                return res;
             });
         });
-        get("/cart", (req, res) -> "This will load all items in shopping cart");
-        get("/wishlist", (req, res) -> "This will load all items in wishlist");
-        get("/outfits", (req, res) -> "This will load all user outfits/outfit feed");
-        get("/outfit/:id", (req, res) -> "This will load an outfit with id" + req.params(":id"));
+    }
+
+    // TODO is this sort of thing helpful
+    private static Response success(Response res) {
+        res.body("Successful");
+        res.status(200);
+        return res;
     }
 }
