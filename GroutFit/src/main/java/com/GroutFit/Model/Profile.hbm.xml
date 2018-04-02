@@ -20,7 +20,7 @@
         <property name="sizeDress" column="size_dress" type="string"/>
 
         <set name="outfits" inverse="true" cascade="all">
-            <key column="email" not-null="true"/>
+            <key column="email" not-null="true"/> <!-- there's an error on this row for "email" -->
             <one-to-many class="Outfit"/>
         </set>
 
