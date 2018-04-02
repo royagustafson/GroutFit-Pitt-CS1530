@@ -1,0 +1,36 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.GroutFit.Model">
+    <class name="Profile" table="profile">
+
+        <meta attribute = "class-description">
+            This class contains the profile information.
+        </meta>
+
+        <id name="email" type="string" column = "email">
+            <generator class="native"/>
+        </id>
+
+        <property name="password" column="password" type="string"/>
+        <property name="sizeShirt" column="size_shirt" type="string"/>
+        <property name="sizePants" column="size_pants" type="string"/>
+        <property name="sizeDress" column="size_dress" type="string" />
+
+        <set name="outfits" inverse="true" cascade="all">
+            <key column="email" not-null="true"/>
+            <one-to-many class="Outfit"/>
+        </set>
+
+        <set name="wishlist" table="wishlist" inverse="false" lazy="true" cascade="all">
+            <key>
+                <column name="email" not-null="true" unique="true"/>
+            </key>
+            <many-to-many entity-name="ClothingItem">
+                <column name="item_id" not-null="true"/>
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

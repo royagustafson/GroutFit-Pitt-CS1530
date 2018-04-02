@@ -1,0 +1,24 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.GroutFit.Model">
+    <class name="ClothingItem" table="clothing_item">
+
+        <meta attribute = "class-description">
+            This class represents a clothing item with a specific color, size, and quantity in stock
+        </meta>
+
+        <id name="itemId" type="string" column="item_id">
+            <generator class="native"/>
+        </id>
+
+        <property name="color" column="color" type="string"/>
+        <property name="size" column="size" type="string"/>
+        <property name="quantity" column="quantity" type="int"/>
+        <property name="gender" column="gender" type="boolean"/>
+        
+        <many-to-one name="type" class="ClothingType" column="type_id"/>
+    </class>
+</hibernate-mapping>

@@ -1,21 +1,12 @@
 package com.GroutFit.Model;
 
-// TODO fix schema name in all
-
-import javax.persistence.*;
-
-@Entity
-@Table(name="clothing_item", schema="schema")
 public class ClothingItem {
-
-    @Id
     private int itemId;
     private String color;
     private String size;
     private int quantity;
-    private String gender;
-    @ManyToOne
-    @JoinColumn(name="type_id", nullable=false)
+    private boolean gender;
+
     private ClothingType type;
 
     // getters and setters
@@ -39,9 +30,9 @@ public class ClothingItem {
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public String getGender() { return gender; }
+    public boolean getGender() { return gender; }
 
-    public void setGender(String gender) { this.gender = gender; }
+    public void setGender(boolean gender) { this.gender = gender; }
 
     public ClothingType getType() { return type; }
 

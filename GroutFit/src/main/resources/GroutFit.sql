@@ -37,14 +37,14 @@ CREATE TABLE clothing_item (
 );
 
 CREATE TABLE wishlist (
-  profile_id INT REFERENCES profile (profile_id),
+  profile_id INT REFERENCES profile (email),
   item_id    INT REFERENCES clothing_item (item_id),
   PRIMARY KEY (profile_id, item_id)
 );
 
 CREATE TABLE outfit (
   outfit_id INT PRIMARY KEY,
-  creator   INT REFERENCES profile (profile_id),
+  creator   INT REFERENCES profile (email),
   full_body BOOLEAN,
   top       INT REFERENCES clothing_item (item_id),
   bottom    INT REFERENCES clothing_item (item_id),

@@ -3,23 +3,12 @@ package com.GroutFit.Model;
 import javax.persistence.*;
 import com.GroutFit.Interfaces.OutfitInterface;
 
-@Entity
-@Table(name="outfit", schema="schema" )
 public class Outfit implements OutfitInterface {
-    @Id
     private int outfitId;
-    @ManyToOne
-    @JoinColumn(name="creator", nullable=false)
     private Profile creator;
     private boolean fullBody;
-    @ManyToOne
-    @JoinColumn(name="top")
     private ClothingItem top;
-    @ManyToOne
-    @JoinColumn(name="bottom")
     private ClothingItem bottom;
-    @ManyToOne
-    @JoinColumn(name="jacket")
     private ClothingItem jacket;
 
     // getters and setters

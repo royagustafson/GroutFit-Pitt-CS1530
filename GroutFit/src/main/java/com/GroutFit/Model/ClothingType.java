@@ -1,18 +1,15 @@
 package com.GroutFit.Model;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.Set;
 
-@Entity
-@Table(name="clothing_type", schema="schema" )
 public class ClothingType {
-    @Id
     private int typeId;
+    private String name;
     private String article;
     private double price;
     private String description;
-    @OneToMany(mappedBy = "clothing_type")
-    private ArrayList<ClothingItem> items;
+
+    private Set<ClothingItem> items;
 
     // getters and setters
     public int getTypeId() { return typeId; }
@@ -31,7 +28,11 @@ public class ClothingType {
 
     public void setDescription(String description) { this.description = description; }
 
-    public ArrayList<ClothingItem> getItems() { return items; }
+    public Set<ClothingItem> getItems() { return items; }
 
-    public void setItems(ArrayList<ClothingItem> items) { this.items = items; }
+    public void setItems(Set<ClothingItem> items) { this.items = items; }
+
+    public String getName() { return this.name; }
+
+    public void setName(String name) { this.name = name; }
 }

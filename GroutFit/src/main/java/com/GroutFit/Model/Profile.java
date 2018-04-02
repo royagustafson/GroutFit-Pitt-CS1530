@@ -1,32 +1,28 @@
 package com.GroutFit.Model;
 
 import com.GroutFit.Interfaces.ProfileInterface;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table(name="profile", schema="schema")
 public class Profile implements ProfileInterface {
-    @Id
     private String email;
     private String password;
     private String sizeShirt;
     private String sizePants;
     private String sizeDress;
-    @OneToMany
-    private ArrayList<Outfit> outfits;
 
-    @JoinTable(
-        name = "wishlist",
-        joinColumns = @JoinColumn(
-            name = "profile_id"
-        ),
-        inverseJoinColumns = @JoinColumn(
-            name = "item_id"
-        )
-    )
-    @OneToMany
-    private ArrayList<ClothingItem> wishlist;
+   private Set outfits = new HashSet();
+
+   private Set wishlist = new HashSet();
+
+   public Profile() {}
+   public Profile(String username, String password) {
+       this.email = username;
+       this.password = password;
+   }
 
     // getters and setters
     public String getEmail() { return this.email; }
@@ -63,9 +59,7 @@ public class Profile implements ProfileInterface {
     }
 
     public boolean login(String username, String password) {
-        if(this.email.equals(username) && this.password.equals(password))
-            return true;
-        return false;
+        return this.email.equals(username) && this.password.equals(password);
     }
 
     public void saveSizes(String shirtSize, String pantSize, String dressSize) {

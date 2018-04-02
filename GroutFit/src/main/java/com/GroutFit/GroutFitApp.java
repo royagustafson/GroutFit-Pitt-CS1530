@@ -36,18 +36,23 @@ public class GroutFitApp {
                 });
             });
             post("/login", (req, res) -> {
-                String username = req.attribute("username");
-                String password = req.attribute("password");
-                Profile user = session.get(Profile.class, username);
-                String retrievedPass = user.getPassword();
-                Boolean valid = pHash.verify(password, retrievedPass);
-                if(valid.booleanValue()) {
-                    loginTable.put(username, true);
-                    res.status(200);
-                } else
-                    res.status(401);
-                res.body(valid.toString());
-                return res;
+                try {
+                    String username = req.headers("username");
+                    String password = req.headers("password");
+                    Profile user = session.get(Profile.class, username);
+                    Boolean valid = pHash.verify(password, user.getPassword());
+                    if (valid) {
+                        loginTable.put(username, true);
+                        res.status(400);
+                    } else
+                        res.status(401);
+                    res.body(valid.toString());
+                    return valid;
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    res.status(0);
+                    return res;
+                }
             });
             get("/item/:id", (req, res) -> {
                 return null;
