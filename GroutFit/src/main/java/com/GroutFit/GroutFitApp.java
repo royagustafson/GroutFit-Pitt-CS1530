@@ -95,10 +95,9 @@ public class GroutFitApp {
             });
 
             // Item functionality
-            get("/item/:type_id/:item_id", (req, res) -> {
+            get("/item/:item_id", (req, res) -> {
                 try {
-                    int type_id = Integer.parseInt(req.params("type_id"));
-                    int item_id = Integer.parseInt(req.params("item_id"));
+                    int id = Integer.parseInt(req.params("item_id"));
                     ClothingItem item = session.get(ClothingItem.class, id);
                     if (item != null) {
                         res.body(item.toString());
