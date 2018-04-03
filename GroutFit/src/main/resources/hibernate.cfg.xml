@@ -9,9 +9,9 @@
         <property name="hibernate.connection.password">02lwsmkVtbllCGkjcWZsYDkYHZL82cQy</property>
         <property name="hibernate.connection.url">jdbc:postgresql://baasu.db.elephantsql.com:5432/wzlscuud</property>
 
-        <mapping resource="Profile.hbm.xml"/>
-        <mapping resource="ClothingType.hbm.xml"/>
-        <mapping resource="ClothingItem.hbm.xml"/>
-        <mapping resource="Outfit.hbm.xml"/>
+        <mapping resource="Mapping/Profile.hbm.xml"/>
+        <mapping resource="Mapping/ClothingType.hbm.xml"/>
+        <mapping resource="Mapping/ClothingItem.hbm.xml"/>
+        <mapping resource="Mapping/Outfit.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
