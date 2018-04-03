@@ -119,14 +119,12 @@ public class GroutFitApp {
             // Item functionality
             get("/item/:item_id", (req, res) -> {
                 try {
-                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
-                    Map<String, String> params = toMap(pairs);
+                    int id = Integer.parseInt(req.params("item_id"));
 
-                    int id = Integer.parseInt(params.get("item_id"));
+                    System.out.println(id);
                     ClothingItem item = session.get(ClothingItem.class, id);
+
                     if (item != null) {
-                        System.out.println("Sending success response");
-                        System.out.println(item);
                         res.body(item.toString());
                         res.status(200);
                     } else {
@@ -139,7 +137,7 @@ public class GroutFitApp {
                 }
                 return res.body();
             });
-            get("/item/:query", (req, res) -> {
+            get("/item/*", (req, res) -> {
                 String regex = "[0-9]{9}";
 
                 res.body("Not implemented");
@@ -158,7 +156,6 @@ public class GroutFitApp {
         return map;
     }
 
-    // TODO is this sort of thing helpful
     private static Response success(Response res) {
         res.body("Successful");
         res.status(200);
