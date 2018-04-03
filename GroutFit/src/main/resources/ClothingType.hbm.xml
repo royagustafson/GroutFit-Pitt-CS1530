@@ -10,7 +10,7 @@
             This class represents a type of clothing for which there can be many sizes, colors, etc
         </meta>
 
-        <id name="typeId" type="string" column="type_id">
+        <id name="typeId" type="int" column="type_id">
             <generator class="native"/>
         </id>
 
