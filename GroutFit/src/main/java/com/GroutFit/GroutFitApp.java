@@ -47,10 +47,16 @@ public class GroutFitApp {
                 String size_pants = req.headers("size_pants");
                 String size_dress = req.headers("size_dress");
 
-                // TODO Create new row
+                Profile pro = new Profile();
+                pro.setEmail(username);
+                pro.setPassword(password);
+                pro.saveSizes(size_shirt, size_pants, size_dress);
+                session.beginTransaction();
+                session.save(pro);
+                session.getTransaction().commit();
                 res.body("Successful");
                 res.status(200);
-                return res;
+                return res.body();
             });
             post("/login", (req, res) -> {
                 try {
@@ -68,7 +74,7 @@ public class GroutFitApp {
                     e.printStackTrace();
                     res.status(500);
                 }
-                return res;
+                return res.body();
             });
             post("/logout", (req, res) -> {
                 try {
@@ -85,13 +91,14 @@ public class GroutFitApp {
                     e.printStackTrace();
                     res.status(500);
                 }
-                return res;
+                return res.body();
             });
 
             // Item functionality
-            get("/item/:id", (req, res) -> {
+            get("/item/:type_id/:item_id", (req, res) -> {
                 try {
-                    int id = Integer.parseInt(req.params("id"));
+                    int type_id = Integer.parseInt(req.params("type_id"));
+                    int item_id = Integer.parseInt(req.params("item_id"));
                     ClothingItem item = session.get(ClothingItem.class, id);
                     if (item != null) {
                         res.body(item.toString());
@@ -105,13 +112,13 @@ public class GroutFitApp {
                     e.printStackTrace();
                     res.status(500);
                 }
-                return res;
+                return res.body();
             });
             get("/item/:query", (req, res) -> {
                 res.body("Not implemented");
                 res.status(200);
                 // To be implemented
-                return res;
+                return res.body();
             });
         });
     }

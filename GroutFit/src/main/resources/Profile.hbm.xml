@@ -11,7 +11,7 @@
         </meta>
 
         <id name="email" type="string" column="email">
-            <generator class="native"/>
+            <generator class="assigned"/>
         </id>
 
         <property name="password" column="password" type="string"/>
