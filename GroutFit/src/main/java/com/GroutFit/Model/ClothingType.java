@@ -39,12 +39,12 @@ public class ClothingType {
     @Override
     public String toString() {
         return "{" +
-                "'typeId'=" + typeId +
-                ", 'name'='" + name + '\'' +
-                ", 'article'='" + article + '\'' +
-                ", 'price'=" + price +
-                ", 'description'='" + description + '\'' +
-                ", 'items'=" + items +
+                "'typeId':" + typeId +
+                ", 'name':'" + name + '\'' +
+                ", 'article':'" + article + '\'' +
+                ", 'price':" + price +
+                ", 'description':'" + description + '\'' +
+                ", 'items':" + items +
                 '}';
     }
 }

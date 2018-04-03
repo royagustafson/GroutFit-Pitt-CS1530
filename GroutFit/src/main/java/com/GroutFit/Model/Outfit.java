@@ -69,11 +69,11 @@ public class Outfit {
     @Override
     public String toString() {
         return "{" +
-                "'outfitId'=" + outfitId +
-                ", 'creator'=" + creator +
-                ", 'top'=" + top +
-                ", 'bottom'=" + bottom +
-                ", 'jacket'=" + jacket +
+                "'outfitId':" + outfitId +
+                ", 'creator':" + creator +
+                ", 'top':" + top +
+                ", 'bottom':" + bottom +
+                ", 'jacket':" + jacket +
                 '}';
     }
 }
