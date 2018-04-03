@@ -46,11 +46,11 @@ public class GroutFitApp {
             post("/register", (req, res) -> {
                 try {
                     Profile pro = Profile.register(
-                            req.headers("username"),
-                            req.headers("password"),
-                            req.headers("size_shirt"),
-                            req.headers("size_pants"),
-                            req.headers("size_dress")
+                            req.queryParams("username"),
+                            req.queryParams("password"),
+                            req.queryParams("size_shirt"),
+                            req.queryParams("size_pants"),
+                            req.queryParams("size_dress")
                     );
                     session.beginTransaction();
                     session.save(pro);
@@ -65,11 +65,11 @@ public class GroutFitApp {
             });
             post("/login", (req, res) -> {
                 try {
-                    Profile user = session.get(Profile.class, req.headers("username"));
+                    Profile user = session.get(Profile.class, req.queryParams("username"));
                     if (user == null) {
                         res.body("Invalid username");
                         res.status(401);
-                    } else if (user.login(req.headers("password"))) {
+                    } else if (user.login(req.queryParams("password"))) {
                         logger.info(String.format("User %s logged in", user.getEmail()));
                         loginTable.put(user.getEmail(), true);
                         res = success(res);
@@ -85,7 +85,7 @@ public class GroutFitApp {
             });
             post("/logout", (req, res) -> {
                 try {
-                    String username = req.headers("username");
+                    String username = req.queryParams("username");
                     if (loginTable.get(username) != null) {
                         logger.info(String.format("User %s logged out", username));
                         loginTable.remove(username);
@@ -122,6 +122,8 @@ public class GroutFitApp {
                 return res.body();
             });
             get("/item/:query", (req, res) -> {
+                String regex = "[0-9]{9}";
+
                 res.body("Not implemented");
                 res.status(200);
                 // To be implemented
