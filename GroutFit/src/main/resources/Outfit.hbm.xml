@@ -20,4 +20,4 @@
         <many-to-one name="bottom" column="bottom" class="ClothingItem" not-null="true"/>
         <many-to-one name="jacket" column="jacket" class="ClothingItem" not-null="true"/>
     </class>
-</hibernate-mapping>
+</hibernate-mapping package="com.GroutFit.Model">

@@ -2,7 +2,7 @@ package com.GroutFit.Model;
 
 import com.GroutFit.Interfaces.ProfileInterface;
 
-import java.util.List;
+import java.util.Set;
 
 public class Profile implements ProfileInterface {
     private String email;
@@ -11,8 +11,8 @@ public class Profile implements ProfileInterface {
     private String sizePants;
     private String sizeDress;
 
-   private List<Outfit> outfits;
-   private List<Wishlist> wishlist;
+   private Set<Outfit> outfits;
+   private Set<ClothingItem> wishlist;
 
     // getters and setters
     public String getEmail() { return this.email; }
@@ -31,13 +31,13 @@ public class Profile implements ProfileInterface {
 
     public void setSizePants(String sizePants) { this.sizePants = sizePants; }
 
-    public List<Wishlist> getWishlist() { return wishlist; }
+    public Set getWishlist() { return wishlist; }
 
-    public void setWishlist(List<Wishlist> wishlist) { this.wishlist = wishlist; }
+    public void setWishlist(Set<ClothingItem> wishlist) { this.wishlist = wishlist; }
 
-    public List<Outfit> getOutfits() { return outfits; }
+    public Set<Outfit> getOutfits() { return outfits; }
 
-    public void setOutfits(List<Outfit> outfits) { this.outfits = outfits; }
+    public void setOutfits(Set<Outfit> outfits) { this.outfits = outfits; }
 
     public String getSizeDress() { return sizeDress; }
 

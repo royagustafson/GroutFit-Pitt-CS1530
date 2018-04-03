@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping package="com.GroutFit.Model">
-    <class name="ClothingItem" table="clothing_item">
+    <class name="ClothingItem">
 
         <meta attribute="class-description">
             This class represents a clothing item with a specific color, size, and quantity in stock

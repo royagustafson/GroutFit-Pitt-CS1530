@@ -24,7 +24,7 @@
             <one-to-many class="Outfit"/>
         </set>
 
-        <set name="wishlist" table="wishlist" inverse="false" lazy="true" cascade="all">
+        <set name="wishlist" table="wishlist" lazy="true" cascade="all">
             <key>
                 <column name="email" not-null="true"/>
             </key>
