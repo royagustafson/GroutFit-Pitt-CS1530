@@ -24,13 +24,9 @@
             <one-to-many class="Outfit"/>
         </set>
 
-        <set name="wishlist" table="wishlist" lazy="true" cascade="all">
-            <key>
-                <column name="email" not-null="true"/>
-            </key>
-            <many-to-many entity-name="ClothingItem">
-                <column name="item_id" not-null="true"/>
-            </many-to-many>
-        </set>
+        <set name="wishlist" table="wishlist" cascade="all">
+            <key column="email" not-null="true" />
+            <many-to-many column="item_id" class="ClothingItem" unique="true"/>
+        </set>
     </class>
 </hibernate-mapping>
