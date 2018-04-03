@@ -1,6 +1,7 @@
 package com.GroutFit.Model;
 
 import com.GroutFit.Interfaces.ProfileInterface;
+import com.GroutFit.Helper.pHash;
 
 import java.util.Set;
 
@@ -21,7 +22,7 @@ public class Profile implements ProfileInterface {
 
     public String getPassword() { return password; }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setPassword(String password) { this.password = pHash.hash(password); }
 
     public String getSizeShirt() { return sizeShirt; }
 
@@ -31,9 +32,9 @@ public class Profile implements ProfileInterface {
 
     public void setSizePants(String sizePants) { this.sizePants = sizePants; }
 
-    public Set getWishlist() { return wishlist; }
-
     public void setWishlist(Set<ClothingItem> wishlist) { this.wishlist = wishlist; }
+
+    public Set<ClothingItem> getWishlist() { return wishlist; }
 
     public Set<Outfit> getOutfits() { return outfits; }
 
