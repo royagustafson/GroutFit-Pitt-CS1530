@@ -84,7 +84,6 @@ public class GroutFitApp {
                 return res.body();
             });
             post("/logout", (req, res) -> {
-                for (String email : loginTable.keySet()) System.out.println(email);
                 try {
                     String username = req.headers("username");
                     if (loginTable.get(username) != null) {
