@@ -1,13 +1,14 @@
 var isLoggedIn=false;
 var curID=null;
 var userCreds=[];
-var userIds=[];
+var userNameIds=[];
+var cart=[];
 var userCount=0;
 
-//i should reslly just JSONify the list of ID's anyway and store it here rather than making API calls. Will work on thatlater
-
 function submitLogin() {
-    
+    //i should reslly just JSONify the list of ID's anyway and store it here rather than making API calls. Will work on thatlater
+  //I haveeit sent as a Form Data element. lmk if its too hard to parse but i'm pretty ure it's easy. you guys shuld only accept username and pssword for both, 
+  //ajust return a boolean for sucess or no success 
     var form=document.logForm;
     
     var xhr = new XMLHttpRequest();
@@ -30,6 +31,7 @@ function submitLogin() {
 }
 /*If these routes end up not working, you can use a key value pair of users and their passwords */
 
+//Same deal as login, you should only recieve the username and password. Return a boolean, successful or nor
 function submitRegister() {
     var form = document.regForm;
     pw=form.pass.value;
@@ -65,12 +67,17 @@ function submitRegister() {
     xhr.send(FD);
 }
 
+//this function will require no API calls
 function logout(){
     isLoggedIn=false;
     curID=null;
     alert("You have been successfully logged out");
     window.location.href = "index.html";
 }
+
+
+//*******************NEXT STEP: Generate full outfit feed from text file of all piture filenmes.****************************
+//Lets see if we havw time to worry about this way. I have a quick workaround for the demo that would still allow us to filter. 
 function generateFeed(){
     //First, create a post reqquest with a flter valye that will return a JSONified list of item ID's applying to that filter. 
     //Convert to a list of objects
@@ -82,16 +89,21 @@ function generateFeed(){
     generateTile();
 }
 
+//if we choose to keep the feed client sid, we will keep this clint side as well (i'll have all thw puctures and mtadata in the DOM for th presentation)
 function generateTile(){
 
     var itemBox=document.createElement("DIV");
     itemBox.classList.add("itemBox");
 
-    var itemImg=document.createElement("IMG");
-    itemImg.classList.add("itemImg");
-    itemImg.setAttribute("src", "clothing_img/293534086.jpg");
+    var imageBox=document.createElement("DIV");
+    imageBox.classList.add("itemImg");
 
-    itemBox.appendChild(itemImg);
+    var itemImg=document.createElement("IMG");
+    
+    itemImg.setAttribute("src", "clothing_img/293534086.jpg");
+    itemImg.setAttribute("alt", "A GROUTFIT")
+    imageBox.appendChild(itemImg);
+    itemBox.appendChild(imageBox);
 
     var buttonGroup=document.createElement("DIV");
     buttonGroup.classList.add("itemBtn-group");
@@ -119,15 +131,33 @@ function generateTile(){
     document.body.appendChild(itemBox);
 }
 
+//I can handle cart on the client side. 
 function generateCart(){
 
 }
+
+//very similar to feed tile
 function generateCartTile(item){
 
 }
+
+//no back end work necesary
 function removeFromCart(item){
 
 }
+
+//no back end work necessary
+function clearCart(){
+
+}
+
+//REFER BELOW FOR THE DATA STRUTURE I'LL USE FOR CART
+
+
+/* It will simply be a 2 dimensional array. I increase a global counter var when a new user registers, so that unique integer key value corresponds directly to array positons
+  For every indexed user, there will be an array of links to their shoping cart items. */
+
+
 
 
 
