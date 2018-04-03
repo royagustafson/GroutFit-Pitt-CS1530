@@ -44,7 +44,7 @@ CREATE TABLE wishlist (
 
 CREATE TABLE outfit (
   outfit_id INT PRIMARY KEY,
-  creator   INT REFERENCES profile (email),
+  creator   VARCHAR(40) REFERENCES profile (email), -- CHANGED THIS MAKE SURE ITS COOL
   full_body BOOLEAN,
   top       INT REFERENCES clothing_item (item_id),
   bottom    INT REFERENCES clothing_item (item_id),

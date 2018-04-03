@@ -5,7 +5,7 @@ public class ClothingItem {
     private String color;
     private String size;
     private int quantity;
-    private boolean gender;
+    private Boolean gender;
 
     private ClothingType type;
     private Profile profile;
@@ -39,9 +39,9 @@ public class ClothingItem {
 
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
-    public boolean getGender() { return gender; }
+    public Boolean getGender() { return gender; }
 
-    public void setGender(boolean gender) { this.gender = gender; }
+    public void setGender(Boolean gender) { this.gender = gender; }
 
     public ClothingType getType() { return type; }
 
@@ -55,8 +55,7 @@ public class ClothingItem {
                 ", size='" + size + '\'' +
                 ", quantity=" + quantity +
                 ", gender=" + gender +
-                ", type=" + type +
-                ", profile=" + profile +
-                '}';
+                ", type=" + type.getTypeId() +
+                "}";
     }
 }

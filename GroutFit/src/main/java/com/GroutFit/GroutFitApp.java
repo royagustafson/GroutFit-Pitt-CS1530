@@ -107,13 +107,14 @@ public class GroutFitApp {
                     int id = Integer.parseInt(req.params("item_id"));
                     ClothingItem item = session.get(ClothingItem.class, id);
                     if (item != null) {
+                        System.out.println("Sending success response");
+                        System.out.println(item);
                         res.body(item.toString());
                         res.status(200);
                     } else {
                         res.body(String.format("No results for id %d", id));
                         res.status(200);
                     }
-                    return null;
                 } catch (Exception e) {
                     e.printStackTrace();
                     res.status(500);

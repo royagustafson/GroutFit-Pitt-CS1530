@@ -10,14 +10,14 @@
             This class represents a clothing item with a specific color, size, and quantity in stock
         </meta>
 
-        <id name="itemId" type="string" column="item_id">
+        <id name="itemId" type="int" column="item_id">
             <generator class="native"/>
         </id>
 
         <property name="color" column="color" type="string"/>
         <property name="size" column="size" type="string"/>
         <property name="quantity" column="quantity" type="int"/>
-        <property name="gender" column="gender" type="boolean"/>
+        <property name="gender" column="gender" type="java.lang.Boolean" not-null="false"/>
 
         <many-to-one name="type" class="ClothingType" column="type_id"/>
     </class>
