@@ -20,26 +20,24 @@
 
         <!-- left side links -->
         <ul class="nav navbar-nav navbar-left">
-            <li class="active"><a href="index.HTML">Home</a></li>
+            <li class="active"><a href="index.html">Home</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="register.HTML"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.HTML"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="form-box">
 
-    <form>
+    <form method="POST" name="regForm">
         <h2>Register</h2>
         <input type="text" name="username"> Username <br>
         <input type="text" name="password"> Password <br>
         <input type="checkbox" name="acceptTerms"> I accept the <a>Terms and Conditions</a><br>
+        <input value="Submit" type="submit" onclick="submitRegister()">
     </form>
-    <div>
-        <a href="index.HTML"><button class="fake-login">Submit</button></a>
-    </div>
 </div>
 
 </body>
