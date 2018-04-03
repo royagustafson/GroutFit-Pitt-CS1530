@@ -1,8 +1,7 @@
 package com.GroutFit.Model;
 
-import javax.persistence.*;
-
 public class Outfit {
+
     private int outfitId;
     private Profile creator;
     private boolean fullBody;
