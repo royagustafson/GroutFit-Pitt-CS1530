@@ -20,13 +20,13 @@
         <property name="sizeDress" column="size_dress" type="string"/>
 
         <set name="outfits" inverse="true" cascade="all">
-            <key column="email" not-null="true"/> <!-- there's an error on this row for "email" -->
+            <key column="outfit_id" not-null="true"/> <!-- there's an error on this row for "email" -->
             <one-to-many class="Outfit"/>
         </set>
 
         <set name="wishlist" table="wishlist" inverse="false" lazy="true" cascade="all">
             <key>
-                <column name="email" not-null="true" unique="true"/>
+                <column name="email" not-null="true"/>
             </key>
             <many-to-many entity-name="ClothingItem">
                 <column name="item_id" not-null="true"/>

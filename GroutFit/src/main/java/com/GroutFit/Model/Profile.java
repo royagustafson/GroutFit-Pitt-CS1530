@@ -17,7 +17,7 @@ public class Profile implements ProfileInterface {
     // getters and setters
     public String getEmail() { return this.email; }
 
-    private void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) { this.email = email; }
 
     public String getPassword() { return password; }
 
@@ -25,11 +25,11 @@ public class Profile implements ProfileInterface {
 
     public String getSizeShirt() { return sizeShirt; }
 
-    private void setSizeShirt(String sizeShirt) { this.sizeShirt = sizeShirt; }
+    public void setSizeShirt(String sizeShirt) { this.sizeShirt = sizeShirt; }
 
     public String getSizePants() { return sizePants; }
 
-    private void setSizePants(String sizePants) { this.sizePants = sizePants; }
+    public void setSizePants(String sizePants) { this.sizePants = sizePants; }
 
     public List<Wishlist> getWishlist() { return wishlist; }
 

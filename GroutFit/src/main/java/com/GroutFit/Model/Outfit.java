@@ -2,9 +2,9 @@ package com.GroutFit.Model;
 
 import javax.persistence.*;
 
-import com.GroutFit.Interfaces.OutfitInterface;
+//import com.GroutFit.Interfaces.OutfitInterface;
 
-public class Outfit implements OutfitInterface {
+public class Outfit {
     private int outfitId;
     private Profile creator;
     private boolean fullBody;
@@ -67,11 +67,5 @@ public class Outfit implements OutfitInterface {
         if (type.equals("shirt")) this.setTop(item);
         else if (type.equals("jacket")) this.setJacket(item);
         else if (type.equals("pants")) this.setBottom(item);
-    }
-
-    public void remove(String article) {
-        if (article.equals("top")) this.setTop(null);
-        else if (article.equals("bottom")) this.setBottom(null);
-        else if (article.equals("jacket")) this.setJacket(null);
     }
 }
