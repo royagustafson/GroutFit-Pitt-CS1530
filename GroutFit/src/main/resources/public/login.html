@@ -32,11 +32,11 @@
 
 <div class="form-box">
     <div>
-    <form method="POST" name="logForm">
+    <form action="/api/login" method="POST" name="logForm">
         <h2>Login</h2>
-        <input type="text" name="username"> Username <br>
-        <input type="text" name="password"> Password <br>
-        <input type="checkbox" name="remember"> <a>Remember me</a><br>
+        <input type="text" name="username" required> Username <br>
+        <input type="password" name="pass" required> Password <br>
+        <input type="checkbox" name="remember" required> <a>Remember me</a><br>
         <input value="Submit" type="submit" onclick="submitLogin()">
     </form>
     </div>
