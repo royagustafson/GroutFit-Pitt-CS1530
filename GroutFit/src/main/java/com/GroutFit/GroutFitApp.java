@@ -152,8 +152,7 @@ public class GroutFitApp {
 
     private static Map<String, String> toMap(List<NameValuePair> pairs){
         Map<String, String> map = new HashMap<>();
-        for(int i=0; i<pairs.size(); i++){
-            NameValuePair pair = pairs.get(i);
+        for (NameValuePair pair : pairs) {
             map.put(pair.getName(), pair.getValue());
         }
         return map;
