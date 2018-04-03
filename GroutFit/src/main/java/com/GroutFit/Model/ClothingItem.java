@@ -8,6 +8,15 @@ public class ClothingItem {
     private boolean gender;
 
     private ClothingType type;
+    private Profile profile;
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
 
     // getters and setters
     public int getItemId() {

@@ -20,5 +20,10 @@
         <property name="gender" column="gender" type="boolean"/>
 
         <many-to-one name="type" class="ClothingType" column="type_id"/>
+        
+        <join table="wishlist" inverse="true">
+            <key column="item_id"/>
+            <many-to-one name="profile" column="email" not-null="true"/>
+        </join>
     </class>
 </hibernate-mapping>
