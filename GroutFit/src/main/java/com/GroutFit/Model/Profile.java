@@ -96,10 +96,10 @@ public class Profile {
     @Override
     public String toString() {
         return "{" +
-                "'email':'" + email + '\'' +
-                ", 'sizeShirt':'" + sizeShirt + '\'' +
-                ", 'sizePants':'" + sizePants + '\'' +
-                ", 'sizeDress':'" + sizeDress + '\'' +
-                '}';
+                "\"email\":\"" + email + "\"" +
+                ", \"sizeShirt\":\"" + sizeShirt + "\"" +
+                ", \"sizePants\":\"" + sizePants + "\"" +
+                ", \"sizeDress\":\"" + sizeDress + "\"" +
+                "}";
     }
 }

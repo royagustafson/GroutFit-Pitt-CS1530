@@ -50,12 +50,12 @@ public class ClothingItem {
     @Override
     public String toString() {
         return "{" +
-                "'itemId':" + itemId +
-                ", 'color':'" + color + '\'' +
-                ", 'size':'" + size + '\'' +
-                ", 'quantity':" + quantity +
-                ", 'gender':" + gender +
-                ", 'type':" + type.getTypeId() +
+                "\"itemId\":" + itemId +
+                ", \"color\":\"" + color + "\"" +
+                ", \"size\":\"" + size + "\"" +
+                ", \"quantity\":" + quantity +
+                ", \"gender\":" + gender +
+                ", \"type\":" + type.getTypeId() +
                 "}";
     }
 }
