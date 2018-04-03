@@ -1,15 +1,20 @@
 package com.GroutFit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.GroutFit.Model.ClothingItem;
 import com.GroutFit.Model.Profile;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Response;
 
+import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static spark.Spark.*;
 
@@ -45,12 +50,15 @@ public class GroutFitApp {
             // Basic user functionality
             post("/register", (req, res) -> {
                 try {
+                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
+                    Map<String, String> params = toMap(pairs);
+
                     Profile pro = Profile.register(
-                            req.queryParams("username"),
-                            req.queryParams("password"),
-                            req.queryParams("size_shirt"),
-                            req.queryParams("size_pants"),
-                            req.queryParams("size_dress")
+                            params.get("username"),
+                            params.get("password"),
+                            null,
+                            null,
+                            null
                     );
                     session.beginTransaction();
                     session.save(pro);
@@ -65,11 +73,15 @@ public class GroutFitApp {
             });
             post("/login", (req, res) -> {
                 try {
-                    Profile user = session.get(Profile.class, req.queryParams("username"));
+
+                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
+                    Map<String, String> params = toMap(pairs);
+
+                    Profile user = session.get(Profile.class, params.get("username"));
                     if (user == null) {
                         res.body("Invalid username");
                         res.status(401);
-                    } else if (user.login(req.queryParams("password"))) {
+                    } else if (user.login(params.get("password"))) {
                         logger.info(String.format("User %s logged in", user.getEmail()));
                         loginTable.put(user.getEmail(), true);
                         res = success(res);
@@ -85,7 +97,10 @@ public class GroutFitApp {
             });
             post("/logout", (req, res) -> {
                 try {
-                    String username = req.queryParams("username");
+                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
+                    Map<String, String> params = toMap(pairs);
+
+                    String username = params.get("username");
                     if (loginTable.get(username) != null) {
                         logger.info(String.format("User %s logged out", username));
                         loginTable.remove(username);
@@ -104,7 +119,10 @@ public class GroutFitApp {
             // Item functionality
             get("/item/:item_id", (req, res) -> {
                 try {
-                    int id = Integer.parseInt(req.params("item_id"));
+                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
+                    Map<String, String> params = toMap(pairs);
+
+                    int id = Integer.parseInt(params.get("item_id"));
                     ClothingItem item = session.get(ClothingItem.class, id);
                     if (item != null) {
                         System.out.println("Sending success response");
@@ -130,6 +148,15 @@ public class GroutFitApp {
                 return res.body();
             });
         });
+    }
+
+    private static Map<String, String> toMap(List<NameValuePair> pairs){
+        Map<String, String> map = new HashMap<>();
+        for(int i=0; i<pairs.size(); i++){
+            NameValuePair pair = pairs.get(i);
+            map.put(pair.getName(), pair.getValue());
+        }
+        return map;
     }
 
     // TODO is this sort of thing helpful
