@@ -1,6 +1,5 @@
 package com.GroutFit.Model;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ProfileTest {
@@ -14,6 +13,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void toString() {
+    public String toString() {
+        return null;
     }
 }

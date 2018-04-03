@@ -6,6 +6,8 @@ import org.junit.Test;
 public class ClothingItemTest {
 
     @Test
-    public void toString() {
+    public String toString() {
+        assertEquals(true, true);
+        return null;
     }
 }
