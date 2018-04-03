@@ -35,4 +35,16 @@ public class ClothingType {
     public String getName() { return this.name; }
 
     public void setName(String name) { this.name = name; }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "typeId=" + typeId +
+                ", name='" + name + '\'' +
+                ", article='" + article + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", items=" + items +
+                '}';
+    }
 }

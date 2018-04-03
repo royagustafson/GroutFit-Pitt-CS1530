@@ -57,4 +57,14 @@ public class Profile implements ProfileInterface {
         if(pantSize != null)  this.setSizePants(pantSize);
         if(dressSize != null) this.setSizeDress(dressSize);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "email='" + email + '\'' +
+                ", sizeShirt='" + sizeShirt + '\'' +
+                ", sizePants='" + sizePants + '\'' +
+                ", sizeDress='" + sizeDress + '\'' +
+                '}';
+    }
 }
