@@ -41,35 +41,38 @@ public class GroutFitApp {
 
             // Basic user functionality
             post("/register", (req, res) -> {
-                String username = req.headers("username");
-                String password = req.headers("password");
-                String size_shirt = req.headers("size_shirt");
-                String size_pants = req.headers("size_pants");
-                String size_dress = req.headers("size_dress");
+                try {
+                    Profile pro = Profile.register(
+                            req.headers("username"),
+                            req.headers("password"),
+                            req.headers("size_shirt"),
+                            req.headers("size_pants"),
+                            req.headers("size_dress")
+                    );
+                    session.beginTransaction();
+                    session.save(pro);
+                    session.getTransaction().commit();
 
-                Profile pro = new Profile();
-                pro.setEmail(username);
-                pro.setPassword(password);
-                pro.saveSizes(size_shirt, size_pants, size_dress);
-                session.beginTransaction();
-                session.save(pro);
-                session.getTransaction().commit();
-                res.body("Successful");
-                res.status(200);
+                    res = success(res);
+                } catch (Exception e) {
+                    res.body("Registration failed");
+                    res.status(500); // internal server error
+                }
                 return res.body();
             });
             post("/login", (req, res) -> {
                 try {
-                    String username = req.headers("username");
-                    String password = req.headers("password");
-                    Profile user = session.get(Profile.class, username);
-                    Boolean valid = pHash.verify(password, user.getPassword());
-                    if (valid) {
-                        loginTable.put(username, true);
-                        res.status(200);
-                    } else
+                    Profile user = session.get(Profile.class, req.headers("username"));
+                    if (user == null) {
+                        res.body("Invalid username");
                         res.status(401);
-                    res.body(valid.toString());
+                    } else if (user.login(req.headers("password"))) {
+                        loginTable.put(user.getEmail(), true);
+                        res = success(res);
+                    } else {
+                        res.body("Invalid password");
+                        res.status(401);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     res.status(500);
@@ -81,8 +84,7 @@ public class GroutFitApp {
                     String username = req.headers("username");
                     if (loginTable.get(username)) {
                         loginTable.remove(username);
-                        res.body("Successful");
-                        res.status(200);
+                        res = success(res);
                     } else {
                         res.body(String.format("User %s is not logged in", username));
                         res.status(401);

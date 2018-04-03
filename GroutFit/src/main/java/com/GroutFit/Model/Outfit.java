@@ -2,8 +2,6 @@ package com.GroutFit.Model;
 
 import javax.persistence.*;
 
-//import com.GroutFit.Interfaces.OutfitInterface;
-
 public class Outfit {
     private int outfitId;
     private Profile creator;
