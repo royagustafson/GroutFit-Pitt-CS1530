@@ -1,6 +1,7 @@
 package com.GroutFit;
 
-import com.GroutFit.Helper.pHash;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.GroutFit.Model.ClothingItem;
 import com.GroutFit.Model.Profile;
 import org.hibernate.Session;
@@ -15,6 +16,8 @@ import static spark.Spark.*;
 public class GroutFitApp {
 
     public static void main(String[] args) {
+
+        Logger logger = LoggerFactory.getLogger(GroutFitApp.class);
         SessionFactory sf = new Configuration().configure().buildSessionFactory(); // Hibernate
         Session session = sf.openSession();
 
@@ -67,6 +70,7 @@ public class GroutFitApp {
                         res.body("Invalid username");
                         res.status(401);
                     } else if (user.login(req.headers("password"))) {
+                        logger.info(String.format("User %s logged in", user.getEmail()));
                         loginTable.put(user.getEmail(), true);
                         res = success(res);
                     } else {
@@ -80,13 +84,15 @@ public class GroutFitApp {
                 return res.body();
             });
             post("/logout", (req, res) -> {
+                for (String email : loginTable.keySet()) System.out.println(email);
                 try {
                     String username = req.headers("username");
-                    if (loginTable.get(username)) {
+                    if (loginTable.get(username) != null) {
+                        logger.info(String.format("User %s logged out", username));
                         loginTable.remove(username);
                         res = success(res);
                     } else {
-                        res.body(String.format("User %s is not logged in", username));
+                        res.body("User is not logged in");
                         res.status(401);
                     }
                 } catch (Exception e) {
