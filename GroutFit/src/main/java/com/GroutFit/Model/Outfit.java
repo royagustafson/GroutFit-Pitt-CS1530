@@ -66,14 +66,4 @@ public class Outfit {
         else if (type.equals("pants")) this.setBottom(item);
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"outfitId\":" + outfitId +
-                ", \"creator\":" + creator +
-                ", \"top\":" + top +
-                ", \"bottom\":" + bottom +
-                ", \"jacket\":" + jacket +
-                "}";
-    }
 }

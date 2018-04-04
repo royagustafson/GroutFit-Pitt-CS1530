@@ -1,7 +1,9 @@
 package com.GroutFit.Model;
 
 import com.GroutFit.Helper.pHash;
+import org.hibernate.Session;
 
+import java.util.Map;
 import java.util.Set;
 
 public class Profile {
@@ -75,6 +77,11 @@ public class Profile {
     }
 
     //TODO: this either needs to be a static method or moved to another interface/class
+    public static Profile register(Map<String, String> map) {
+        assert map.get("username") != null && map.get("password") != null;
+        return register(map.get("username"), map.get("password"), map.get("size_shirt"), map.get("size_pant"), map.get("size_dress"));
+    }
+
     public static Profile register(String email, String password, String sizeShirt, String sizePants, String sizeDress) {
         Profile pro = new Profile();
         pro.setEmail(email);
@@ -93,13 +100,4 @@ public class Profile {
         if (dressSize != null) this.setSizeDress(dressSize);
     }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"email\":\"" + email + "\"" +
-                ", \"sizeShirt\":\"" + sizeShirt + "\"" +
-                ", \"sizePants\":\"" + sizePants + "\"" +
-                ", \"sizeDress\":\"" + sizeDress + "\"" +
-                "}";
-    }
 }

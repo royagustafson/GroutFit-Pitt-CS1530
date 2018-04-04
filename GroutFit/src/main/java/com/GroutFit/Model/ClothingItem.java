@@ -47,15 +47,4 @@ public class ClothingItem {
 
     public void setType(ClothingType type) { this.type = type; }
 
-    @Override
-    public String toString() {
-        return "{" +
-                "\"itemId\":" + itemId +
-                ", \"color\":\"" + color + "\"" +
-                ", \"size\":\"" + size + "\"" +
-                ", \"quantity\":" + quantity +
-                ", \"gender\":" + gender +
-                ", \"type\":" + type.getTypeId() +
-                "}";
-    }
 }
