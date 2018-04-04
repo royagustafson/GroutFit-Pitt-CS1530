@@ -1,5 +1,6 @@
 package com.GroutFit;
 
+import com.GroutFit.Helper.JsonTransformer;
 import com.GroutFit.Model.ClothingItem;
 import com.GroutFit.Model.Profile;
 import org.apache.http.NameValuePair;
@@ -12,9 +13,9 @@ import org.slf4j.LoggerFactory;
 import spark.Response;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.regex.Pattern;
 
 import static spark.Spark.*;
 
@@ -29,131 +30,78 @@ public class GroutFitApp {
         staticFiles.location("public");
         HashMap<String, Boolean> loginTable = new HashMap<>();
 
-        // Example routes
-        get("/hello", (req, res) -> "Hello World");
-
-        // Api calls
+        /* API calls */
         path("/api", () -> {
+            before((req, res) -> res.type("application/json"));
 
-            // Example queries
-            path("/example", () -> {
-                post("/login", (req, res) -> {
-                    // http://sparkjava.com/documentation#request
-                    return req.attribute("username") != null && req.attribute("password") != null;
+            /* USER FUNCTIONS */
+            /* For all paths that require the user to be logged in*/
+            path("/auth", () -> {
+                before((req, res) -> {
+                    if (!loginTable.get(toMap(req.body()).get("username"))) halt(401, "User not logged in");
                 });
-                get("/cart", (req, res) -> "This will load all items in shopping cart");
-                get("/wishlist", (req, res) -> "This will load all items in wishlist");
-                get("/outfits", (req, res) -> "This will load all user outfits/outfit feed");
-                get("/outfit/:id", (req, res) -> "This will load an outfit with id" + req.params(":id"));
+
+                post("/logout", (req, res) -> {
+                    loginTable.remove(toMap(req.body()).get("username"));
+                    return "Success";
+                }, new JsonTransformer());
             });
 
-            // Basic user functionality
             post("/register", (req, res) -> {
-                try {
-                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
-                    Map<String, String> params = toMap(pairs);
+                HashMap<String, String> params = toMap(req.body());
+                Profile pro = Profile.register(params);
 
-                    Profile pro = Profile.register(
-                            params.get("username"),
-                            params.get("password"),
-                            null,
-                            null,
-                            null
-                    );
-                    session.beginTransaction();
-                    session.save(pro);
-                    session.getTransaction().commit();
+                session.beginTransaction();
+                session.save(pro);
+                session.getTransaction().commit();
 
-                    res = success(res);
-                } catch (Exception e) {
-                    res.body("Registration failed");
-                    res.status(500); // internal server error
-                }
-                return res.body();
-            });
+                return "Success";
+            }, new JsonTransformer());
+
             post("/login", (req, res) -> {
-                try {
+                HashMap<String, String> params = toMap(req.body());
+                Profile user = session.get(Profile.class, params.get("username"));
 
-                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
-                    Map<String, String> params = toMap(pairs);
+                if (user == null) halt(401, "Invalid username");
+                if (!user.login(params.get("password"))) halt(401, "Invalid passowrd");
 
-                    Profile user = session.get(Profile.class, params.get("username"));
-                    if (user == null) {
-                        res.body("Invalid username");
-                        res.status(401);
-                    } else if (user.login(params.get("password"))) {
-                        logger.info(String.format("User %s logged in", user.getEmail()));
-                        loginTable.put(user.getEmail(), true);
-                        res = success(res);
-                    } else {
-                        res.body("Invalid password");
-                        res.status(401);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    res.status(500);
-                }
-                return res.body();
-            });
-            post("/logout", (req, res) -> {
-                try {
-                    List<NameValuePair> pairs = URLEncodedUtils.parse(req.body(), Charset.defaultCharset());
-                    Map<String, String> params = toMap(pairs);
+                loginTable.put(user.getEmail(), true);
 
-                    String username = params.get("username");
-                    if (loginTable.get(username) != null) {
-                        logger.info(String.format("User %s logged out", username));
-                        loginTable.remove(username);
-                        res = success(res);
-                    } else {
-                        res.body("User is not logged in");
-                        res.status(401);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    res.status(500);
-                }
-                return res.body();
-            });
+                return "Success";
+            }, new JsonTransformer());
 
-            // Item functionality
+            /* ITEMS */
             get("/item/:item_id", (req, res) -> {
-                try {
-                    int id = Integer.parseInt(req.params("item_id"));
+                HashMap<Integer, String> json = new HashMap<>();
 
-                    System.out.println(id);
-                    ClothingItem item = session.get(ClothingItem.class, id);
-
-                    if (item != null) {
-                        res.body(item.toString());
-                        res.status(200);
-                    } else {
-                        res.body(String.format("No results for id %d", id));
-                        res.status(200);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    res.status(500);
+                for (Integer item_id : parseIDs(req.params("item_id"))) {
+                    ClothingItem item = session.get(ClothingItem.class, item_id);
+                    if (item != null) json.put(item_id, item.toString());
+                    else json.put(item_id, "null");
                 }
-                return res.body();
-            });
-            get("/item/*", (req, res) -> {
-                String regex = "[0-9]{9}";
 
-                res.body("Not implemented");
-                res.status(200);
-                // To be implemented
-                return res.body();
-            });
+                return json;
+            }, new JsonTransformer());
         });
+
+        /* Error handing */
+        notFound((req, res) -> "Invalid request");
+        internalServerError((req, res) -> "Unknown error");
+        exception(Exception.class, (exception, request, response) -> System.out.println(exception.getMessage()));
     }
 
-    private static Map<String, String> toMap(List<NameValuePair> pairs){
-        Map<String, String> map = new HashMap<>();
-        for (NameValuePair pair : pairs) {
-            map.put(pair.getName(), pair.getValue());
-        }
+    private static HashMap<String, String> toMap(String body) {
+        ArrayList<NameValuePair> pairs = (ArrayList<NameValuePair>) URLEncodedUtils.parse(body, Charset.defaultCharset());
+        HashMap<String, String> map = new HashMap<>();
+        for (NameValuePair pair : pairs) map.put(pair.getName(), pair.getValue());
         return map;
+    }
+
+    private static ArrayList<Integer> parseIDs(String body) {
+        ArrayList<Integer> ids = new ArrayList<>();
+        if (!Pattern.matches("\\A([\\d]*,)*\\d+$", body)) return ids;
+        for (String str : body.split(",", 100)) ids.add(Integer.parseInt(str));
+        return ids;
     }
 
     private static Response success(Response res) {
