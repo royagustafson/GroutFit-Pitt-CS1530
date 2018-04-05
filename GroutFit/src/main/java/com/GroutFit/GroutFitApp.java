@@ -2,7 +2,10 @@ package com.GroutFit;
 
 import com.GroutFit.Helper.JsonTransformer;
 import com.GroutFit.Model.ClothingItem;
+import com.GroutFit.Model.ClothingType;
 import com.GroutFit.Model.Profile;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.hibernate.Session;
@@ -10,7 +13,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import spark.Response;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -30,12 +32,13 @@ public class GroutFitApp {
         staticFiles.location("public");
         HashMap<String, Boolean> loginTable = new HashMap<>();
 
+        before("/*", (req, res) -> res.type("application/json"));
+
         /* API calls */
         path("/api", () -> {
-            before((req, res) -> res.type("application/json"));
 
             /* USER FUNCTIONS */
-            /* For all paths that require the user to be logged in*/
+            // For all paths that require the user to be logged in
             path("/auth", () -> {
                 before((req, res) -> {
                     if (!loginTable.get(toMap(req.body()).get("username"))) halt(401, "User not logged in");
@@ -70,24 +73,44 @@ public class GroutFitApp {
                 return "Success";
             }, new JsonTransformer());
 
-            /* ITEMS */
-            get("/item/:item_id", (req, res) -> {
-                HashMap<Integer, String> json = new HashMap<>();
+            /* CLOTHING */
+            // Types
+            get("/type/:type_id", (req, res) -> {
+                Integer type_id = Integer.parseInt(req.params("type_id"));
+                ClothingType type = session.get(ClothingType.class, type_id);
+                if (type == null) halt(404, "Item not found");
+                return type.toString();
+            });
+            get("/types/:type_id", (req, res) -> {
+                ArrayList<JsonObject> json = new ArrayList<>();
+                for (Integer type_id : parseIDs(req.params("type_id"))) {
+                    ClothingType type = session.get(ClothingType.class, type_id);
+                    json.add(new Gson().fromJson(type.toString(), JsonObject.class));
+                }
+                return json;
+            }, new JsonTransformer());
 
+            // Items
+            get("/item/:item_id", (req, res) -> {
+                Integer item_id = Integer.parseInt(req.params("item_id"));
+                ClothingItem item = session.get(ClothingItem.class, item_id);
+                if (item == null) halt(404, "Item not found");
+                return item.toString();
+            });
+            get("/items/:item_id", (req, res) -> {
+                ArrayList<JsonObject> json = new ArrayList<>();
                 for (Integer item_id : parseIDs(req.params("item_id"))) {
                     ClothingItem item = session.get(ClothingItem.class, item_id);
-                    if (item != null) json.put(item_id, item.toString());
-                    else json.put(item_id, "null");
+                    json.add(new Gson().fromJson(item.toString(), JsonObject.class));
                 }
-
                 return json;
             }, new JsonTransformer());
         });
 
         /* Error handing */
-        notFound((req, res) -> "Invalid request");
-        internalServerError((req, res) -> "Unknown error");
-        exception(Exception.class, (exception, request, response) -> System.out.println(exception.getMessage()));
+        notFound((req, res) -> "\"Invalid request\"");
+        internalServerError((req, res) -> "\"Unknown error\"");
+        exception(Exception.class, (exception, request, response) -> exception.printStackTrace());
     }
 
     private static HashMap<String, String> toMap(String body) {
@@ -102,11 +125,5 @@ public class GroutFitApp {
         if (!Pattern.matches("\\A([\\d]*,)*\\d+$", body)) return ids;
         for (String str : body.split(",", 100)) ids.add(Integer.parseInt(str));
         return ids;
-    }
-
-    private static Response success(Response res) {
-        res.body("Successful");
-        res.status(200);
-        return res;
     }
 }

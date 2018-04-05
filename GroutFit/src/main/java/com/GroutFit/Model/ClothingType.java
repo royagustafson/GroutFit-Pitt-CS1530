@@ -12,28 +12,69 @@ public class ClothingType {
     private List<ClothingItem> items;
 
     // getters and setters
-    public int getTypeId() { return typeId; }
+    public int getTypeId() {
+        return typeId;
+    }
 
-    public void setTypeId(int typeId) { this.typeId = typeId; }
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
 
-    public String getArticle() { return article; }
+    public String getArticle() {
+        return article;
+    }
 
-    public void setArticle(String article) { this.article = article; }
+    public void setArticle(String article) {
+        this.article = article;
+    }
 
-    public double getPrice() { return price; }
+    public double getPrice() {
+        return price;
+    }
 
-    public void setPrice(double price) { this.price = price; }
+    public void setPrice(double price) {
+        this.price = price;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public List<ClothingItem> getItems() { return items; }
+    public List<ClothingItem> getItems() {
+        return items;
+    }
 
-    public void setItems(List<ClothingItem> items) { this.items = items; }
+    public void setItems(List<ClothingItem> items) {
+        this.items = items;
+    }
 
-    public String getName() { return this.name; }
+    public String getName() {
+        return this.name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "{" +
+                        "\"type_id\": %d, " +
+                        "\"name\": \"%s\", " +
+                        "\"article\": \"%s\", " +
+                        "\"price\": %f, " +
+                        "\"description\": \"%s\"" +
+                        "}",
+                typeId,
+                name,
+                article,
+                price,
+                description
+        );
+    }
 }

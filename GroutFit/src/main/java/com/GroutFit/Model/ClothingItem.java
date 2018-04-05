@@ -27,24 +27,61 @@ public class ClothingItem {
         this.itemId = id;
     }
 
-    public String getColor() { return color; }
+    public String getColor() {
+        return color;
+    }
 
-    public void setColor(String color) { this.color = color; }
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-    public String getSize() { return size; }
+    public String getSize() {
+        return size;
+    }
 
-    public void setSize(String size) { this.size = size; }
+    public void setSize(String size) {
+        this.size = size;
+    }
 
-    public int getQuantity() { return quantity; }
+    public int getQuantity() {
+        return quantity;
+    }
 
-    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-    public Boolean getGender() { return gender; }
+    public Boolean getGender() {
+        return gender;
+    }
 
-    public void setGender(Boolean gender) { this.gender = gender; }
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
 
-    public ClothingType getType() { return type; }
+    public ClothingType getType() {
+        return type;
+    }
 
-    public void setType(ClothingType type) { this.type = type; }
+    public void setType(ClothingType type) {
+        this.type = type;
+    }
 
+    @Override
+    public String toString() {
+        return String.format(
+                "{" +
+                        "\"item_id\": %d, " +
+                        "\"color\": \"%s\", " +
+                        "\"size\": \"%s\", " +
+                        "\"quantity\": %d, " +
+                        "\"gender\": \"%s\"" +
+                        "}",
+                itemId,
+                color,
+                size,
+                quantity,
+                gender
+        );
+    }
 }
