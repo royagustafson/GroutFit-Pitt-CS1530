@@ -3,6 +3,7 @@ package com.GroutFit;
 import com.GroutFit.Helper.JsonTransformer;
 import com.GroutFit.Model.ClothingItem;
 import com.GroutFit.Model.ClothingType;
+import com.GroutFit.Model.Outfit;
 import com.GroutFit.Model.Profile;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -14,6 +15,8 @@ import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,18 +41,6 @@ public class GroutFitApp {
         path("/api", () -> {
 
             /* USER FUNCTIONS */
-            // For all paths that require the user to be logged in
-            path("/auth", () -> {
-                before((req, res) -> {
-                    if (!loginTable.get(toMap(req.body()).get("username"))) halt(401, "User not logged in");
-                });
-
-                post("/logout", (req, res) -> {
-                    loginTable.remove(toMap(req.body()).get("username"));
-                    return "Success";
-                }, new JsonTransformer());
-            });
-
             post("/register", (req, res) -> {
                 HashMap<String, String> params = toMap(req.body());
                 Profile pro = Profile.register(params);
@@ -60,7 +51,6 @@ public class GroutFitApp {
 
                 return "Success";
             }, new JsonTransformer());
-
             post("/login", (req, res) -> {
                 HashMap<String, String> params = toMap(req.body());
                 Profile user = session.get(Profile.class, params.get("username"));
@@ -73,6 +63,37 @@ public class GroutFitApp {
                 return "Success";
             }, new JsonTransformer());
 
+            // For all paths that require the user to be logged in
+            path("/auth", () -> {
+                before((req, res) -> {
+                    if (!loginTable.get(toMap(req.body()).get("username")))
+                        halt(401, "User not logged in");
+                });
+
+                // Long term store for desired items
+                post("/wishlist", (req, res) -> {
+                    ArrayList<JsonObject> json = new ArrayList<>();
+                    Profile pro = session.get(Profile.class, toMap(req.body()).get("username"));
+                    for (ClothingItem item : pro.getWishlist())
+                        json.add(toJsonObject(item));
+                    return json;
+                }, new JsonTransformer());
+
+                //
+                post("/outfits", (req, res) -> {
+                    ArrayList<JsonObject> json = new ArrayList<>();
+                    Profile pro = session.get(Profile.class, toMap(req.body()).get("username"));
+                    for (Outfit outfit : pro.getOutfits())
+                        json.add(toJsonObject(outfit));
+                    return json;
+                }, new JsonTransformer());
+
+                post("/logout", (req, res) -> {
+                    loginTable.remove(toMap(req.body()).get("username"));
+                    return "Success";
+                }, new JsonTransformer());
+            });
+
             /* CLOTHING */
             // Types
             path("/type", () -> {
@@ -80,6 +101,17 @@ public class GroutFitApp {
                     ArrayList<JsonObject> json = new ArrayList<>();
                     for (Integer type_id : parseIDs(req.params("type_id")))
                         json.add(toJsonObject(session.get(ClothingType.class, type_id)));
+                    return json;
+                }, new JsonTransformer());
+                get("/:type_id/items", (req, res) -> {
+                    HashMap<Integer, ArrayList<JsonObject>> json = new HashMap<>();
+                    for (Integer type_id : parseIDs(req.params("type_id"))) {
+                        json.put(type_id, new ArrayList<>());
+                        ClothingType type = session.get(ClothingType.class, type_id);
+                        if (type == null) continue;
+                        for (ClothingItem item : type.getItems())
+                            json.get(type_id).add(toJsonObject(item));
+                    }
                     return json;
                 }, new JsonTransformer());
             });
@@ -90,6 +122,15 @@ public class GroutFitApp {
                     ArrayList<JsonObject> json = new ArrayList<>();
                     for (Integer item_id : parseIDs(req.params("item_id")))
                         json.add(toJsonObject(session.get(ClothingItem.class, item_id)));
+                    return json;
+                }, new JsonTransformer());
+                get("/:item_id/types", (req, res) -> {
+                    HashMap<Integer, JsonObject> json = new HashMap<>();
+                    for (Integer item_id : parseIDs(req.params("item_id"))) {
+                        ClothingItem item = session.get(ClothingItem.class, item_id);
+                        if (item == null) continue;
+                        json.put(item_id, toJsonObject(item));
+                    }
                     return json;
                 }, new JsonTransformer());
             });
