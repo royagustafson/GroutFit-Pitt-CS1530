@@ -1,30 +1,29 @@
 package com.GroutFit.Model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="clothing_item")
 public class ClothingItem {
-    private int itemId;
+
+    @Id
+    private int item_id;
     private String color;
     private String size;
     private int quantity;
     private Boolean gender;
 
+    @ManyToOne(fetch=FetchType.LAZY, optional=false)
+    @JoinColumn(name="type_id")
     private ClothingType type;
-    private Profile profile;
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
 
     // getters and setters
-    public int getItemId() {
-        return itemId;
+    public int getItem_id() {
+        return item_id;
     }
 
-    public void setItemId(int id) {
-        this.itemId = id;
+    public void setItem_id(int id) {
+        this.item_id = id;
     }
 
     public String getColor() {
@@ -77,7 +76,7 @@ public class ClothingItem {
                         "\"quantity\": %d, " +
                         "\"gender\": \"%s\"" +
                         "}",
-                itemId,
+                item_id,
                 color,
                 size,
                 quantity,

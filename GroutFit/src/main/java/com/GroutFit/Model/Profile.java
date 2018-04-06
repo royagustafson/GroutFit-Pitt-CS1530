@@ -1,20 +1,28 @@
 package com.GroutFit.Model;
 
 import com.GroutFit.Helper.pHash;
-import org.hibernate.Session;
 
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Profile {
+
+    @Id
     private String email;
     private String password;
-    private String sizeShirt;
-    private String sizePants;
-    private String sizeDress;
+    private String size_shirt;
+    private String size_pants;
+    private String size_dress;
 
-    private Set<Outfit> outfits;
-    private Set<ClothingItem> wishlist;
+    @OneToMany(mappedBy="profile")
+    private List<Outfit> outfits;
+
+    @JoinTable
+    @OneToMany
+    private List<ClothingItem> wishlist;
 
     public Profile() {
     }
@@ -36,44 +44,44 @@ public class Profile {
         this.password = password;
     }
 
-    public String getSizeShirt() {
-        return sizeShirt;
+    public String getSize_shirt() {
+        return size_shirt;
     }
 
-    public void setSizeShirt(String sizeShirt) {
-        this.sizeShirt = sizeShirt;
+    public void setSize_shirt(String sizeShirt) {
+        this.size_shirt = sizeShirt;
     }
 
-    public String getSizePants() {
-        return sizePants;
+    public String getSize_pants() {
+        return size_pants;
     }
 
-    public void setSizePants(String sizePants) {
-        this.sizePants = sizePants;
+    public void setSize_pants(String sizePants) {
+        this.size_pants = sizePants;
     }
 
-    public void setWishlist(Set<ClothingItem> wishlist) {
-        this.wishlist = wishlist;
-    }
-
-    public Set<ClothingItem> getWishlist() {
+    public List<ClothingItem> getWishlist() {
         return wishlist;
     }
 
-    public Set<Outfit> getOutfits() {
+    public void setWishlist(List<ClothingItem> wishlist) {
+        this.wishlist = wishlist;
+    }
+
+    public List<Outfit> getOutfits() {
         return outfits;
     }
 
-    public void setOutfits(Set<Outfit> outfits) {
+    public void setOutfits(List<Outfit> outfits) {
         this.outfits = outfits;
     }
 
-    public String getSizeDress() {
-        return sizeDress;
+    public String getSize_dress() {
+        return size_dress;
     }
 
-    public void setSizeDress(String sizeDress) {
-        this.sizeDress = sizeDress;
+    public void setSize_dress(String sizeDress) {
+        this.size_dress = sizeDress;
     }
 
     //TODO: this either needs to be a static method or moved to another interface/class
@@ -86,18 +94,14 @@ public class Profile {
         Profile pro = new Profile();
         pro.setEmail(email);
         pro.setPassword(pHash.hash(password));
-        pro.saveSizes(sizeShirt, sizePants, sizeDress);
+        if (sizeShirt != null) pro.setSize_shirt(sizeShirt);
+        if (sizePants != null) pro.setSize_pants(sizePants);
+        if (sizeDress != null) pro.setSize_dress(sizeDress);
         return pro;
     }
 
     public boolean login(String password) {
         return pHash.verify(password, this.getPassword());
-    }
-
-    public void saveSizes(String shirtSize, String pantSize, String dressSize) {
-        if (shirtSize != null) this.setSizeShirt(shirtSize);
-        if (pantSize != null) this.setSizePants(pantSize);
-        if (dressSize != null) this.setSizeDress(dressSize);
     }
 
 }

@@ -1,31 +1,40 @@
 package com.GroutFit.Model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
 
+@Entity
+@Table(name="clothing_type")
 public class ClothingType {
-    private int typeId;
+
+    @Id
+    private int type_id;
     private String name;
-    private String article;
+    private String category;
     private double price;
     private String description;
 
+    @OneToMany(mappedBy="type")
     private List<ClothingItem> items;
 
     // getters and setters
-    public int getTypeId() {
-        return typeId;
+    public int getType_id() {
+        return type_id;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setType_id(int typeId) {
+        this.type_id = typeId;
     }
 
-    public String getArticle() {
-        return article;
+    public String getCategory() {
+        return category;
     }
 
-    public void setArticle(String article) {
-        this.article = article;
+    public void setCategory(String article) {
+        this.category = article;
     }
 
     public double getPrice() {
@@ -70,9 +79,9 @@ public class ClothingType {
                         "\"price\": %f, " +
                         "\"description\": \"%s\"" +
                         "}",
-                typeId,
+                type_id,
                 name,
-                article,
+                category,
                 price,
                 description
         );

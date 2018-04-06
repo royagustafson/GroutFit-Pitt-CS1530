@@ -75,36 +75,24 @@ public class GroutFitApp {
 
             /* CLOTHING */
             // Types
-            get("/type/:type_id", (req, res) -> {
-                Integer type_id = Integer.parseInt(req.params("type_id"));
-                ClothingType type = session.get(ClothingType.class, type_id);
-                if (type == null) halt(404, "Item not found");
-                return type.toString();
+            path("/type", () -> {
+                get("/:type_id", (req, res) -> {
+                    ArrayList<JsonObject> json = new ArrayList<>();
+                    for (Integer type_id : parseIDs(req.params("type_id")))
+                        json.add(toJsonObject(session.get(ClothingType.class, type_id)));
+                    return json;
+                }, new JsonTransformer());
             });
-            get("/types/:type_id", (req, res) -> {
-                ArrayList<JsonObject> json = new ArrayList<>();
-                for (Integer type_id : parseIDs(req.params("type_id"))) {
-                    ClothingType type = session.get(ClothingType.class, type_id);
-                    json.add(new Gson().fromJson(type.toString(), JsonObject.class));
-                }
-                return json;
-            }, new JsonTransformer());
 
             // Items
-            get("/item/:item_id", (req, res) -> {
-                Integer item_id = Integer.parseInt(req.params("item_id"));
-                ClothingItem item = session.get(ClothingItem.class, item_id);
-                if (item == null) halt(404, "Item not found");
-                return item.toString();
+            path("/item", () -> {
+                get("/:item_id", (req, res) -> {
+                    ArrayList<JsonObject> json = new ArrayList<>();
+                    for (Integer item_id : parseIDs(req.params("item_id")))
+                        json.add(toJsonObject(session.get(ClothingItem.class, item_id)));
+                    return json;
+                }, new JsonTransformer());
             });
-            get("/items/:item_id", (req, res) -> {
-                ArrayList<JsonObject> json = new ArrayList<>();
-                for (Integer item_id : parseIDs(req.params("item_id"))) {
-                    ClothingItem item = session.get(ClothingItem.class, item_id);
-                    json.add(new Gson().fromJson(item.toString(), JsonObject.class));
-                }
-                return json;
-            }, new JsonTransformer());
         });
 
         /* Error handing */
@@ -118,6 +106,14 @@ public class GroutFitApp {
         HashMap<String, String> map = new HashMap<>();
         for (NameValuePair pair : pairs) map.put(pair.getName(), pair.getValue());
         return map;
+    }
+
+    private static JsonObject toJsonObject(Object obj) {
+        try {
+            return new Gson().fromJson(obj.toString(), JsonObject.class);
+        } catch (NoSuchMethodError ex) {
+            return (JsonObject) obj;
+        }
     }
 
     private static ArrayList<Integer> parseIDs(String body) {
