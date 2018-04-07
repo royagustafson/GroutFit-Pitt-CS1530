@@ -1,13 +1,10 @@
 package com.GroutFit.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="clothing_type")
+@Table(name = "clothing_type")
 public class ClothingType {
 
     @Id
@@ -17,7 +14,7 @@ public class ClothingType {
     private double price;
     private String description;
 
-    @OneToMany(mappedBy="type")
+    @OneToMany(mappedBy = "type")
     private List<ClothingItem> items;
 
     // getters and setters

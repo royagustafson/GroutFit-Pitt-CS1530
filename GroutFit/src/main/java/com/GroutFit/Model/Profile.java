@@ -2,12 +2,11 @@ package com.GroutFit.Model;
 
 import com.GroutFit.Helper.pHash;
 
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.*;
 import java.util.Map;
+import java.util.Set;
 
+@Entity
 public class Profile {
 
     @Id
@@ -17,14 +16,18 @@ public class Profile {
     private String size_pants;
     private String size_dress;
 
-    @OneToMany(mappedBy="profile")
-    private List<Outfit> outfits;
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Outfit> outfits;
 
     @JoinTable
-    @OneToMany
-    private List<ClothingItem> wishlist;
+    @OneToMany(targetEntity = ClothingItem.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ClothingItem> wishlist;
 
     public Profile() {
+    }
+
+    public Profile(String email) {
+        this.email = email;
     }
 
     // getters and setters
@@ -60,19 +63,19 @@ public class Profile {
         this.size_pants = sizePants;
     }
 
-    public List<ClothingItem> getWishlist() {
+    public Set<ClothingItem> getWishlist() {
         return wishlist;
     }
 
-    public void setWishlist(List<ClothingItem> wishlist) {
+    public void setWishlist(Set<ClothingItem> wishlist) {
         this.wishlist = wishlist;
     }
 
-    public List<Outfit> getOutfits() {
+    public Set<Outfit> getOutfits() {
         return outfits;
     }
 
-    public void setOutfits(List<Outfit> outfits) {
+    public void setOutfits(Set<Outfit> outfits) {
         this.outfits = outfits;
     }
 
@@ -91,12 +94,9 @@ public class Profile {
     }
 
     public static Profile register(String email, String password, String sizeShirt, String sizePants, String sizeDress) {
-        Profile pro = new Profile();
-        pro.setEmail(email);
+        Profile pro = new Profile(email);
         pro.setPassword(pHash.hash(password));
-        if (sizeShirt != null) pro.setSize_shirt(sizeShirt);
-        if (sizePants != null) pro.setSize_pants(sizePants);
-        if (sizeDress != null) pro.setSize_dress(sizeDress);
+        pro.setSizes(sizeShirt, sizePants, sizeDress);
         return pro;
     }
 
@@ -104,4 +104,10 @@ public class Profile {
         return pHash.verify(password, this.getPassword());
     }
 
+    public void setSizes(String size_shirt, String size_pants, String size_dress) {
+        if (size_shirt != null) this.size_shirt = size_shirt;
+        if (size_pants != null) this.size_pants = size_pants;
+        if (size_dress != null) this.size_dress = size_dress;
+
+    }
 }

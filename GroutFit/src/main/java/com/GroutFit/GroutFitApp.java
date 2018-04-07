@@ -1,22 +1,21 @@
 package com.GroutFit;
 
 import com.GroutFit.Helper.JsonTransformer;
-import com.GroutFit.Model.ClothingItem;
-import com.GroutFit.Model.ClothingType;
-import com.GroutFit.Model.Outfit;
-import com.GroutFit.Model.Profile;
+import com.GroutFit.Model.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataBuilder;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.ServiceRegistry;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +27,8 @@ public class GroutFitApp {
 
     public static void main(String[] args) {
 
-        Logger logger = LoggerFactory.getLogger(GroutFitApp.class);
-        SessionFactory sf = new Configuration().configure().buildSessionFactory(); // Hibernate
+        SessionFactory sf = setUp();
+        assert sf != null;
         Session session = sf.openSession();
 
         staticFiles.location("public");
@@ -41,22 +40,15 @@ public class GroutFitApp {
         path("/api", () -> {
 
             /* USER FUNCTIONS */
-            post("/register", (req, res) -> {
-                HashMap<String, String> params = toMap(req.body());
-                Profile pro = Profile.register(params);
-
-                session.beginTransaction();
-                session.save(pro);
-                session.getTransaction().commit();
-
-                return "Success";
-            }, new JsonTransformer());
             post("/login", (req, res) -> {
                 HashMap<String, String> params = toMap(req.body());
+
+                if (loginTable.containsKey(params.get("username"))) return "User is already logged in";
+
                 Profile user = session.get(Profile.class, params.get("username"));
 
                 if (user == null) halt(401, "Invalid username");
-                if (!user.login(params.get("password"))) halt(401, "Invalid passowrd");
+                if (!user.login(params.get("password"))) halt(401, "Invalid password");
 
                 loginTable.put(user.getEmail(), true);
 
@@ -137,9 +129,27 @@ public class GroutFitApp {
         });
 
         /* Error handing */
-        notFound((req, res) -> "\"Invalid request\"");
         internalServerError((req, res) -> "\"Unknown error\"");
         exception(Exception.class, (exception, request, response) -> exception.printStackTrace());
+        notFound((req, res) -> "\"Invalid request\"");
+
+    }
+
+    private static SessionFactory setUp() {
+        StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
+                .configure()
+                .build();
+
+        return new MetadataSources(standardRegistry)
+                .addAnnotatedClass(Profile.class)
+                .addAnnotatedClass(ClothingItem.class)
+                .addAnnotatedClass(ClothingType.class)
+                .addAnnotatedClass(Outfit.class)
+                .getMetadataBuilder()
+                .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
+                .build()
+                .getSessionFactoryBuilder()
+                .build();
     }
 
     private static HashMap<String, String> toMap(String body) {

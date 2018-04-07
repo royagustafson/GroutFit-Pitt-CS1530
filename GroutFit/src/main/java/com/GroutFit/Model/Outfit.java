@@ -1,17 +1,19 @@
 package com.GroutFit.Model;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
 public class Outfit {
 
     @Id
     private int outfit_id;
-    private Profile creator;
     private boolean full_body;
+
+    @ManyToOne
     private ClothingItem top;
+    @ManyToOne
     private ClothingItem bottom;
+    @ManyToOne
     private ClothingItem jacket;
 
     @ManyToOne
@@ -25,14 +27,6 @@ public class Outfit {
 
     public void setOutfit_id(int outfitId) {
         this.outfit_id = outfitId;
-    }
-
-    public Profile getCreator() {
-        return creator;
-    }
-
-    public void setCreator(Profile creator) {
-        this.creator = creator;
     }
 
     public boolean isFull_body() {

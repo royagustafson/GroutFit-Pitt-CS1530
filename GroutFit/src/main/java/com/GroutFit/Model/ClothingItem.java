@@ -3,7 +3,7 @@ package com.GroutFit.Model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="clothing_item")
+@Table(name = "clothing_item")
 public class ClothingItem {
 
     @Id
@@ -13,8 +13,8 @@ public class ClothingItem {
     private int quantity;
     private Boolean gender;
 
-    @ManyToOne(fetch=FetchType.LAZY, optional=false)
-    @JoinColumn(name="type_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "type_id")
     private ClothingType type;
 
     // getters and setters
