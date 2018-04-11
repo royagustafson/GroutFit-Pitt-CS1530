@@ -108,6 +108,5 @@ public class Profile {
         if (size_shirt != null) this.size_shirt = size_shirt;
         if (size_pants != null) this.size_pants = size_pants;
         if (size_dress != null) this.size_dress = size_dress;
-
     }
 }

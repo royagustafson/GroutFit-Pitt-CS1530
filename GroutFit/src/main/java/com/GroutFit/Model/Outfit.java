@@ -1,6 +1,15 @@
 package com.GroutFit.Model;
 
-import javax.persistence.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.hibernate.Session;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import java.util.Map;
+import java.util.Random;
 
 @Entity
 public class Outfit {
@@ -19,6 +28,9 @@ public class Outfit {
     @ManyToOne
     @JoinColumn(name = "profile")
     private Profile profile;
+
+    public Outfit() {
+    }
 
     // getters and setters
     public int getOutfit_id() {
@@ -70,11 +82,50 @@ public class Outfit {
     }
 
     //TODO: currently works with "shirt", "jacket", "pants"
-    public void add(ClothingItem item) {
+    private void add(ClothingItem item) {
+        if (item == null) return;
         String type = item.getType().getCategory();
         if (type.equals("shirt")) this.setTop(item);
         else if (type.equals("jacket")) this.setJacket(item);
         else if (type.equals("pants")) this.setBottom(item);
     }
 
+    public static Outfit build(Profile pro, Session session, Map<String, String> params) {
+        Outfit out = new Outfit();
+        Integer ID;
+        Random rand = new Random();
+        do {
+            ID = rand.nextInt(899999999) + 100000000;
+        } while (session.get(Outfit.class, ID) != null);
+        out.setProfile(pro);
+        out.setFull_body(Boolean.parseBoolean(params.get("full_body")));
+        out.add(session.get(ClothingItem.class, params.get("top_id")));
+        if (!out.full_body)
+            out.add(session.get(ClothingItem.class, params.get("bottom_id")));
+        out.add(session.get(ClothingItem.class, params.get("jacket_id")));
+        return out;
+    }
+
+    public JsonObject toJson() {
+        return new Gson().fromJson(toString(), JsonObject.class);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "{" +
+                        "\"outfit_id\": \"%s\", " +
+                        "\"full_body\": %b, " +
+                        "\"top\": %s, " +
+                        "\"bottom\": %s, " +
+                        "\"jacket\": %s, " +
+                        "\"profile_id\": \"%s\"",
+                outfit_id,
+                full_body,
+                (top == null) ? "null" : getTop().toString(),
+                (bottom == null) ? "null" : getBottom().toString(),
+                (jacket == null) ? "null" : getTop().toString(),
+                getProfile().getEmail()
+        );
+    }
 }
