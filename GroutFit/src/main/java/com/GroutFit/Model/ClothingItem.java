@@ -69,6 +69,24 @@ public class ClothingItem {
         this.type = type;
     }
 
+    public JsonObject toJsonWithTypeID() {
+        return new Gson().fromJson(String.format(
+                "{" +
+                        "\"item_id\": %d, " +
+                        "\"type_id\": %d, " +
+                        "\"color\": \"%s\", " +
+                        "\"size\": \"%s\", " +
+                        "\"quantity\": %d, " +
+                        "\"gender\": \"%s\"" +
+                        "}",
+                item_id,
+                getType().getType_id(),
+                color,
+                size,
+                quantity,
+                gender
+        ), JsonObject.class);
+    }
     public JsonObject toJson() {
         return new Gson().fromJson(toString(), JsonObject.class);
     }

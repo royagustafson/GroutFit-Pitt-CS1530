@@ -16,10 +16,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.spi.ServiceException;
 
+import javax.persistence.criteria.CriteriaQuery;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -35,9 +34,18 @@ public class GroutFitApp {
         Session session = sf.openSession();
 
         staticFiles.location("public");
-        HashMap<String, Boolean> loginTable = new HashMap<>();
 
-        before("/*", (req, res) -> res.type("application/json"));
+        HashSet<String> loginTable = new HashSet<>();
+
+        before("/api/*", (req, res) -> res.type("application/json"));
+
+        // Verify login
+        // NOTE: security is TERRIBLE
+        // But this allows for proper OAuth to be implemented, or other security
+        before("/api/auth/*", (req, res) -> {
+            if (!loginTable.contains(toMap(req.body()).get("username")))
+                halt(401, "\"User not logged in\"");
+        });
 
         /* API calls */
         path("/api", () -> {
@@ -46,14 +54,14 @@ public class GroutFitApp {
             post("/login", (req, res) -> {
                 HashMap<String, String> params = toMap(req.body());
 
-                if (loginTable.containsKey(params.get("username"))) return "User is already logged in";
+                if (loginTable.contains(params.get("username"))) return "User is already logged in";
 
                 Profile user = session.get(Profile.class, params.get("username"));
 
-                if (user == null) halt(401, "Invalid username");
-                if (!user.login(params.get("password"))) halt(401, "Invalid password");
+                if (user == null) halt(401, "\"Invalid username\"");
+                if (!user.login(params.get("password"))) halt(401, "\"Invalid password\"");
 
-                loginTable.put(user.getEmail(), true);
+                loginTable.add(user.getEmail());
 
                 return "Success";
             }, new JsonTransformer());
@@ -61,21 +69,16 @@ public class GroutFitApp {
             // For all paths that require the user to be logged in
             path("/auth", () -> {
 
-                // Verify login
-                // NOTE: security is TERRIBLE
-                // But this allows for
-                before((req, res) -> {
-                    if (!loginTable.get(toMap(req.body()).get("username")))
-                        halt(401, "User not logged in");
-                });
-
                 /* WISHLIST FUNCTIONS */
                 // Get wishlist as json list
                 post("/wishlist", (req, res) -> {
-                    return session.get(Profile.class, toMap(req.body()).get("username"))    // load user model
-                            .getWishlist().stream()                                         // stream wishlist items
-                            .map(ClothingItem::toJson)                                      // convert items to json
-                            .collect(Collectors.toCollection(ArrayList::new));              // collect in list
+                    ArrayList<JsonObject> jsonObjects = new ArrayList<>();
+                    for (ClothingItem clothingItem : session.get(Profile.class, toMap(req.body()).get("username"))
+                            .getWishlist()) {
+                        JsonObject toJson = clothingItem.toJson();
+                        jsonObjects.add(toJson);
+                    }
+                    return jsonObjects;              // collect in list
                 }, new JsonTransformer());
 
                 // Add, remove, clear
@@ -95,7 +98,7 @@ public class GroutFitApp {
                             pro.getWishlist().clear();
                             return "Success";
                         default:
-                            halt(404, "Invalid function");
+                            halt(404, "\"Invalid function\"");
                     }
 
                     // Stream all ID's that correspond to non null ClothingItem, apply function
@@ -104,7 +107,7 @@ public class GroutFitApp {
                             .filter(Objects::nonNull)
                             .forEach(applyFunction);
 
-                    session.save(pro);
+                    session.update(pro);
                     return "Success";
                 }, new JsonTransformer());
 
@@ -164,7 +167,7 @@ public class GroutFitApp {
                     Profile pro = session.get(Profile.class, params.get("username"));
                     for (Outfit outfit : pro.getOutfits()) session.remove(outfit);
                     pro.getOutfits().clear();
-                    session.save(pro);
+                    session.update(pro);
                     return "Success";
                 }, new JsonTransformer());
 
@@ -179,7 +182,15 @@ public class GroutFitApp {
             // Types
             path("/type", () -> {
 
-                // Gets all types
+                get("", (req, res) -> {
+                    CriteriaQuery<ClothingType> criteriaQuery = session.getCriteriaBuilder()
+                            .createQuery(ClothingType.class);
+                    criteriaQuery.select(criteriaQuery.from(ClothingType.class));
+                    return session.createQuery(criteriaQuery)
+                            .getResultList().stream()
+                            .map(ClothingType::toJson)
+                            .collect(Collectors.toList());
+                }, new JsonTransformer());
 
                 // Stream through type_ids of valid ClothingTypes, collect as list of JsonObjects
                 get("/:type_id", (req, res) -> {
@@ -196,19 +207,39 @@ public class GroutFitApp {
                     return parseIDs(req.params("type_id")).stream()
                             .map(type_id -> session.get(ClothingType.class, type_id))
                             .filter(Objects::nonNull)
-                            .collect(Collectors.toMap(ClothingType::getType_id, ClothingType::itemsToJson));
+                            .collect(Collectors.toMap(ClothingType::getType_id, ClothingType::itemsToJson, (a, b) -> b));
+                }, new JsonTransformer());
+
+                // Creates CriteriaBuilder for ClothingTypes, queries for all rows, convert list to JSON
+                get("/blah", (req, res) -> {
+                    System.out.println("Running");
+                    System.out.println(session.getCriteriaBuilder().createQuery(ClothingType.class));
+                    return "No";
                 }, new JsonTransformer());
             });
 
             // Items
             path("/item", () -> {
 
+                // Get all items
+                get("", (req, res) -> {
+                    CriteriaQuery<ClothingItem> criteriaQuery = session.getCriteriaBuilder()
+                            .createQuery(ClothingItem.class);
+                    criteriaQuery.select(criteriaQuery.from(ClothingItem.class));
+                    return session.createQuery(criteriaQuery)
+                            .getResultList().stream()
+                            .map(ClothingItem::toJsonWithTypeID)
+                            .collect(Collectors.toList());
+                }, new JsonTransformer());
+
                 // Stream through item_ids of valid ClothingItems, collect as list of JsonObjects
                 get("/:item_id", (req, res) -> {
-                    return parseIDs(req.params("item_id")).stream()
-                            .map(item_id -> session.get(ClothingItem.class, item_id))
+                    List<JsonObject> list = parseIDs(req.params("item_id"))
+                            .stream().map(item_id -> session.get(ClothingItem.class, item_id))
                             .filter(Objects::nonNull)
+                            .map(ClothingItem::toJson)
                             .collect(Collectors.toList());
+                    return list;
                 }, new JsonTransformer());
 
                 // Same as above, but returns types mapped by items
@@ -217,7 +248,7 @@ public class GroutFitApp {
                             .map(item_id -> session.get(ClothingItem.class, item_id))
                             .filter(Objects::nonNull)
                             .collect(Collectors.toMap(ClothingItem::getItem_id, ClothingItem::typeToJson));
-                });
+                }, new JsonTransformer());
             });
         });
 
@@ -226,6 +257,7 @@ public class GroutFitApp {
         exception(Exception.class, (exception, request, response) -> exception.printStackTrace());
         notFound((req, res) -> "\"Invalid request\"");
 
+        System.out.println("\n\n~~ Server is Running ~~\n\n");
     }
 
     private static SessionFactory setUp() {
