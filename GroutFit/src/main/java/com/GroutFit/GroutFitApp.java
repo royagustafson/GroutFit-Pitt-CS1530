@@ -51,20 +51,36 @@ public class GroutFitApp {
         path("/api", () -> {
 
             /* USER FUNCTIONS */
+            post("/register", (req, res) -> {
+                HashMap<String, String> params = toMap(req.body());
+
+                // Unique email
+                if (session.get(Profile.class, params.get("username")) != null)
+                    halt("\"Invalid username\"");
+
+                Profile pro = Profile.register(params);
+                session.save(pro);
+
+                return "\"Success\"";
+            });
+
             post("/login", (req, res) -> {
                 HashMap<String, String> params = toMap(req.body());
 
-                if (loginTable.contains(params.get("username"))) return "User is already logged in";
+                if (loginTable.contains(params.get("username")))
+                    return "\"User is already logged in\"";
 
                 Profile user = session.get(Profile.class, params.get("username"));
 
-                if (user == null) halt(401, "\"Invalid username\"");
-                if (!user.login(params.get("password"))) halt(401, "\"Invalid password\"");
+                if (user == null)
+                    halt(401, "\"Invalid username\"");
+                if (!user.login(params.get("password")))
+                    halt(401, "\"Invalid password\"");
 
                 loginTable.add(user.getEmail());
 
-                return "Success";
-            }, new JsonTransformer());
+                return "\"Success\"";
+            });
 
             // For all paths that require the user to be logged in
             path("/auth", () -> {
@@ -96,7 +112,7 @@ public class GroutFitApp {
                             break;
                         case "clear":
                             pro.getWishlist().clear();
-                            return "Success";
+                            return "\"Success\"";
                         default:
                             halt(404, "\"Invalid function\"");
                     }
@@ -108,8 +124,8 @@ public class GroutFitApp {
                             .forEach(applyFunction);
 
                     session.update(pro);
-                    return "Success";
-                }, new JsonTransformer());
+                    return "\"Success\"";
+                });
 
                 /* OUTFIT FUNCTIONS */
                 // Render outfits
@@ -143,8 +159,8 @@ public class GroutFitApp {
                     // Params are all fields of "outfit" except outfit_id
                     // username (obviously), full_body, top_id, bottom_id, jacket_id
                     session.save(Outfit.build(pro, session, params));
-                    return "Success";
-                }, new JsonTransformer());
+                    return "\"Success\"";
+                });
 
                 // Remove outfits in batch
                 post("/outfits/remove", (req, res) -> {
@@ -158,7 +174,7 @@ public class GroutFitApp {
                             .filter(outfit -> !outfit.getProfile().equals(pro))
                             .forEach(pro.getOutfits()::remove);
 
-                    return "Success";
+                    return "\"Success\"";
                 });
 
                 // Remove all outfits by hand, then clear profile
@@ -168,20 +184,21 @@ public class GroutFitApp {
                     for (Outfit outfit : pro.getOutfits()) session.remove(outfit);
                     pro.getOutfits().clear();
                     session.update(pro);
-                    return "Success";
-                }, new JsonTransformer());
+                    return "\"Success\"";
+                });
 
                 // Logs user out
                 post("/logout", (req, res) -> {
                     loginTable.remove(toMap(req.body()).get("username"));
-                    return "Success";
-                }, new JsonTransformer());
+                    return "\"Success\"";
+                });
             });
 
             /* CLOTHING */
             // Types
             path("/type", () -> {
 
+                // Return all
                 get("", (req, res) -> {
                     CriteriaQuery<ClothingType> criteriaQuery = session.getCriteriaBuilder()
                             .createQuery(ClothingType.class);
@@ -208,13 +225,6 @@ public class GroutFitApp {
                             .map(type_id -> session.get(ClothingType.class, type_id))
                             .filter(Objects::nonNull)
                             .collect(Collectors.toMap(ClothingType::getType_id, ClothingType::itemsToJson, (a, b) -> b));
-                }, new JsonTransformer());
-
-                // Creates CriteriaBuilder for ClothingTypes, queries for all rows, convert list to JSON
-                get("/blah", (req, res) -> {
-                    System.out.println("Running");
-                    System.out.println(session.getCriteriaBuilder().createQuery(ClothingType.class));
-                    return "No";
                 }, new JsonTransformer());
             });
 
