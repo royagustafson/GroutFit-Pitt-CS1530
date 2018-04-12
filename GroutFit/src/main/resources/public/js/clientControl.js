@@ -101,7 +101,52 @@ function generateFeed() {
     var listBR = document.createElement("DIV");
     listBR.classList.add("itemList");
     document.body.appendChild(listBR);
-    generateTile();
+    generateOutfitTile();
+}
+
+function generateOutfitTile() {
+
+    var outfitFrame = document.createElement("DIV");
+    outfitFrame.classList.add("outfitFrame");
+
+    var outfitBox = document.createElement("DIV");
+    outfitBox.classList.add("outfitBox");
+
+    var imageBox = document.createElement("DIV");
+    imageBox.classList.add("itemImg");
+
+    var itemImg = document.createElement("IMG");
+
+    itemImg.setAttribute("src", "clothing_img/293534086.jpg");
+    itemImg.setAttribute("alt", "A GROUTFIT");
+    imageBox.appendChild(itemImg);
+    outfitBox.appendChild(imageBox);
+
+    var buttonGroup = document.createElement("DIV");
+    buttonGroup.classList.add("itemBtn-group");
+
+    var wishButton = document.createElement("BUTTON");
+    wishButton.classList.add("itemBtn");
+    wishButton.innerHTML = "W";
+
+    var cartButton = document.createElement("BUTTON");
+    cartButton.classList.add("itemBtn");
+    cartButton.innerHTML = "C";
+
+    buttonGroup.appendChild(wishButton);
+    buttonGroup.appendChild(cartButton);
+
+    outfitBox.appendChild(buttonGroup);
+
+    var itemDetail = document.createElement("DIV");
+    itemDetail.classList.add("itemDetails");
+
+    //need to figure out what descriptive info is returned before i finish thus
+    itemDetail.innerHTML = "This shirt is amazing. It got me a gf";
+
+    outfitBox.appendChild(itemDetail);
+    outfitFrame.appendChild(outfitBox);
+    document.body.appendChild(outfitBox);
 }
 
 //if we choose to keep the feed client sid, we will keep this clint side as well (i'll have all thw puctures and mtadata in the DOM for th presentation)
@@ -139,8 +184,8 @@ function generateTile() {
     var itemDetail = document.createElement("DIV");
     itemDetail.classList.add("itemDetails");
 
-    var description = "This shirt is amazikng. It got me leid"; //need to figure out what descriptive info is returned before i finish thus
-    itemDetail.innerHTML = description;
+    //need to figure out what descriptive info is returned before i finish thus
+    itemDetail.innerHTML = "This shirt is amazing. It got me a gf";
 
     itemBox.appendChild(itemDetail);
     document.body.appendChild(itemBox);
