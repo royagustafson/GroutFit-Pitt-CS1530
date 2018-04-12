@@ -101,7 +101,6 @@ public class GroutFitApp {
 
                     List<JsonObject> json = new ArrayList<>();
                     List results = jpaQuery.getResultList();
-                    System.out.println(results.size());
                     for (Object result : results) {
                         json.add(((ClothingType)result).toJson());
                     }
