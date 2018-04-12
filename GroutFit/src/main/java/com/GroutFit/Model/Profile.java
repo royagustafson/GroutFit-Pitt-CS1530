@@ -19,8 +19,14 @@ public class Profile {
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Outfit> outfits;
 
-    @JoinTable
-    @OneToMany(targetEntity = ClothingItem.class, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(
+            name = "wishlist",
+            joinColumns = @JoinColumn(name = "email"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    @OneToMany(
+            targetEntity = ClothingItem.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private Set<ClothingItem> wishlist;
 
     public Profile() {
@@ -108,6 +114,5 @@ public class Profile {
         if (size_shirt != null) this.size_shirt = size_shirt;
         if (size_pants != null) this.size_pants = size_pants;
         if (size_dress != null) this.size_dress = size_dress;
-
     }
 }

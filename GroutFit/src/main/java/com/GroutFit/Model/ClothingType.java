@@ -1,7 +1,14 @@
 package com.GroutFit.Model;
 
-import javax.persistence.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "clothing_type")
@@ -64,6 +71,16 @@ public class ClothingType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public JsonObject toJson() {
+        return new Gson().fromJson(toString(), JsonObject.class);
+    }
+
+    public List<JsonObject> itemsToJson() {
+        return getItems().stream()
+                .map(ClothingItem::toJson)
+                .collect(Collectors.toList());
     }
 
     @Override
