@@ -14,7 +14,6 @@ import javax.persistence.*;
 @Indexed
 @Table(name = "clothing_item")
 public class ClothingItem {
-
     @Id
     private int item_id;
     @Field(index=Index.YES, analyze= Analyze.YES, store= Store.NO)
