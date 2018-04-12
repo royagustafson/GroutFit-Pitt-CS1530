@@ -14,6 +14,9 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
 import org.hibernate.service.spi.ServiceException;
 
 import javax.persistence.criteria.CriteriaQuery;
@@ -366,5 +369,18 @@ public class GroutFitApp {
         if (!Pattern.matches("\\A([\\d]*,)*\\d+$", body)) return ids;
         for (String str : body.split(",", 100)) ids.add(Integer.parseInt(str));
         return ids;
+    }
+
+    // Run this method to index the db for search
+    private static void indexDB() {
+        SessionFactory sf = new Configuration().configure().buildSessionFactory(); // Hibernate
+        Session session = sf.openSession();
+
+        try {
+            FullTextSession fullTextSession = Search.getFullTextSession(session);
+            fullTextSession.createIndexer().startAndWait();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }
