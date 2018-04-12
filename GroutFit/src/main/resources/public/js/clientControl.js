@@ -10,25 +10,29 @@ function submitLogin() {
     //I haveeit sent as a Form Data element. lmk if its too hard to parse but i'm pretty ure it's easy. you guys shuld only accept username and pssword for both,
     //ajust return a boolean for sucess or no success
     var form = document.logForm;
-
+    var uName = form.username.value;
+    var uPass = form.password.value;
+    var encodedString="username=" + uName + "&password=" + uPass;
+    console.log("Encoded string: " + encodedString);
     var xhr = new XMLHttpRequest();
-    var FD = new FormData(form);
+
 
     xhr.addEventListener("load", function (event) {
         alert(event.target.responseText);
+        console.log("response is loading");
         /*Edit this to determine if login fails or works and render certain page conditionally. */
         isLoggedIn = true;
         curID = userIds[form.username.value];
-        window.location.href = "index.html";
     });
 
     xhr.addEventListener("error", function (event) {
-        alert('Oops! Something went wrong. Please try again'); //this means the request failed competely, so let's try to log in again.
-        window.location.href = "login.html";
+        console.log("error recieved from reuest");
+        alert("Failed to communicate with server"); //this means the request failed competely, so let's try to log in again.
     });
 
-    xhr.open("POST", "localhost:4567/api/login", true);
-    xhr.send(FD);
+    xhr.open("POST", "httplocalhost:4567/api/login", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.send(encodedString);
 }
 
 /*If these routes end up not working, you can use a key value pair of users and their passwords */
@@ -36,16 +40,20 @@ function submitLogin() {
 //Same deal as login, you should only recieve the username and password. Return a boolean, successful or nor
 function submitRegister() {
     var form = document.regForm;
-    pw = form.password.value;
-    if (pw.length < 8) {
+    var uName = form.username.value;
+    var uPass = form.password.value;
+    var encodedString="username=" + uName + "&password=" + uPass;
+    console.log("Encoded string: " + encodedString);
+    if (uPass.length < 8) {
         alert("Password must be at least 8 characters long");
         form.reset();
     }
+
     var xhr = new XMLHttpRequest();
-    var FD = new FormData(form);
 
     xhr.addEventListener("load", function (event) {
-        alert(event.target.responseText);
+        alert("WE DID IT!!!" + event.target.responseText);
+
         /*Edit this to determine if login fails or works and render certain page conditionally. */
 
         /* Also add user to a key value list, just in case. THIS IS UNSAFE AND CAN ONLY WORK FOR DEMO PURPOSES, incase the server breaks*/
@@ -56,18 +64,15 @@ function submitRegister() {
         userIds.push(userIndex);
         userCreds.push(userCred);
         userCount++; //lt us know how many users the are, this will be useful for later
-
-
-        window.location.href = "index.html"; //
     });
 
     xhr.addEventListener("error", function (event) {
         alert('Oops! Something went wrong. Please try again'); //this means the request failed competely, so let's try to log in again.
-        window.location.href = "login.html";
+        window.location.href = "index.html";
     });
 
     xhr.open("POST", "localhost:4567/api/register", true);
-    xhr.send(FD);
+    xhr.send(encodedString);
 }
 
 //this function will require no API calls
@@ -80,9 +85,9 @@ function logout() {
 
 
 //*******************NEXT STEP: Generate full outfit feed from text file of all piture filenmes.****************************
-//Lets see if we havw time to worry about this way. I have a quick workaround for the demo that would still allow us to filter. 
+//Lets see if we havw time to worry about this way. I have a quick workaround for the demo that would still allow us to filter.
 function generateFeed() {
-    //First, create a post reqquest with a flter valye that will return a JSONified list of item ID's applying to that filter. 
+    //First, create a post reqquest with a flter valye that will return a JSONified list of item ID's applying to that filter.
     //Convert to a list of objects
     //Iterate through list, passing the objevts to generateTile
 
@@ -104,7 +109,7 @@ function generateTile() {
     var itemImg = document.createElement("IMG");
 
     itemImg.setAttribute("src", "clothing_img/293534086.jpg");
-    itemImg.setAttribute("alt", "A GROUTFIT")
+    itemImg.setAttribute("alt", "A GROUTFIT");
     imageBox.appendChild(itemImg);
     itemBox.appendChild(imageBox);
 
@@ -134,7 +139,7 @@ function generateTile() {
     document.body.appendChild(itemBox);
 }
 
-//I can handle cart on the client side. 
+//I can handle cart on the client side.
 function generateCart() {
 
 }
@@ -159,8 +164,4 @@ function clearCart() {
 
 /* It will simply be a 2 dimensional array. I increase a global counter var when a new user registers, so that unique integer key value corresponds directly to array positons
   For every indexed user, there will be an array of links to their shoping cart items. */
-
-
-
-
 
