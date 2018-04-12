@@ -18,15 +18,20 @@ public class Outfit {
     private int outfit_id;
     private boolean full_body;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "top")
     private ClothingItem top;
+
     @ManyToOne
+    @JoinColumn(name = "bottom")
     private ClothingItem bottom;
+
     @ManyToOne
+    @JoinColumn(name = "jacket")
     private ClothingItem jacket;
 
     @ManyToOne
-    @JoinColumn(name = "profile")
+    @JoinColumn(name = "creator")
     private Profile profile;
 
     public Outfit() {
@@ -84,25 +89,39 @@ public class Outfit {
     //TODO: currently works with "shirt", "jacket", "pants"
     private void add(ClothingItem item) {
         if (item == null) return;
-        String type = item.getType().getCategory();
-        if (type.equals("shirt")) this.setTop(item);
-        else if (type.equals("jacket")) this.setJacket(item);
-        else if (type.equals("pants")) this.setBottom(item);
+        switch (item.getType().getCategory()) {
+            case "T - Shirt":
+            case "Shirt":
+            case "Dress":
+                this.setTop(item);
+                break;
+            case "Sweatshirt":
+            case "Jacket":
+                this.setJacket(item);
+                break;
+            case "Jeans":
+            case "Pants":
+            case "Sweatpants":
+            case "Skirt":
+                this.setBottom(item);
+                break;
+        }
     }
 
-    public static Outfit build(Profile pro, Session session, Map<String, String> params) {
+    public static Outfit build(Session session, Map<String, String> params) {
         Outfit out = new Outfit();
-        Integer ID;
-        Random rand = new Random();
         do {
-            ID = rand.nextInt(899999999) + 100000000;
-        } while (session.get(Outfit.class, ID) != null);
-        out.setProfile(pro);
+            out.setOutfit_id(new Random().nextInt((899999999) + 100000000));
+        } while (session.get(Outfit.class, out.outfit_id) != null);
+        out.setProfile(session.get(Profile.class, params.get("username")));
         out.setFull_body(Boolean.parseBoolean(params.get("full_body")));
-        out.add(session.get(ClothingItem.class, params.get("top_id")));
+        out.add(session.get(ClothingItem.class,
+                Integer.parseInt(params.get("top_id"))));
         if (!out.full_body)
-            out.add(session.get(ClothingItem.class, params.get("bottom_id")));
-        out.add(session.get(ClothingItem.class, params.get("jacket_id")));
+            out.add(session.get(ClothingItem.class,
+                    Integer.parseInt(params.get("bottom_id"))));
+        out.add(session.get(ClothingItem.class,
+                Integer.parseInt(params.get("jacket_id"))));
         return out;
     }
 
