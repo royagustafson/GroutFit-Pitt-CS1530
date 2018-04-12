@@ -1,39 +1,46 @@
 var isLoggedIn = false;
 var curID = null;
 var userCreds = [];
-var userNameIds = [];
+var userIds = [];
 var cart = [];
 var userCount = 0;
 
-function submitLogin() {
-    //i should reslly just JSONify the list of ID's anyway and store it here rather than making API calls. Will work on thatlater
-    //I haveeit sent as a Form Data element. lmk if its too hard to parse but i'm pretty ure it's easy. you guys shuld only accept username and pssword for both,
-    //ajust return a boolean for sucess or no success
+window.addEventListener("load", function (event) {
     var form = document.logForm;
-    var uName = form.username.value;
-    var uPass = form.password.value;
-    var encodedString="username=" + uName + "&password=" + uPass;
-    console.log("Encoded string: " + encodedString);
-    var xhr = new XMLHttpRequest();
+    if(form==null){
+        console.log("form is false");
+        return false;
+    }
+    var u=form.username.value;
+    if(u==null || u==""){
+        return false;
+    }
+    //console.log("Form exists in window!");
+    responseAction();
+    function submitLogin() {
+        form.submit();
+    }
+    function responseAction() {
+        alert("Username Found! You're logged On!");
+        //window.location.href = "index.html";
+    }
 
+    // ...and take over its submit event.
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    xhr.addEventListener("load", function (event) {
-        alert(event.target.responseText);
-        console.log("response is loading");
-        /*Edit this to determine if login fails or works and render certain page conditionally. */
-        isLoggedIn = true;
-        curID = userIds[form.username.value];
+        submitLogin();
     });
+});
 
-    xhr.addEventListener("error", function (event) {
-        console.log("error recieved from reuest");
-        alert("Failed to communicate with server"); //this means the request failed competely, so let's try to log in again.
-    });
+window.addEventListener("error", function (event){
+    var form = document.logForm;
+    if(form==null){
+        return false;
+    }
+    alert("Something went wrong!");
 
-    xhr.open("POST", "httplocalhost:4567/api/login", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(encodedString);
-}
+});
 
 /*If these routes end up not working, you can use a key value pair of users and their passwords */
 
@@ -157,6 +164,9 @@ function removeFromCart(item) {
 //no back end work necessary
 function clearCart() {
 
+}
+function loadHomepage(){
+    window.location.href = "index.html";
 }
 
 //REFER BELOW FOR THE DATA STRUTURE I'LL USE FOR CART
