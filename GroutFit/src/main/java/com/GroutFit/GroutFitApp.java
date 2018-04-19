@@ -10,7 +10,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -61,7 +60,7 @@ public class GroutFitApp {
         /* API calls */
         path("/api", () -> {
             /* SEARCH FUNCTIONS */
-            post("/search", (req,res) -> {
+            post("/search", (req, res) -> {
                 HashMap<String, String> map = toMap(req.body());
                 String searchTerm = map.get("query");
 
@@ -74,7 +73,7 @@ public class GroutFitApp {
                 List<JsonObject> json = new ArrayList<>();
                 List results = jpaQuery.getResultList();
                 for (Object result : results) {
-                    json.add(((ClothingType)result).toJson());
+                    json.add(((ClothingType) result).toJson());
                 }
                 fullTextSession.close();
                 fullTextSession.close();
@@ -393,7 +392,7 @@ public class GroutFitApp {
         try {
             FullTextSession fullTextSession = Search.getFullTextSession(session);
             fullTextSession.createIndexer().startAndWait();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

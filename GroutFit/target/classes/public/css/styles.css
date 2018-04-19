@@ -12,7 +12,7 @@ img {
     position: absolute;
     background-color: lightgray;
     width: 80%;
-    top: 87px;
+    top: 137px;
     left: 10%;
     right: 10%;
     margin: auto;
@@ -23,6 +23,19 @@ img {
     position: fixed;
     background-color: dimgray;
     height: 35px;
+    width: 80%;
+    top: 102px;
+    left: 10%;
+    right: 10%;
+    display: inline;
+    text-align: right;
+    z-index: 2;
+
+}
+.searchBar {
+    position: fixed;
+    background-color: darkgray;
+    height: 50px;
     width: 80%;
     top: 52px;
     left: 10%;
@@ -168,16 +181,11 @@ img {
 h2 {
     text-align: center;
 }
-
-form {
+.userForm {
     position: absolute;
     top: 20%;
     left: 20%;
     right: 20%;
-}
-
-input {
-    margin-top: 10px;
 }
 
 /* CART PAGE CSS */

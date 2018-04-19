@@ -1,7 +1,6 @@
 package com.GroutFit.Model;
 
 import com.GroutFit.Helper.pHash;
-import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.util.Map;
