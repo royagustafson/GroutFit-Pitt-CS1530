@@ -92,20 +92,18 @@ function logout() {
 
 //*******************NEXT STEP: Generate full outfit feed from text file of all piture filenmes.****************************
 //Lets see if we havw time to worry about this way. I have a quick workaround for the demo that would still allow us to filter.
-function generateFeed() {
+function generateFeed(filterValue) {
     //First, create a post reqquest with a flter valye that will return a JSONified list of item ID's applying to that filter.
     //Convert to a list of objects
     //Iterate through list, passing the objevts to generateTile
 
-    var listBR = document.createElement("DIV");
-    listBR.classList.add("itemList");
-    document.body.appendChild(listBR);
+
     generateTile();
 }
 
 //if we choose to keep the feed client sid, we will keep this clint side as well (i'll have all thw puctures and mtadata in the DOM for th presentation)
-function generateTile() {
-
+function generateTile(cid) {
+    var itemList=document.getElementById("IL");
     var itemBox = document.createElement("DIV");
     itemBox.classList.add("itemBox");
 
@@ -114,7 +112,7 @@ function generateTile() {
 
     var itemImg = document.createElement("IMG");
 
-    itemImg.setAttribute("src", "clothing_img/293534086.jpg");
+    itemImg.setAttribute("src", "clothing_img/" + cid + ".jpg");
     itemImg.setAttribute("alt", "A GROUTFIT");
     imageBox.appendChild(itemImg);
     itemBox.appendChild(imageBox);
@@ -125,13 +123,24 @@ function generateTile() {
     var wishButton = document.createElement("BUTTON");
     wishButton.classList.add("itemBtn");
     wishButton.innerHTML = "W";
+    wishButton.id=cid;
+    wishButton.addEventListener("click", function(e){
+        var wlARR=JSON.parse(localStorage.getItem("WishList"));
+        console.log("Target id: " + e.target.id);
+        if(wlARR==null){
+            wlARR=[];
+        }
+        if(wlARR.includes(e.target.id)==false){
+            wlARR.push(e.target.id);
+            console.log("Wishlist after adding item: " + JSON.stringify(wlARR));
+            localStorage.setItem("WishList", JSON.stringify(wlARR));
+        } else {
+            console.log("Item already in wishlist");
+        }
 
-    var cartButton = document.createElement("BUTTON");
-    cartButton.classList.add("itemBtn");
-    cartButton.innerHTML = "C";
+    });
 
     buttonGroup.appendChild(wishButton);
-    buttonGroup.appendChild(cartButton);
 
     itemBox.appendChild(buttonGroup);
 
@@ -142,26 +151,75 @@ function generateTile() {
     itemDetail.innerHTML = description;
 
     itemBox.appendChild(itemDetail);
-    document.body.appendChild(itemBox);
-}
-function getTile(itemID){
-
+    itemList.appendChild(itemBox);
 }
 
 //I can handle cart on the client side.
-function generateCart() {
-
+function generateWishlist() {
+    var wlARR=JSON.parse(localStorage.getItem("WishList"));
+    if(wlARR==null){
+        wlARR=[];
+    }
+    var wlSize=wlARR.length;
+    if(wlSize==0){
+        alert("Your wishlist is empty");
+        window.location.href="index.html";
+    }else{
+        for(var i=0; i<wlARR.length; i++){
+            generateCartTile(wlARR[i]);
+        }
+    }
 }
 
 //very similar to feed tile
-function generateCartTile(item) {
+function generateCartTile(cid) {
+    var itemList=document.getElementById("IL");
+    var itemBox = document.createElement("DIV");
+    itemBox.classList.add("itemBox");
 
+    var imageBox = document.createElement("DIV");
+    imageBox.classList.add("itemImg");
+
+    var itemImg = document.createElement("IMG");
+
+    itemImg.setAttribute("src", "clothing_img/" + cid + ".jpg");
+    itemImg.setAttribute("alt", "A GROUTFIT");
+    imageBox.appendChild(itemImg);
+    itemBox.appendChild(imageBox);
+
+    var buttonGroup = document.createElement("DIV");
+    buttonGroup.classList.add("itemBtn-group");
+
+    var wishButton = document.createElement("BUTTON");
+    wishButton.classList.add("itemBtn");
+    wishButton.innerHTML = "R";
+    wishButton.id=cid;
+    wishButton.addEventListener("click", function(e){
+        var wlARR=JSON.parse(localStorage.getItem("WishList"));
+        console.log("Target id: " + e.target.id);
+        if(wlARR==null){
+            wlARR=[];
+        }
+        wlARR.splice(wlARR.indexOf(e.target.id), 1);
+        console.log("Wishlist after removing item: " + JSON.stringify(wlARR));
+        localStorage.setItem("WishList", JSON.stringify(wlARR));
+        window.location.reload();
+    });
+
+    buttonGroup.appendChild(wishButton);
+
+    itemBox.appendChild(buttonGroup);
+
+    var itemDetail = document.createElement("DIV");
+    itemDetail.classList.add("itemDetails");
+
+    var description = "This shirt is amazikng. It got me leid"; //need to figure out what descriptive info is returned before i finish thus
+    itemDetail.innerHTML = description;
+
+    itemBox.appendChild(itemDetail);
+    itemList.appendChild(itemBox);
 }
 
-//no back end work necesary
-function removeFromCart(item) {
-
-}
 
 //no back end work necessary
 function clearCart() {
