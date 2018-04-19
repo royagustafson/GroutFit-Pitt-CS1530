@@ -27,21 +27,16 @@ function submitLogin(enc, name){
     xhr.open("POST", "http://localhost:4567/api/login", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.onreadystatechange = function(){//Call a function when the state changes.
-        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-            if("\"Success\""==xhr.responseText){
-                isLoggedIn="true";
-                localStorage.setItem("isLoggedIn", isLoggedIn);
-                localStorage.setItem("UserID", name);
-                alert("Login successful");
-                window.location.href="index.html";
-            }
-        } else if(xhr.readyState == XMLHttpRequest.DONE){
-            isLoggedIn="false";
+    xhr.onload= function(){
+        if("\"Success\""==xhr.responseText){
+            isLoggedIn="true";
             localStorage.setItem("isLoggedIn", isLoggedIn);
-            alert("Invalid username or password");
+            localStorage.setItem("UserID", name);
+            alert("Login successful");
+            window.location.href="index.html";
+        } else {
+            alert("Login failed");
             window.location.href="login.html";
-
         }
     };
     xhr.send(enc);
@@ -55,8 +50,8 @@ function submitRegister(enc, name) {
     xhr.open("POST", "http://localhost:4567/api/register", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.onreadystatechange = function(){//Call a function when the state changes.
-        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+    xhr.onload = function(){//Call a function when the state changes.
+        if(xhr.status == 200) {
             if("\"Success\""==xhr.responseText){
                 alert("Registration successful");
                 window.location.href="index.html";
@@ -71,26 +66,27 @@ function submitRegister(enc, name) {
 
 //this function will require no API calls
 function logout() {
-    curID = localStorage.getItem("UserID");
-    alert("Logging out " + curID);
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4567/api/auth/logout", true);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.onreadystatechange = function() {//Call a function when the state changes.
-        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+    xhr.onload = function() {//Call a function when the state changes.
+        if (xhr.status == 200) {
             if ("\"Success\"" == xhr.responseText) {
                 localStorage.setItem("isLoggedIn", "false");
                 localStorage.setItem("UserID", "");
                 alert("You have been successfully logged out");
                 window.location.href="index.html";
             }
-        } else if(xhr.readyState == XMLHttpRequest.DONE){
-            alert("You are not logged in");
+        } else{
+            alert("You are not logged in" + xhr.responseText);
             window.location.href="index.html";
         }
     };
-    xhr.send(curID);
+    curID = localStorage.getItem("UserID");
+    alert("Logging out " + curID);
+    var enc="username=" + curID;
+    xhr.send(enc);
 }
 
 
