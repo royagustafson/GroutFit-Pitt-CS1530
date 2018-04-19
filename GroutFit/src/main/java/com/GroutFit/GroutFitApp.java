@@ -38,7 +38,7 @@ public class GroutFitApp {
         SessionFactory sf = setUp();
         assert sf != null;
         AtomicReference<Session> session = new AtomicReference<>();
-
+        session.set(sf.openSession());
 
         // Load static DHTML, create basic login table
         staticFiles.location("public");
@@ -47,7 +47,6 @@ public class GroutFitApp {
         // Set the content type to json, open a new database session
         before("/api/*", (req, res) -> {
             res.type("application/json");
-            session.set(sf.openSession());
         });
 
         // Verify login
