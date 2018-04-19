@@ -138,7 +138,8 @@ public class Outfit {
                         "\"top\": %s, " +
                         "\"bottom\": %s, " +
                         "\"jacket\": %s, " +
-                        "\"profile_id\": \"%s\"",
+                        "\"profile_id\": \"%s\"" +
+                        "}",
                 outfit_id,
                 full_body,
                 (top == null) ? "null" : getTop().toString(),

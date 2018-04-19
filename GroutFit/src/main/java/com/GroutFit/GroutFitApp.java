@@ -277,12 +277,11 @@ public class GroutFitApp {
 
                 // Stream through item_ids of valid ClothingItems, collect as list of JsonObjects
                 get("/:item_id", (req, res) -> {
-                    List<JsonObject> list = parseIDs(req.params("item_id")).stream()
+                    return parseIDs(req.params("item_id")).stream()
                             .map(item_id -> session.get().get(ClothingItem.class, item_id))
                             .filter(Objects::nonNull)
                             .map(ClothingItem::toJson)
                             .collect(Collectors.toList());
-                    return list;
                 }, new JsonTransformer());
 
                 // Same as above, but returns types mapped by items
