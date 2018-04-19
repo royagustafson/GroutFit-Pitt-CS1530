@@ -10,7 +10,7 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/clientControl.js"></script>
 </head>
-<body onload="generateTile(130416315)">
+<body onload="generateAll()">
 <!--This section Contains the banner, should be placed in evry HTML file.  -->
 <nav class="navbar navbar-inverse navbar-fixed">
     <div class="container-fluid">
@@ -34,12 +34,19 @@
 
 <div class="filterBar">
         <div class="filter-button-group">
-            <button class="filter-button" onclick="generateFeed()">Shirts</button>
-            <button class="filter-button" onclick="generateFeed()">Pants</button>
-            <button class="filter-button" onclick="generateFeed()">Skirts</button>
+            <button id="shirts" class="filter-button">Shirts</button>
+            <button id="pants" class="filter-button">Pants</button>
+            <button id="skirts" class="filter-button">Skirts</button>
+            <button id="all" class="filter-button">All</button>
             <a href="outfit.html"><button class="filter-button">Outfits</button></a>
         </div>
 </div>
+<script>
+    document.getElementById("shirts").addEventListener("click", generateFeed);
+    document.getElementById("pants").addEventListener("click", generateFeed);
+    document.getElementById("skirts").addEventListener("click", generateFeed);
+    document.getElementById("all").addEventListener("click", generateFeed)
+</script>
 <div id="IL" class="itemList">
 
     

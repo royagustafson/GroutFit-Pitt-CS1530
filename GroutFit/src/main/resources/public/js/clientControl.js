@@ -1,6 +1,12 @@
 var isLoggedIn;
 var curID;
-var cart = [];
+var Pants=["659004047","660115502","674932943","720120373","720211709","836673326","842239534"];
+var Shirts=["130416315","140226300","430627026","250879861","457136344","293534086","395557109"];
+var Skirts=["240698130","374581910","468276714","524635841","565956011","765158210"];
+var All=["130416315","140226300","240698130","250879861","285499569","293534086","374581910","395557109","430627026","457136344","468276714","524635841","565956011","659004047","660115502","674932943","709054560","720120373","720211709","756741519","765158210","836673326","842239534","849825435","859609403","887162937","998342202"];
+
+
+
 
 /*
 window.onload = function (event) {
@@ -92,13 +98,37 @@ function logout() {
 
 //*******************NEXT STEP: Generate full outfit feed from text file of all piture filenmes.****************************
 //Lets see if we havw time to worry about this way. I have a quick workaround for the demo that would still allow us to filter.
-function generateFeed(filterValue) {
-    //First, create a post reqquest with a flter valye that will return a JSONified list of item ID's applying to that filter.
-    //Convert to a list of objects
-    //Iterate through list, passing the objevts to generateTile
+function generateFeed(e) {
+    //Get filter value from button
+    var filter=e.target.id;
+    clearFeed();
+    console.log("Applying filter of type: " + filter);
+    var items=[];
+    if("pants"==filter){
+        items=Pants;
+    } else if("shirts"==filter){
+        items=Shirts;
+    } else if("skirts"==filter){
+        items=Skirts;
+    } else if("all"==filter){
+        items=All;
+    }
+    for(var i=0; i<items.length; i++){
+        generateTile(items[i]);
+    }
+}
+function generateAll(){
+    var items=All;
+    for(var i=0; i<items.length; i++){
+        generateTile(items[i]);
+    }
+}
 
-
-    generateTile();
+function clearFeed(){
+    var myNode = document.getElementById("IL");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
 }
 
 //if we choose to keep the feed client sid, we will keep this clint side as well (i'll have all thw puctures and mtadata in the DOM for th presentation)
