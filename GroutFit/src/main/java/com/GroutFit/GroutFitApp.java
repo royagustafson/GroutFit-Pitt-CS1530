@@ -45,9 +45,6 @@ public class GroutFitApp {
         staticFiles.location("public");
         HashSet<String> loginTable = new HashSet<>();
 
-        // Init hashmap to tie color names to hex values
-        HashMap<String, String> colorMap = setColorMap();
-
         // Set the content type to json, open a new database session
         before("/api/*", (req, res) -> {
             res.type("application/json");
@@ -64,51 +61,25 @@ public class GroutFitApp {
         /* API calls */
         path("/api", () -> {
             /* SEARCH FUNCTIONS */
-            path("/search", () -> {
-                post("/item", (req, res)-> {
-                    HashMap<String, String> map = toMap(req.body());
-                    String searchTerm = map.get("query");
-                    String field = map.get("field");
+            post("/search", (req,res) -> {
+                HashMap<String, String> map = toMap(req.body());
+                String searchTerm = map.get("query");
 
-                    String color = colorMap.get(searchTerm);
-                    if(color != null)
-                        searchTerm = color;
+                FullTextSession fullTextSession = Search.getFullTextSession(session.get());
+                QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(ClothingType.class).get();
+                org.apache.lucene.search.Query query = qb.keyword().onFields("name", "category", "description").matching(searchTerm).createQuery();
 
-                    FullTextSession fullTextSession = Search.getFullTextSession(session.get());
-                    QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(ClothingItem.class).get();
-                    org.apache.lucene.search.Query query = qb.keyword().onField(field).matching(searchTerm).createQuery();
+                javax.persistence.Query jpaQuery = fullTextSession.createFullTextQuery(query, ClothingType.class);
 
-                    javax.persistence.Query jpaQuery = fullTextSession.createFullTextQuery(query, ClothingItem.class);
-
-                    List<JsonObject> json = new ArrayList<>();
-                    for (Object item : jpaQuery.getResultList())
-                        json.add(((ClothingItem)item).toJson());
-                    
-                    fullTextSession.close();
-                    return json;
-                }, new JsonTransformer());
-
-                post("/type", (req, res) -> {
-                    HashMap<String, String> map = toMap(req.body());
-                    String searchTerm = map.get("query");
-                    String field = map.get("field");
-
-                    FullTextSession fullTextSession = Search.getFullTextSession(session.get());
-                    QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(ClothingType.class).get();
-                    org.apache.lucene.search.Query query = qb.keyword().onField(field).matching(searchTerm).createQuery();
-
-                    javax.persistence.Query jpaQuery = fullTextSession.createFullTextQuery(query, ClothingType.class);
-
-                    List<JsonObject> json = new ArrayList<>();
-                    List results = jpaQuery.getResultList();
-                    for (Object result : results) {
-                        json.add(((ClothingType)result).toJson());
-                    }
-                    fullTextSession.close();
-                    fullTextSession.close();
-                    return json;
-                }, new JsonTransformer());
-            });
+                List<JsonObject> json = new ArrayList<>();
+                List results = jpaQuery.getResultList();
+                for (Object result : results) {
+                    json.add(((ClothingType)result).toJson());
+                }
+                fullTextSession.close();
+                fullTextSession.close();
+                return json;
+            }, new JsonTransformer());
 
             /* USER FUNCTIONS */
             post("/register", (req, res) -> {
@@ -426,19 +397,5 @@ public class GroutFitApp {
         } catch(Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private static HashMap<String, String> setColorMap() {
-        HashMap<String, String> colorMap = new HashMap<>();
-        colorMap.put("black", "000000");
-        colorMap.put("gray", "808080");
-        colorMap.put("dark gray", "A9A9A9");
-        colorMap.put("x11 gray", "BEBEBE");
-        colorMap.put("sivler", "C0C0C0");
-        colorMap.put("light gray", "D3D3D3");
-        colorMap.put("gainsboro", "DCDCDC");
-        colorMap.put("white smoke", "F5F5F5");
-        colorMap.put("white", "FFFFFF");
-        return colorMap;
     }
 }
