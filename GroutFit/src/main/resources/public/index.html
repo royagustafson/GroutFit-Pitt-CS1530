@@ -24,14 +24,29 @@
             <li><a href="cart.html">WishList</a></li>
             <li><a href="#">Help</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="register.html"><span id="link1" class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.html"><span id="link2" class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            <li><a href="javascript:logout()"><span id="link3" class="glyphicon glyphicon-log-in"></span> logout</a></li>>
+
+        <!-- right side links -->
+        <ul id="RL" class="nav navbar-nav navbar-right">
+            <li id="signup" class="hidden"><a href="register.html"><span id="link1" class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li id="login" class="hidden"><a href="login.html"><span id="link2" class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li id="logout" class="hidden"><a href="javascript:logout()"><span id="link3" class="glyphicon glyphicon-log-in"></span> Log Out</a></li>>
         </ul>
     </div>
 </nav>
 
+<div class="searchBar">
+    <form name="searchForm" class="form-inline">
+        <input type="text" name="searchVal">
+        <button onclick="itemSearch()">Search</button>
+    </form>
+</div>
+<script>
+    var form =document.searchForm;
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        itemSearch();
+    });
+</script>
 <div class="filterBar">
         <div class="filter-button-group">
             <button id="shirts" class="filter-button">Shirts</button>

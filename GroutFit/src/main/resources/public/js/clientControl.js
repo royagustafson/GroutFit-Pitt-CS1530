@@ -36,8 +36,8 @@ function submitLogin(enc, name){
     xhr.onload= function(){
         if("\"Success\""==xhr.responseText){
             isLoggedIn="true";
-            localStorage.setItem("isLoggedIn", isLoggedIn);
-            localStorage.setItem("UserID", name);
+            sessionStorage.setItem("isLoggedIn", isLoggedIn);
+            sessionStorage.setItem("UserID", name);
             alert("Login successful");
             window.location.href="index.html";
         } else {
@@ -79,8 +79,8 @@ function logout() {
     xhr.onload = function() {//Call a function when the state changes.
         if (xhr.status == 200) {
             if ("\"Success\"" == xhr.responseText) {
-                localStorage.setItem("isLoggedIn", "false");
-                localStorage.setItem("UserID", "");
+                sessionStorage.setItem("isLoggedIn", "false");
+                sessionStorage.setItem("UserID", "");
                 alert("You have been successfully logged out");
                 window.location.href="index.html";
             }
@@ -89,7 +89,7 @@ function logout() {
             window.location.href="index.html";
         }
     };
-    curID = localStorage.getItem("UserID");
+    curID = sessionStorage.getItem("UserID");
     alert("Logging out " + curID);
     var enc="username=" + curID;
     xhr.send(enc);
@@ -118,9 +118,20 @@ function generateFeed(e) {
     }
 }
 function generateAll(){
+    addLinks();
     var items=All;
     for(var i=0; i<items.length; i++){
         generateTile(items[i]);
+    }
+}
+function addLinks(){
+    var loggedIn=sessionStorage.getItem("isLoggedIn");
+    if("true"==loggedIn){
+        document.getElementById("logout").classList.toggle("hidden");
+    } else{
+        document.getElementById("signup").classList.toggle("hidden");
+        document.getElementById("login").classList.toggle("hidden");
+
     }
 }
 
@@ -177,7 +188,7 @@ function generateTile(cid) {
     var itemDetail = document.createElement("DIV");
     itemDetail.classList.add("itemDetails");
 
-    var description = "This shirt is amazikng. It got me leid"; //need to figure out what descriptive info is returned before i finish thus
+    var description = "This shirt is amazing\n ID: "+ cid; //need to figure out what descriptive info is returned before i finish thus
     itemDetail.innerHTML = description;
 
     itemBox.appendChild(itemDetail);
@@ -243,7 +254,7 @@ function generateCartTile(cid) {
     var itemDetail = document.createElement("DIV");
     itemDetail.classList.add("itemDetails");
 
-    var description = "This shirt is amazikng. It got me leid"; //need to figure out what descriptive info is returned before i finish thus
+    var description = "This shirt is amazing"; //need to figure out what descriptive info is returned before i finish thus
     itemDetail.innerHTML = description;
 
     itemBox.appendChild(itemDetail);
@@ -254,6 +265,14 @@ function generateCartTile(cid) {
 //no back end work necessary
 function clearCart() {
 
+}
+
+function itemSearch() {
+    var searchVal=document.searchForm.searchVal.value;
+    if(All.includes(searchVal)){
+        clearFeed();
+        generateTile(searchVal);
+    }
 }
 function loadHomepage(){
     window.location.href = "index.html";
