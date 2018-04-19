@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Groutfit</title>
+    <meta name="author" content="Spencer Rakoczy">
+    <meta name="keywords" content="Clothing,Men,Women,Gray">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <script src="../js/bootstrap.js"></script>
+    <script src="../js/clientControl.js"></script>
+</head>
+<body>
+<!--This section Contains the banner, should be placed in evry HTML file.  -->
+<nav class="navbar navbar-inverse navbar-fixed">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">GroutFit</a>
+        </div>
+
+        <!-- left side links -->
+        <ul class="nav navbar-nav navbar-left">
+            <li class="active"><a href="../index.html">Home</a></li>
+            <li><a href="../cart.html">Cart</a></li>
+            <li><a href="#">Help</a></li>
+            <!--  SEARCH BOX IS MESSED UP BECAUSE OF FORM ELEMENT BEING MODIFIED IN MY CSS, I'LL FIX LATER
+                <li>
+                <form class="navbar-form">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </li>
+            -->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="../register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="../login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="filterBar">
+        <div class="filter-button-group">
+            <a href="../index.html"><button class="filter-button">All</button></a>
+            <a href="shirts.html"><button class="filter-button">Shirts</button></a>
+            <a href="pants.html"><button class="filter-button">Pants</button></a>
+        </div>
+</div>
+<div id="itemList">
+    <div class="itemBox">
+    	<div class="itemImg"><img src="../clothing_img/240698130.jpg" alt="Polka Dotted Shirt"></div>
+   		<div class="itemBtn-group">
+   			<button class="itemBtn wishlist-add">W</button>
+   			<button class="itemBtn cart-add">C</button>
+   		</div>
+        <div class="itemDetails">This shirt is grey</div>
+    </div>
+
+    <div class="itemBox">
+        <div class="itemImg"><img src="../clothing_img/374581910.jpg" alt="Polka Dotted Shirt"></div>
+        <div class="itemBtn-group">
+            <button class="itemBtn wishlist-add">W</button>
+            <button class="itemBtn cart-add">C</button>
+        </div>
+        <div class="itemDetails">This shirt is grey</div>
+    </div>
+
+    <div class="itemBox">
+        <div class="itemImg"><img src="../clothing_img/468276714.jpg" alt="Polka Dotted Shirt"></div>
+        <div class="itemBtn-group">
+            <button class="itemBtn wishlist-add">W</button>
+            <button class="itemBtn cart-add">C</button>
+        </div>
+        <div class="itemDetails">This shirt is grey</div>
+    </div>
+
+    <div class="itemBox">
+        <div class="itemImg"><img src="../clothing_img/524635841.jpg" alt="Polka Dotted Shirt"></div>
+        <div class="itemBtn-group">
+            <button class="itemBtn wishlist-add">W</button>
+            <button class="itemBtn cart-add">C</button>
+        </div>
+        <div class="itemDetails">This shirt is grey</div>
+    </div>
+
+    <div class="itemBox">
+        <div class="itemImg"><img src="../clothing_img/565956011.jpg" alt="Polka Dotted Shirt"></div>
+        <div class="itemBtn-group">
+            <button class="itemBtn wishlist-add">W</button>
+            <button class="itemBtn cart-add">C</button>
+        </div>
+        <div class="itemDetails">This shirt is grey</div>
+    </div>
+
+    <div class="itemBox">
+        <div class="itemImg"><img src="../clothing_img/765158210.jpg" alt="Polka Dotted Shirt"></div>
+        <div class="itemBtn-group">
+            <button class="itemBtn wishlist-add">W</button>
+            <button class="itemBtn cart-add">C</button>
+        </div>
+        <div class="itemDetails">This shirt is grey</div>
+    </div>
+    <div>
+    	<a>Next Page</a>
+    </div>
+</div>
+</body>
+</html>
