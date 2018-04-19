@@ -2,10 +2,7 @@ package com.GroutFit.Model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
@@ -16,7 +13,7 @@ import javax.persistence.*;
 public class ClothingItem {
     @Id
     private int item_id;
-    @Field(index=Index.YES, analyze= Analyze.YES, store= Store.NO)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String color;
     private String size;
     private int quantity;

@@ -10,7 +10,6 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
@@ -39,7 +38,7 @@ public class GroutFitApp {
         SessionFactory sf = setUp();
         assert sf != null;
         AtomicReference<Session> session = new AtomicReference<>();
-
+        session.set(sf.openSession());
 
         // Load static DHTML, create basic login table
         staticFiles.location("public");
@@ -48,7 +47,6 @@ public class GroutFitApp {
         // Set the content type to json, open a new database session
         before("/api/*", (req, res) -> {
             res.type("application/json");
-            session.set(sf.openSession());
         });
 
         // Verify login
@@ -61,7 +59,7 @@ public class GroutFitApp {
         /* API calls */
         path("/api", () -> {
             /* SEARCH FUNCTIONS */
-            post("/search", (req,res) -> {
+            post("/search", (req, res) -> {
                 HashMap<String, String> map = toMap(req.body());
                 String searchTerm = map.get("query");
 
@@ -74,10 +72,8 @@ public class GroutFitApp {
                 List<JsonObject> json = new ArrayList<>();
                 List results = jpaQuery.getResultList();
                 for (Object result : results) {
-                    json.add(((ClothingType)result).toJson());
+                    json.add(((ClothingType) result).toJson());
                 }
-                fullTextSession.close();
-                fullTextSession.close();
                 return json;
             }, new JsonTransformer());
 
@@ -303,12 +299,11 @@ public class GroutFitApp {
 
                 // Stream through item_ids of valid ClothingItems, collect as list of JsonObjects
                 get("/:item_id", (req, res) -> {
-                    List<JsonObject> list = parseIDs(req.params("item_id")).stream()
+                    return parseIDs(req.params("item_id")).stream()
                             .map(item_id -> session.get().get(ClothingItem.class, item_id))
                             .filter(Objects::nonNull)
                             .map(ClothingItem::toJson)
                             .collect(Collectors.toList());
-                    return list;
                 }, new JsonTransformer());
             });
         });
@@ -394,7 +389,7 @@ public class GroutFitApp {
         try {
             FullTextSession fullTextSession = Search.getFullTextSession(session);
             fullTextSession.createIndexer().startAndWait();
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

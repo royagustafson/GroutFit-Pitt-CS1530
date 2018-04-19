@@ -2,11 +2,7 @@ package com.GroutFit.Model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Store;
-import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -22,12 +18,12 @@ public class ClothingType {
 
     @Id
     private int type_id;
-    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String name;
-    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String category;
     private double price;
-    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String description;
 
     @OneToMany(mappedBy = "type")
