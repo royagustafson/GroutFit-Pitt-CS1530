@@ -272,15 +272,12 @@ function itemSearch() {
     if(All.includes(searchVal)){
         clearFeed();
         generateTile(searchVal);
+    } else {
+        alert("Could not find that item");
+        window.location.reload();
     }
 }
 function loadHomepage(){
     window.location.href = "index.html";
 }
-
-//REFER BELOW FOR THE DATA STRUTURE I'LL USE FOR CART
-
-
-/* It will simply be a 2 dimensional array. I increase a global counter var when a new user registers, so that unique integer key value corresponds directly to array positons
-  For every indexed user, there will be an array of links to their shoping cart items. */
 

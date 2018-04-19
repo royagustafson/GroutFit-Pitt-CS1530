@@ -10,7 +10,7 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/clientControl.js"></script>
 </head>
-<body>
+<body onload="generateAll()">
 <!--This section Contains the banner, should be placed in evry HTML file.  -->
 <nav class="navbar navbar-inverse navbar-fixed">
     <div class="container-fluid">
@@ -21,92 +21,51 @@
         <!-- left side links -->
         <ul class="nav navbar-nav navbar-left">
             <li class="active"><a href="#">Home</a></li>
-            <li><a href="cart.html">Cart</a></li>
+            <li><a href="cart.html">WishList</a></li>
             <li><a href="#">Help</a></li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="register.html"><span id="link1" class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.html"><span id="link2" class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            <li><a href="javascript:logout()"><span id="link3" class="glyphicon glyphicon-log-in"></span> logout</a></li>>
+
+        <!-- right side links -->
+        <ul id="RL" class="nav navbar-nav navbar-right">
+            <li id="signup" class="hidden"><a href="register.html"><span id="link1" class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li id="login" class="hidden"><a href="login.html"><span id="link2" class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li id="logout" class="hidden"><a href="javascript:logout()"><span id="link3" class="glyphicon glyphicon-log-in"></span> Log Out</a></li>>
         </ul>
     </div>
 </nav>
 
+<div class="searchBar">
+    <form name="searchForm" class="form-inline">
+        <input type="text" name="searchVal">
+        <button onclick="itemSearch()">Search</button>
+    </form>
+</div>
+<script>
+    var form =document.searchForm;
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        itemSearch();
+    });
+</script>
 <div class="filterBar">
         <div class="filter-button-group">
-            <a href="sample_html/shirts.html"><button class="filter-button">Shirts</button></a>
-            <a href="sample_html/pants.html"><button class="filter-button">Pants</button></a>
-            <a href="sample_html/skirts.html"><button class="filter-button">Skirts</button></a>
+            <button id="shirts" class="filter-button">Shirts</button>
+            <button id="pants" class="filter-button">Pants</button>
+            <button id="skirts" class="filter-button">Skirts</button>
+            <button id="all" class="filter-button">All</button>
             <a href="outfit.html"><button class="filter-button">Outfits</button></a>
         </div>
 </div>
-<div class="itemList">
-    <div class="itemBox">
-    	<div class="itemImg"><img src="clothing_img/130416315.jpg" alt="Polka Dotted Shirt"></div>
-   		<div class="itemBtn-group">
-   			<button class="itemBtn wishlist-add">W</button>
-   			<button class="itemBtn cart-add">C</button>
-   		</div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
+<script>
+    document.getElementById("shirts").addEventListener("click", generateFeed);
+    document.getElementById("pants").addEventListener("click", generateFeed);
+    document.getElementById("skirts").addEventListener("click", generateFeed);
+    document.getElementById("all").addEventListener("click", generateFeed)
+</script>
+<div id="IL" class="itemList">
 
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/140226300.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="itemBtn-group">
-            <button class="itemBtn wishlist-add">W</button>
-            <button class="itemBtn cart-add">C</button>
-        </div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
-
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/240698130.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="itemBtn-group">
-            <button class="itemBtn wishlist-add">W</button>
-            <button class="itemBtn cart-add">C</button>
-        </div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
-
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/250879861.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="itemBtn-group">
-            <button class="itemBtn wishlist-add">W</button>
-            <button class="itemBtn cart-add">C</button>
-        </div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
-
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/285499569.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="itemBtn-group">
-            <button class="itemBtn wishlist-add">W</button>
-            <button class="itemBtn cart-add">C</button>
-        </div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
-
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/293534086.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="itemBtn-group">
-            <button class="itemBtn wishlist-add">W</button>
-            <button class="itemBtn cart-add">C</button>
-        </div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
-
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/374581910.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="itemBtn-group">
-            <button class="itemBtn wishlist-add">W</button>
-            <button class="itemBtn cart-add">C</button>
-        </div>
-        <div class="itemDetails">This shirt is grey</div>
-    </div>
     
-    <div>
-    	<a>Next Page</a>
-    </div>
+
 </div>
 </body>
 </html>
