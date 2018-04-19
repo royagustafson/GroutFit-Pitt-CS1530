@@ -30,15 +30,25 @@
 </nav>
 
 <div class="form-box">
-
-    <form action= "localhost:4567/api/register" method="POST" name="regForm">
+    <div>
+    <form name="regForm">
         <h2>Register</h2>
         <input type="text" name="username" required> Username <br>
         <input type="password" name="password" required> Password <br>
         <input type="checkbox" name="acceptTerms" required> I accept the <a>Terms and Conditions</a><br>
         <input value="Submit" type="submit" onclick="submitRegister()">
     </form>
+    </div>
 </div>
-
+<script>
+    var form =document.regForm;
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var uName = form.username.value;
+        var uPass = form.password.value;
+        var encodedString="username=" + uName + "&password=" + uPass;
+        submitRegister(encodedString, uName);
+    });
+</script>
 </body>
 </html>

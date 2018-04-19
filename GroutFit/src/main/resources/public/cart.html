@@ -10,7 +10,7 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/clientControl.js"></script>
 </head>
-<body>
+<body onload="generateWishlist()">
 <!--This section Contains the banner, should be placed in evry HTML file.  -->
 <nav class="navbar navbar-inverse navbar-fixed">
     <div class="container-fluid">
@@ -21,9 +21,8 @@
         <!-- left side links -->
         <ul class="nav navbar-nav navbar-left">
             <li class="active"><a href="index.html">Home</a></li>
-            
-            <!--  SEARCH BOX IS MESSED UP BECAUSE OF FORM ELEMENT BEING MODIFIED IN MY CSS, I'LL FIX LATER
-                <li>
+
+            <li>
                 <form class="navbar-form">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search">
@@ -35,60 +34,18 @@
                     </div>
                 </form>
             </li>
-            -->
+
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li><a href="register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <ul id="RL" class="nav navbar-nav navbar-right">
+            <li id="signup" class="hidden"><a href="register.html"><span id="link1" class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li id="login" class="hidden"><a href="login.html"><span id="link2" class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li id="logout" class="hidden"><a href="javascript:logout()"><span id="link3" class="glyphicon glyphicon-log-in"></span> Log Out</a></li>>
         </ul>
     </div>
 </nav>
 
-<div class="filterBar">
-        Filter
-        <select>
-            <option value="all">All</option>
-            <option value="shirts">Shirts</option>
-            <option value="jackets">Jackets</option>
-            <option value="pantsz">Pants</option>
-            <option value="dresses">Dresses</option>
-        </select>
-        <input type="button" value="Go">
-</div>
-<div id="itemList">
-    <div class="itemBox">
-    	<div class="itemImg"><img src="clothing_img/140226300.jpg" alt="Polka Dotted Shirt"></div>
-   		<div class="remove-button-container">
-   			<button class="remove-button">Remove</button>
-   		</div>
-        <div class="itemDetails">This shirt is grey <br><br><br> Cost: $10.00</div>
-    </div>
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/240698130.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="remove-button-container">
-            <button class="remove-button">Remove</button>
-        </div>
-        <div class="itemDetails">This shirt is really really really grey <br><br><br> Cost: $10.00</div>
-    </div>
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/250879861.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="remove-button-container">
-            <button class="remove-button">Remove</button>
-        </div>
-        <div class="itemDetails">This shirt is really grey <br><br><br> Cost: $10.00</div>
-    </div>
-    <div class="itemBox">
-        <div class="itemImg"><img src="clothing_img/293534086.jpg" alt="Polka Dotted Shirt"></div>
-        <div class="remove-button-container">
-            <button class="remove-button">Remove</button>
-        </div>
-        <div class="itemDetails">This shirt is really reallyrey <br><br><br> Cost: $10.00</div>
-    </div>
+<div id="IL" class="itemList">
 
-    
-    <div class="cart-total"> Total: $40.00 </div>
-    <button class="checkout-button">Checkout</button>
-    
 </div>
 </body>
 </html>

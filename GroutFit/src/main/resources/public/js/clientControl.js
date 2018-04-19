@@ -1,105 +1,150 @@
-var isLoggedIn = false;
-var curID = null;
-var userCreds = [];
-var userNameIds = [];
-var cart = [];
-var userCount = 0;
+var isLoggedIn;
+var curID;
+var Pants=["659004047","660115502","674932943","720120373","720211709","836673326","842239534"];
+var Shirts=["130416315","140226300","430627026","250879861","457136344","293534086","395557109"];
+var Skirts=["240698130","374581910","468276714","524635841","565956011","765158210"];
+var All=["130416315","140226300","240698130","250879861","285499569","293534086","374581910","395557109","430627026","457136344","468276714","524635841","565956011","659004047","660115502","674932943","709054560","720120373","720211709","756741519","765158210","836673326","842239534","849825435","859609403","887162937","998342202"];
 
-function submitLogin() {
-    //i should reslly just JSONify the list of ID's anyway and store it here rather than making API calls. Will work on thatlater
-    //I haveeit sent as a Form Data element. lmk if its too hard to parse but i'm pretty ure it's easy. you guys shuld only accept username and pssword for both,
-    //ajust return a boolean for sucess or no success
-    var form = document.logForm;
-    var uName = form.username.value;
-    var uPass = form.password.value;
-    var encodedString="username=" + uName + "&password=" + uPass;
-    console.log("Encoded string: " + encodedString);
+
+
+
+/*
+window.onload = function (event) {
+    var reg=document.getElementById("link1");
+    var log=document.getElementById("link2");
+    var out=document.getElementById("link3");
+    isLoggedIn=localStorage.getItem(isLoggedIn);
+    console.log("logged in:" + isLoggedIn);
+    if(isLoggedIn=="true"){
+        reg.classList.add("hidden");
+        log.classList.add("hidden");
+        out.classList.remove("hidden");
+    }else{
+        reg.classList.remove("hidden");
+        log.classList.remove("hidden");
+        out.classList.add("hidden");
+    }
+
+}
+*/
+
+function submitLogin(enc, name){
     var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/api/login", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-
-    xhr.addEventListener("load", function (event) {
-        alert(event.target.responseText);
-        console.log("response is loading");
-        /*Edit this to determine if login fails or works and render certain page conditionally. */
-        isLoggedIn = true;
-        curID = userIds[form.username.value];
-    });
-
-    xhr.addEventListener("error", function (event) {
-        console.log("error recieved from reuest");
-        alert("Failed to communicate with server"); //this means the request failed competely, so let's try to log in again.
-    });
-
-    xhr.open("POST", "httplocalhost:4567/api/login", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send(encodedString);
+    xhr.onload= function(){
+        if("\"Success\""==xhr.responseText){
+            isLoggedIn="true";
+            sessionStorage.setItem("isLoggedIn", isLoggedIn);
+            sessionStorage.setItem("UserID", name);
+            alert("Login successful");
+            window.location.href="index.html";
+        } else {
+            alert("Login failed");
+            window.location.href="login.html";
+        }
+    };
+    xhr.send(enc);
 }
 
 /*If these routes end up not working, you can use a key value pair of users and their passwords */
 
 //Same deal as login, you should only recieve the username and password. Return a boolean, successful or nor
-function submitRegister() {
-    var form = document.regForm;
-    var uName = form.username.value;
-    var uPass = form.password.value;
-    var encodedString="username=" + uName + "&password=" + uPass;
-    console.log("Encoded string: " + encodedString);
-    if (uPass.length < 8) {
-        alert("Password must be at least 8 characters long");
-        form.reset();
-    }
-
+function submitRegister(enc, name) {
     var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/api/register", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.addEventListener("load", function (event) {
-        alert("WE DID IT!!!" + event.target.responseText);
-
-        /*Edit this to determine if login fails or works and render certain page conditionally. */
-
-        /* Also add user to a key value list, just in case. THIS IS UNSAFE AND CAN ONLY WORK FOR DEMO PURPOSES, incase the server breaks*/
-        var userIndex = {};
-        var userCred = {};
-        userIndex[form.username.value] = userCount;
-        userCred[form.username.value] = form.password.value;
-        userIds.push(userIndex);
-        userCreds.push(userCred);
-        userCount++; //lt us know how many users the are, this will be useful for later
-    });
-
-    xhr.addEventListener("error", function (event) {
-        alert('Oops! Something went wrong. Please try again'); //this means the request failed competely, so let's try to log in again.
-        window.location.href = "index.html";
-    });
-
-    xhr.open("POST", "localhost:4567/api/register", true);
-    xhr.send(encodedString);
+    xhr.onload = function(){//Call a function when the state changes.
+        if(xhr.status == 200) {
+            if("\"Success\""==xhr.responseText){
+                alert("Registration successful");
+                window.location.href="index.html";
+            } else if("\"Invalid username\""==xhr.responseText){
+                alert("username already exists. try again");
+                window.location.href="register.html";
+            }
+        }
+    };
+    xhr.send(enc);
 }
 
 //this function will require no API calls
 function logout() {
-    isLoggedIn = false;
-    curID = null;
-    alert("You have been successfully logged out");
-    window.location.href = "index.html";
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/api/auth/logout", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function() {//Call a function when the state changes.
+        if (xhr.status == 200) {
+            if ("\"Success\"" == xhr.responseText) {
+                sessionStorage.setItem("isLoggedIn", "false");
+                sessionStorage.setItem("UserID", "");
+                alert("You have been successfully logged out");
+                window.location.href="index.html";
+            }
+        } else{
+            alert("You are not logged in" + xhr.responseText);
+            window.location.href="index.html";
+        }
+    };
+    curID = sessionStorage.getItem("UserID");
+    alert("Logging out " + curID);
+    var enc="username=" + curID;
+    xhr.send(enc);
 }
 
 
 //*******************NEXT STEP: Generate full outfit feed from text file of all piture filenmes.****************************
 //Lets see if we havw time to worry about this way. I have a quick workaround for the demo that would still allow us to filter.
-function generateFeed() {
-    //First, create a post reqquest with a flter valye that will return a JSONified list of item ID's applying to that filter.
-    //Convert to a list of objects
-    //Iterate through list, passing the objevts to generateTile
+function generateFeed(e) {
+    //Get filter value from button
+    var filter=e.target.id;
+    clearFeed();
+    console.log("Applying filter of type: " + filter);
+    var items=[];
+    if("pants"==filter){
+        items=Pants;
+    } else if("shirts"==filter){
+        items=Shirts;
+    } else if("skirts"==filter){
+        items=Skirts;
+    } else if("all"==filter){
+        items=All;
+    }
+    for(var i=0; i<items.length; i++){
+        generateTile(items[i]);
+    }
+}
+function generateAll(){
+    addLinks();
+    var items=All;
+    for(var i=0; i<items.length; i++){
+        generateTile(items[i]);
+    }
+}
+function addLinks(){
+    var loggedIn=sessionStorage.getItem("isLoggedIn");
+    if("true"==loggedIn){
+        document.getElementById("logout").classList.toggle("hidden");
+    } else{
+        document.getElementById("signup").classList.toggle("hidden");
+        document.getElementById("login").classList.toggle("hidden");
 
-    var listBR = document.createElement("DIV");
-    listBR.classList.add("itemList");
-    document.body.appendChild(listBR);
-    generateTile();
+    }
+}
+
+function clearFeed(){
+    var myNode = document.getElementById("IL");
+    while (myNode.firstChild) {
+        myNode.removeChild(myNode.firstChild);
+    }
 }
 
 //if we choose to keep the feed client sid, we will keep this clint side as well (i'll have all thw puctures and mtadata in the DOM for th presentation)
-function generateTile() {
-
+function generateTile(cid) {
+    var itemList=document.getElementById("IL");
     var itemBox = document.createElement("DIV");
     itemBox.classList.add("itemBox");
 
@@ -108,7 +153,7 @@ function generateTile() {
 
     var itemImg = document.createElement("IMG");
 
-    itemImg.setAttribute("src", "clothing_img/293534086.jpg");
+    itemImg.setAttribute("src", "clothing_img/" + cid + ".jpg");
     itemImg.setAttribute("alt", "A GROUTFIT");
     imageBox.appendChild(itemImg);
     itemBox.appendChild(imageBox);
@@ -119,44 +164,118 @@ function generateTile() {
     var wishButton = document.createElement("BUTTON");
     wishButton.classList.add("itemBtn");
     wishButton.innerHTML = "W";
+    wishButton.id=cid;
+    wishButton.addEventListener("click", function(e){
+        var wlARR=JSON.parse(localStorage.getItem("WishList"));
+        console.log("Target id: " + e.target.id);
+        if(wlARR==null){
+            wlARR=[];
+        }
+        if(wlARR.includes(e.target.id)==false){
+            wlARR.push(e.target.id);
+            console.log("Wishlist after adding item: " + JSON.stringify(wlARR));
+            localStorage.setItem("WishList", JSON.stringify(wlARR));
+        } else {
+            console.log("Item already in wishlist");
+        }
 
-    var cartButton = document.createElement("BUTTON");
-    cartButton.classList.add("itemBtn");
-    cartButton.innerHTML = "C";
+    });
 
     buttonGroup.appendChild(wishButton);
-    buttonGroup.appendChild(cartButton);
 
     itemBox.appendChild(buttonGroup);
 
     var itemDetail = document.createElement("DIV");
     itemDetail.classList.add("itemDetails");
 
-    var description = "This shirt is amazikng. It got me leid"; //need to figure out what descriptive info is returned before i finish thus
+    var description = "This shirt is amazing\n ID: "+ cid; //need to figure out what descriptive info is returned before i finish thus
     itemDetail.innerHTML = description;
 
     itemBox.appendChild(itemDetail);
-    document.body.appendChild(itemBox);
+    itemList.appendChild(itemBox);
 }
 
 //I can handle cart on the client side.
-function generateCart() {
-
+function generateWishlist() {
+    var wlARR=JSON.parse(localStorage.getItem("WishList"));
+    if(wlARR==null){
+        wlARR=[];
+    }
+    var wlSize=wlARR.length;
+    if(wlSize==0){
+        alert("Your wishlist is empty");
+        window.location.href="index.html";
+    }else{
+        for(var i=0; i<wlARR.length; i++){
+            generateCartTile(wlARR[i]);
+        }
+    }
 }
 
 //very similar to feed tile
-function generateCartTile(item) {
+function generateCartTile(cid) {
+    var itemList=document.getElementById("IL");
+    var itemBox = document.createElement("DIV");
+    itemBox.classList.add("itemBox");
 
+    var imageBox = document.createElement("DIV");
+    imageBox.classList.add("itemImg");
+
+    var itemImg = document.createElement("IMG");
+
+    itemImg.setAttribute("src", "clothing_img/" + cid + ".jpg");
+    itemImg.setAttribute("alt", "A GROUTFIT");
+    imageBox.appendChild(itemImg);
+    itemBox.appendChild(imageBox);
+
+    var buttonGroup = document.createElement("DIV");
+    buttonGroup.classList.add("itemBtn-group");
+
+    var wishButton = document.createElement("BUTTON");
+    wishButton.classList.add("itemBtn");
+    wishButton.innerHTML = "R";
+    wishButton.id=cid;
+    wishButton.addEventListener("click", function(e){
+        var wlARR=JSON.parse(localStorage.getItem("WishList"));
+        console.log("Target id: " + e.target.id);
+        if(wlARR==null){
+            wlARR=[];
+        }
+        wlARR.splice(wlARR.indexOf(e.target.id), 1);
+        console.log("Wishlist after removing item: " + JSON.stringify(wlARR));
+        localStorage.setItem("WishList", JSON.stringify(wlARR));
+        window.location.reload();
+    });
+
+    buttonGroup.appendChild(wishButton);
+
+    itemBox.appendChild(buttonGroup);
+
+    var itemDetail = document.createElement("DIV");
+    itemDetail.classList.add("itemDetails");
+
+    var description = "This shirt is amazing"; //need to figure out what descriptive info is returned before i finish thus
+    itemDetail.innerHTML = description;
+
+    itemBox.appendChild(itemDetail);
+    itemList.appendChild(itemBox);
 }
 
-//no back end work necesary
-function removeFromCart(item) {
-
-}
 
 //no back end work necessary
 function clearCart() {
 
+}
+
+function itemSearch() {
+    var searchVal=document.searchForm.searchVal.value;
+    if(All.includes(searchVal)){
+        clearFeed();
+        generateTile(searchVal);
+    }
+}
+function loadHomepage(){
+    window.location.href = "index.html";
 }
 
 //REFER BELOW FOR THE DATA STRUTURE I'LL USE FOR CART

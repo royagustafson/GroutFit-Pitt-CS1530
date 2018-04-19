@@ -1,182 +1,224 @@
-
 /*HOMEPAGE AND UNIVERSAL CSS*/
-body{
-	background-color: whitesmoke;
-	z-index:-5;
+body {
+    background-color: whitesmoke;
+    z-index: -5;
 }
-img{
-	z-index:5;
+
+img {
+    z-index: 5;
 }
-.itemList{
-	position:absolute;
-	background-color: lightgray;
-	width:80%;
-	height:2500px;
-	top:87px;
-	left:10%;
-	right:10%;
-	margin:auto;
-	z-index:1;
+
+.itemList {
+    position: absolute;
+    background-color: lightgray;
+    width: 80%;
+    top: 137px;
+    left: 10%;
+    right: 10%;
+    margin: auto;
+    z-index: 1;
 }
-.filterBar{
-	position:fixed;
-	background-color: dimgray;
-	height:35px;
-	width:80%;
-	top:52px;
-	left:10%;
-	right:10%;
-	display:inline;
-	text-align: right;
-	z-index:2;
+
+.filterBar {
+    position: fixed;
+    background-color: dimgray;
+    height: 35px;
+    width: 80%;
+    top: 102px;
+    left: 10%;
+    right: 10%;
+    display: inline;
+    text-align: right;
+    z-index: 2;
+
+}
+.searchBar {
+    position: fixed;
+    background-color: darkgray;
+    height: 50px;
+    width: 80%;
+    top: 52px;
+    left: 10%;
+    right: 10%;
+    display: inline;
+    text-align: right;
+    z-index: 2;
 
 }
 
-.itemBox{
-	position:relative;
-	background-color: slategray;
-	width: 400px;
-	height: 300px;
-	margin:auto;
-	margin-top: 100px;
-	border:2px solid darkgray;
-	display: block;
-	z-index:2;
-}
-.itemImg{
-	position:absolute;
-	background-color:white;
-	text-align: center;
-	top:5px;
-	left:5px;
-	width: 192px;
-	height: 256px;
-	z-index:3;
-}
-.itemDetails{
-	position: absolute;
-	background-color: slategray;
-	text-align: center;
-	color: white;
-	font-size: 15px;
-	width:194px;
-	height:294px;
-	top:0px;
-	right:0px;
-	z-index:3;
-}
-.itemBtn{
-	width:29px;
-	height:29px;
-	border-radius:4px;
-	border:none;
-	text-align: center;
-	background-color: lavender;
-	z-index:4;
-}
-.wishlist-add{
-	background-color: lavender;
-}
-.cart-add{
-	background-color: lavender;
-}
-.itemBtn-group{
-	position:absolute;
-	display:inline;
-	bottom:3px;
-	left:3px;
-}
-.filter-button-group{
-	position:absolute;
-	display:inline;
-	right:5px;
-	top:5px;
-}
-.filter-button{
-	background-color: lavender;
-	height:25px;
-	width:90px;
-	border-radius: 4px;
-	font-size: 15px;
-	color:white;
-
-}
-.navbar-fixed{
-	position:fixed;
-	top:0px;
-	width:100%;
-	z-index:10;
-}
-.border{
-	border: solid 2px darkgray;
+.outfitFrame {
+    position: relative;
+    background-color: slategray;
+    width: 700px;
+    height: 1000px;
+    margin: 100px auto auto;
+    border: 2px solid gray;
+    display: block;
+    z-index: 2;
 }
 
+.outfitBox {
+    position: relative;
+    background-color: slategray;
+    width: 400px;
+    height: 300px;
+    margin: 20px auto auto;
+    border: 2px solid darkgray;
+    display: block;
+    z-index: 2;
+}
 
+.itemBox {
+    position: relative;
+    background-color: slategray;
+    width: 400px;
+    height: 300px;
+    margin: 100px auto auto;
+    border: 2px solid darkgray;
+    display: block;
+    z-index: 2;
+}
 
+.itemImg {
+    position: absolute;
+    background-color: white;
+    text-align: center;
+    top: 5px;
+    left: 5px;
+    width: 192px;
+    height: 256px;
+    z-index: 3;
+}
+
+.itemDetails {
+    position: absolute;
+    background-color: slategray;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    width: 194px;
+    height: 294px;
+    top: 0;
+    right: 0;
+    z-index: 3;
+}
+
+.itemBtn {
+    width: 29px;
+    height: 29px;
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+    background-color: lavender;
+    z-index: 4;
+}
+
+.wishlist-add {
+    background-color: lavender;
+}
+
+.cart-add {
+    background-color: lavender;
+}
+
+.itemBtn-group {
+    position: absolute;
+    display: inline;
+    bottom: 3px;
+    left: 3px;
+}
+
+.filter-button-group {
+    position: absolute;
+    display: inline;
+    right: 5px;
+    top: 5px;
+}
+
+.filter-button {
+    background-color: lavender;
+    height: 25px;
+    width: 90px;
+    border-radius: 4px;
+    font-size: 15px;
+    color: white;
+
+}
+
+.navbar-fixed {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.border {
+    border: solid 2px darkgray;
+}
 
 /* LOGIN & REGISTER PAGE CSS */
-.fake-login{
-	position: absolute;
-	right:45%;
-	bottom:20%;
-	width:150px;
-	height:50px;
+.fake-login {
+    position: absolute;
+    right: 45%;
+    bottom: 20%;
+    width: 150px;
+    height: 50px;
 
 }
 
-.form-box{
-	position: absolute;
-	text-align: center;
-	width:60%;
-	height:60%;
-	border-radius: 5px;
-	border: solid 1px darkgray;
-	background-color:gainsboro;
-	left:20%;
-	top:20%;
-}
-h2{
-	text-align: center;
+.form-box {
+    position: absolute;
+    text-align: center;
+    width: 60%;
+    height: 60%;
+    border-radius: 5px;
+    border: solid 1px darkgray;
+    background-color: gainsboro;
+    left: 20%;
+    top: 20%;
 }
 
-form {
-	position:absolute;
-	top:20%;
-	left:20%;
-	right:20%;
+h2 {
+    text-align: center;
 }
-input {
-	margin-top:10px;
+.userForm {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    right: 20%;
 }
 
 /* CART PAGE CSS */
 
-.checkout-button{
-	position:absolute;
-	right:30%;
-	width:150px;
-	height:50px;
-	border-radius:10px;
-	border:2px solid black;
-	text-align: center;
-	z-index:4;
-	background-color: dimgray;
+.checkout-button {
+    position: absolute;
+    right: 30%;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid black;
+    text-align: center;
+    z-index: 4;
+    background-color: dimgray;
 }
-.remove-button-container{
-	position:absolute;
-	left:3px;
-	bottom:3px;
+
+.remove-button-container {
+    position: absolute;
+    left: 3px;
+    bottom: 3px;
 }
-.remove-button{
-	height:30px;
-	width: 80px;
-	text-align:center;
-	color: black;
-	font-size:15px;
+
+.remove-button {
+    height: 30px;
+    width: 80px;
+    text-align: center;
+    color: black;
+    font-size: 15px;
 
 }
-.cart-total{
-	text-align:center;
-	color: white;
-	font-size:30px;
+
+.cart-total {
+    text-align: center;
+    color: white;
+    font-size: 30px;
 }
