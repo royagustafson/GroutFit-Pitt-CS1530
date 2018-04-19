@@ -1,93 +1,96 @@
-var isLoggedIn = false;
-var curID = null;
-var userCreds = [];
-var userIds = [];
+var isLoggedIn;
+var curID;
 var cart = [];
-var userCount = 0;
 
-window.addEventListener("load", function (event) {
-    var form = document.logForm;
-    if(form==null){
-        console.log("form is false");
-        return false;
-    }
-    var u=form.username.value;
-    if(u==null || u==""){
-        return false;
-    }
-    //console.log("Form exists in window!");
-    responseAction();
-    function submitLogin() {
-        form.submit();
-    }
-    function responseAction() {
-        alert("Username Found! You're logged On!");
-        //window.location.href = "index.html";
+/*
+window.onload = function (event) {
+    var reg=document.getElementById("link1");
+    var log=document.getElementById("link2");
+    var out=document.getElementById("link3");
+    isLoggedIn=localStorage.getItem(isLoggedIn);
+    console.log("logged in:" + isLoggedIn);
+    if(isLoggedIn=="true"){
+        reg.classList.add("hidden");
+        log.classList.add("hidden");
+        out.classList.remove("hidden");
+    }else{
+        reg.classList.remove("hidden");
+        log.classList.remove("hidden");
+        out.classList.add("hidden");
     }
 
-    // ...and take over its submit event.
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
+}
+*/
 
-        submitLogin();
-    });
-});
+function submitLogin(enc, name){
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/api/login", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-window.addEventListener("error", function (event){
-    var form = document.logForm;
-    if(form==null){
-        return false;
-    }
-    alert("Something went wrong!");
+    xhr.onreadystatechange = function(){//Call a function when the state changes.
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            if("\"Success\""==xhr.responseText){
+                isLoggedIn="true";
+                localStorage.setItem("isLoggedIn", isLoggedIn);
+                localStorage.setItem("UserID", name);
+                alert("Login successful");
+                window.location.href="index.html";
+            }
+        } else if(xhr.readyState == XMLHttpRequest.DONE){
+            isLoggedIn="false";
+            localStorage.setItem("isLoggedIn", isLoggedIn);
+            alert("Invalid username or password");
+            window.location.href="login.html";
 
-});
+        }
+    };
+    xhr.send(enc);
+}
 
 /*If these routes end up not working, you can use a key value pair of users and their passwords */
 
 //Same deal as login, you should only recieve the username and password. Return a boolean, successful or nor
-function submitRegister() {
-    var form = document.regForm;
-    var uName = form.username.value;
-    var uPass = form.password.value;
-    var encodedString="username=" + uName + "&password=" + uPass;
-    console.log("Encoded string: " + encodedString);
-    if (uPass.length < 8) {
-        alert("Password must be at least 8 characters long");
-        form.reset();
-    }
-
+function submitRegister(enc, name) {
     var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/api/register", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    xhr.addEventListener("load", function (event) {
-        alert("WE DID IT!!!" + event.target.responseText);
-
-        /*Edit this to determine if login fails or works and render certain page conditionally. */
-
-        /* Also add user to a key value list, just in case. THIS IS UNSAFE AND CAN ONLY WORK FOR DEMO PURPOSES, incase the server breaks*/
-        var userIndex = {};
-        var userCred = {};
-        userIndex[form.username.value] = userCount;
-        userCred[form.username.value] = form.password.value;
-        userIds.push(userIndex);
-        userCreds.push(userCred);
-        userCount++; //lt us know how many users the are, this will be useful for later
-    });
-
-    xhr.addEventListener("error", function (event) {
-        alert('Oops! Something went wrong. Please try again'); //this means the request failed competely, so let's try to log in again.
-        window.location.href = "index.html";
-    });
-
-    xhr.open("POST", "localhost:4567/api/register", true);
-    xhr.send(encodedString);
+    xhr.onreadystatechange = function(){//Call a function when the state changes.
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            if("\"Success\""==xhr.responseText){
+                alert("Registration successful");
+                window.location.href="index.html";
+            } else if("\"Invalid username\""==xhr.responseText){
+                alert("username already exists. try again");
+                window.location.href="register.html";
+            }
+        }
+    };
+    xhr.send(enc);
 }
 
 //this function will require no API calls
 function logout() {
-    isLoggedIn = false;
-    curID = null;
-    alert("You have been successfully logged out");
-    window.location.href = "index.html";
+    curID = localStorage.getItem("UserID");
+    alert("Logging out " + curID);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:4567/api/auth/logout", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function() {//Call a function when the state changes.
+        if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            if ("\"Success\"" == xhr.responseText) {
+                localStorage.setItem("isLoggedIn", "false");
+                localStorage.setItem("UserID", "");
+                alert("You have been successfully logged out");
+                window.location.href="index.html";
+            }
+        } else if(xhr.readyState == XMLHttpRequest.DONE){
+            alert("You are not logged in");
+            window.location.href="index.html";
+        }
+    };
+    xhr.send(curID);
 }
 
 
@@ -101,52 +104,7 @@ function generateFeed() {
     var listBR = document.createElement("DIV");
     listBR.classList.add("itemList");
     document.body.appendChild(listBR);
-    generateOutfitTile();
-}
-
-function generateOutfitTile() {
-
-    var outfitFrame = document.createElement("DIV");
-    outfitFrame.classList.add("outfitFrame");
-
-    var outfitBox = document.createElement("DIV");
-    outfitBox.classList.add("outfitBox");
-
-    var imageBox = document.createElement("DIV");
-    imageBox.classList.add("itemImg");
-
-    var itemImg = document.createElement("IMG");
-
-    itemImg.setAttribute("src", "clothing_img/293534086.jpg");
-    itemImg.setAttribute("alt", "A GROUTFIT");
-    imageBox.appendChild(itemImg);
-    outfitBox.appendChild(imageBox);
-
-    var buttonGroup = document.createElement("DIV");
-    buttonGroup.classList.add("itemBtn-group");
-
-    var wishButton = document.createElement("BUTTON");
-    wishButton.classList.add("itemBtn");
-    wishButton.innerHTML = "W";
-
-    var cartButton = document.createElement("BUTTON");
-    cartButton.classList.add("itemBtn");
-    cartButton.innerHTML = "C";
-
-    buttonGroup.appendChild(wishButton);
-    buttonGroup.appendChild(cartButton);
-
-    outfitBox.appendChild(buttonGroup);
-
-    var itemDetail = document.createElement("DIV");
-    itemDetail.classList.add("itemDetails");
-
-    //need to figure out what descriptive info is returned before i finish thus
-    itemDetail.innerHTML = "This shirt is amazing. It got me a gf";
-
-    outfitBox.appendChild(itemDetail);
-    outfitFrame.appendChild(outfitBox);
-    document.body.appendChild(outfitBox);
+    generateTile();
 }
 
 //if we choose to keep the feed client sid, we will keep this clint side as well (i'll have all thw puctures and mtadata in the DOM for th presentation)
@@ -184,11 +142,14 @@ function generateTile() {
     var itemDetail = document.createElement("DIV");
     itemDetail.classList.add("itemDetails");
 
-    //need to figure out what descriptive info is returned before i finish thus
-    itemDetail.innerHTML = "This shirt is amazing. It got me a gf";
+    var description = "This shirt is amazikng. It got me leid"; //need to figure out what descriptive info is returned before i finish thus
+    itemDetail.innerHTML = description;
 
     itemBox.appendChild(itemDetail);
     document.body.appendChild(itemBox);
+}
+function getTile(itemID){
+
 }
 
 //I can handle cart on the client side.

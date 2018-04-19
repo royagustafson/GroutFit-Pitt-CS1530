@@ -24,15 +24,16 @@
             
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a href="register.html"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-            <li><a href="login.html"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="register.html"><span id="link1" class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="login.html"><span id="link2" class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <li><a href="javascript:logout()"><span id="link3" class="glyphicon glyphicon-log-in"></span> logout</a></li>
         </ul>
     </div>
 </nav>
 
 <div class="form-box">
     <div>
-    <form name="logForm" method="POST" action="http://localhost:4567/api/login">
+    <form name="logForm">
         <h2>Login</h2>
         <input type="text" name="username" required> Username <br>
         <input type="password" name="password" required> Password <br>
@@ -42,5 +43,15 @@
     </div>
 </div>
 
+<script>
+    var form =document.logForm;
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var uName = form.username.value;
+        var uPass = form.password.value;
+        var encodedString="username=" + uName + "&password=" + uPass;
+        submitLogin(encodedString, uName);
+    });
+</script>
 </body>
 </html>
