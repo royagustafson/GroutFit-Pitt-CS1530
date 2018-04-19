@@ -10,10 +10,15 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.hibernate.service.spi.ServiceException;
 
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,6 +40,7 @@ public class GroutFitApp {
         assert sf != null;
         AtomicReference<Session> session = new AtomicReference<>();
 
+
         // Load static DHTML, create basic login table
         staticFiles.location("public");
         HashSet<String> loginTable = new HashSet<>();
@@ -54,6 +60,26 @@ public class GroutFitApp {
 
         /* API calls */
         path("/api", () -> {
+            /* SEARCH FUNCTIONS */
+            post("/search", (req,res) -> {
+                HashMap<String, String> map = toMap(req.body());
+                String searchTerm = map.get("query");
+
+                FullTextSession fullTextSession = Search.getFullTextSession(session.get());
+                QueryBuilder qb = fullTextSession.getSearchFactory().buildQueryBuilder().forEntity(ClothingType.class).get();
+                org.apache.lucene.search.Query query = qb.keyword().onFields("name", "category", "description").matching(searchTerm).createQuery();
+
+                javax.persistence.Query jpaQuery = fullTextSession.createFullTextQuery(query, ClothingType.class);
+
+                List<JsonObject> json = new ArrayList<>();
+                List results = jpaQuery.getResultList();
+                for (Object result : results) {
+                    json.add(((ClothingType)result).toJson());
+                }
+                fullTextSession.close();
+                fullTextSession.close();
+                return json;
+            }, new JsonTransformer());
 
             /* USER FUNCTIONS */
             post("/register", (req, res) -> {
@@ -283,14 +309,6 @@ public class GroutFitApp {
                             .map(ClothingItem::toJson)
                             .collect(Collectors.toList());
                 }, new JsonTransformer());
-
-                // Same as above, but returns types mapped by items
-                get("/:item_id/types", (req, res) -> {
-                    return parseIDs(req.params("item_id")).stream()
-                            .map(item_id -> session.get().get(ClothingItem.class, item_id))
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toMap(ClothingItem::getItem_id, ClothingItem::typeToJson));
-                }, new JsonTransformer());
             });
         });
 
@@ -365,5 +383,18 @@ public class GroutFitApp {
         if (!Pattern.matches("\\A([\\d]*,)*\\d+$", body)) return ids;
         for (String str : body.split(",", 100)) ids.add(Integer.parseInt(str));
         return ids;
+    }
+
+    // Run this method to index the db for search
+    private static void indexDB() {
+        SessionFactory sf = new Configuration().configure().buildSessionFactory(); // Hibernate
+        Session session = sf.openSession();
+
+        try {
+            FullTextSession fullTextSession = Search.getFullTextSession(session);
+            fullTextSession.createIndexer().startAndWait();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 }

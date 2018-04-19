@@ -8,11 +8,12 @@
         <property name="hibernate.connection.username">wzlscuud</property>
         <property name="hibernate.connection.password">02lwsmkVtbllCGkjcWZsYDkYHZL82cQy</property>
         <property name="hibernate.connection.url">jdbc:postgresql://baasu.db.elephantsql.com:5432/wzlscuud</property>
+        <property name="hibernate.search.default.directory_provider">filesystem</property>
+        <property name="hibernate.search.default.indexBase">./GroutFit/src/main/resources/lucene</property>
 
         <mapping class="com.GroutFit.Model.Profile"/>
         <mapping class="com.GroutFit.Model.ClothingType"/>
         <mapping class="com.GroutFit.Model.ClothingItem"/>
         <mapping class="com.GroutFit.Model.Outfit"/>
-
     </session-factory>
 </hibernate-configuration>
