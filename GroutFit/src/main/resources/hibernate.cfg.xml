@@ -6,8 +6,13 @@
         <property name="hibernate.dialect">org.hibernate.dialect.PostgresPlusDialect</property>
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.username">wzlscuud</property>
-        <property name="hibernate.connection.password">02lwsmkVtbllCGkjcWZsYDkYHZL82cQy</property>
+        <property name="hibernate.connection.password">SL3wV_TE9QZeXlN8mJ8_Zq9J4oM8zH6S</property>
         <property name="hibernate.connection.url">jdbc:postgresql://baasu.db.elephantsql.com:5432/wzlscuud</property>
+        <property name="hibernate.search.default.directory_provider">filesystem</property>
+        <property name="hibernate.search.default.indexBase">./GroutFit/src/main/resources/lucene</property>
+
+        <property name="connection.pool_size">1</property>
+
         <mapping class="com.GroutFit.Model.Profile"/>
         <mapping class="com.GroutFit.Model.ClothingType"/>
         <mapping class="com.GroutFit.Model.ClothingItem"/>

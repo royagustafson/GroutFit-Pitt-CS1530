@@ -2,15 +2,18 @@ package com.GroutFit.Model;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
 
 import javax.persistence.*;
 
 @Entity
+@Indexed
 @Table(name = "clothing_item")
 public class ClothingItem {
-
     @Id
     private int item_id;
+    @Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
     private String color;
     private String size;
     private int quantity;
