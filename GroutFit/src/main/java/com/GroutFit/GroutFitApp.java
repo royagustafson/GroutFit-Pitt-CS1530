@@ -307,6 +307,13 @@ public class GroutFitApp {
                             .map(ClothingItem::toJson)
                             .collect(Collectors.toList());
                 }, new JsonTransformer());
+
+                get("/:item_id/types", (req, res) -> {
+                    return parseIDs(req.params("item_id")).stream()
+                            .map(type_id -> session.get().get(ClothingItem.class, type_id))
+                            .filter(Objects::nonNull)
+                            .collect(Collectors.toMap(ClothingItem::getItem_id, ClothingItem::typeToJson, (a, b) -> b));
+                }, new JsonTransformer());
             });
         });
 
