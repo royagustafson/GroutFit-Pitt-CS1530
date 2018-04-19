@@ -74,8 +74,6 @@ public class GroutFitApp {
                 for (Object result : results) {
                     json.add(((ClothingType) result).toJson());
                 }
-                fullTextSession.close();
-                fullTextSession.close();
                 return json;
             }, new JsonTransformer());
 
